@@ -22,15 +22,16 @@ import { HeroParallaxHero } from "@/components/ui/HeroParallax";
 export default function GlassmorphicLanding() {
   return (
     <>
-      {/* BACKGROUND LAYERS */}
-      <div className="aurora-background" />
-      {/* Cosmic Background Effects */}
-      <div className="cosmos-nebula" aria-hidden="true" />
-      <div className="cosmos-dust" aria-hidden="true" />
-      <div className="cosmos-dust-twinkle" aria-hidden="true" />
+      {/* FX WRAPPER */}
+      <div className="fx-wrapper">
+        <div className="aurora-background" />
+        <div className="cosmos-nebula" />
+        <div className="cosmos-dust" />
+        <div className="cosmos-dust-twinkle" />
+      </div>
 
       {/* CONTENT */}
-      <main className="relative z-10 overflow-hidden text-white">
+      <main className="relative z-10 text-white">
         <Navbar />
         <HeroParallaxHero />
         <WhatIDo />

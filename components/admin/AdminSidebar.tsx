@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import {
   LayoutDashboard,
@@ -14,6 +15,7 @@ import {
   Moon,
   LogOut,
   ChevronLeft,
+  User,
 } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
 import { useState } from "react";
@@ -31,10 +33,13 @@ export function AdminSidebar() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
   const [collapsed, setCollapsed] = useState(false);
-
-  // Get unread message count
+  const { data: session } = useSession();
   const { data: unreadData } = useUnreadCount();
   const unreadCount = unreadData?.data?.count ?? 0;
+
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/login" });
+  };
 
   return (
     <aside
@@ -61,11 +66,11 @@ export function AdminSidebar() {
           {!collapsed && (
             <Link
               href="/admin"
-              className={`text-xl font-bold ${
+              className={`text-xl font-bold flex items-baseline gap-1 ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
-              Admin<span className="text-violet-500">.</span>
+              Admin<span className="bg-violet-500 h-1 w-1 block"></span>
             </Link>
           )}
           <button
@@ -85,46 +90,81 @@ export function AdminSidebar() {
         </div>
       </div>
 
+      {/* User Info */}
+      {session?.user && (
+        <div
+          className={`px-4 py-3 border-b ${
+            isDark ? "border-white/10" : "border-black/10"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              className={`p-2 rounded-xl ${
+                isDark ? "bg-violet-500/20" : "bg-violet-100"
+              }`}
+            >
+              <User className="w-4 h-4 text-violet-500" />
+            </div>
+            {!collapsed && (
+              <div className="flex-1 min-w-0">
+                <p
+                  className={`text-sm font-medium truncate ${
+                    isDark ? "text-white" : "text-slate-900"
+                  }`}
+                >
+                  {session.user.name || session.user.email?.split("@")[0]}
+                </p>
+                <p
+                  className={`text-xs truncate ${
+                    isDark ? "text-white/50" : "text-slate-500"
+                  }`}
+                >
+                  {session.user.email}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2 bg-red">
+      <nav className="flex flex-col flex-1 p-4 gap-2">
         {NAV_ITEMS.map((item) => {
           const isActive =
             pathname === item.href ||
             (item.href !== "/admin" && pathname.startsWith(item.href));
 
-          const badge = item.showBadge ? unreadCount : 0;
+          const badgeCount = item.showBadge ? unreadCount : 0;
 
           return (
-            <Link key={item.href} href={item.href} className="block">
+            <Link key={item.href} href={item.href}>
               <motion.div
                 className={`
-            flex items-center gap-3 px-4 py-2 rounded-xl
-            transition-all duration-200 relative
-            ${
-              isActive
-                ? isDark
-                  ? "bg-violet-500/20 text-violet-400"
-                  : "bg-violet-100 text-violet-600"
-                : isDark
-                ? "text-white/60 hover:text-white hover:bg-white/10"
-                : "text-slate-600 hover:text-slate-900 hover:bg-black/5"
-            }
-          `}
+                  flex items-center gap-3 px-4 py-3 rounded-xl
+                  transition-all duration-200
+                  ${
+                    isActive
+                      ? isDark
+                        ? "bg-violet-500/20 text-violet-400"
+                        : "bg-violet-100 text-violet-600"
+                      : isDark
+                      ? "text-white/60 hover:text-white hover:bg-white/10"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-black/5"
+                  }
+                `}
               >
                 <div className="relative">
                   <item.icon className="w-5 h-5 shrink-0" />
-                  {/* Badge dot for collapsed state */}
-                  {collapsed && badge > 0 && (
-                    <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500" />
+                  {collapsed && badgeCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 border-2 border-slate-900" />
                   )}
                 </div>
                 {!collapsed && (
                   <>
                     <span className="font-medium flex-1">{item.label}</span>
-                    {/* Badge count for expanded state */}
-                    {badge > 0 && (
-                      <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-rose-500 text-white">
-                        {badge > 99 ? "99+" : badge}
+                    {badgeCount > 0 && (
+                      <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-rose-500 text-white min-w-[20px] text-center">
+                        {badgeCount > 99 ? "99+" : badgeCount}
                       </span>
                     )}
                   </>
@@ -146,7 +186,7 @@ export function AdminSidebar() {
           onClick={toggleTheme}
           className={`
             w-full flex items-center gap-3 px-4 py-3 rounded-xl
-            transition-colors mb-2
+            transition-colors mb-2 cursor-pointer
             ${
               isDark
                 ? "text-white/60 hover:text-white hover:bg-white/10"
@@ -166,7 +206,7 @@ export function AdminSidebar() {
         <Link href="/">
           <div
             className={`
-              flex items-center gap-3 px-4 py-3 rounded-xl
+              flex items-center gap-3 px-4 py-3 rounded-xl mb-2
               transition-colors
               ${
                 isDark
@@ -175,10 +215,27 @@ export function AdminSidebar() {
               }
             `}
           >
-            <LogOut className="w-5 h-5" />
-            {!collapsed && <span className="font-medium">Back to Site</span>}
+            <LogOut className="w-5 h-5 rotate-180" />
+            {!collapsed && <span className="font-medium">View Site</span>}
           </div>
         </Link>
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className={`
+            w-full flex items-center gap-3 px-4 py-3 rounded-xl
+            transition-colors cursor-pointer
+            ${
+              isDark
+                ? "text-red-400/80 hover:text-red-400 hover:bg-red-500/10"
+                : "text-red-500/80 hover:text-red-500 hover:bg-red-50"
+            }
+          `}
+        >
+          <LogOut className="w-5 h-5" />
+          {!collapsed && <span className="font-medium">Sign Out</span>}
+        </button>
       </div>
     </aside>
   );

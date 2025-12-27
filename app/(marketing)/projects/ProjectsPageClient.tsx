@@ -110,9 +110,11 @@ export function ProjectsPageClient({
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className={`mb-6 pb-6 border-b ${
+            isDark ? "border-gray-800" : "border-gray-300"
+          }`}
         >
-          <span
+          {/* <span
             className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 ${
               isDark
                 ? "bg-violet-500/20 text-violet-300"
@@ -120,19 +122,19 @@ export function ProjectsPageClient({
             }`}
           >
             Portfolio
-          </span>
+          </span> */}
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
+            className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-6 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             My{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
               Projects
             </span>
           </h1>
           <p
-            className={`text-lg max-w-2xl mx-auto leading-relaxed ${
+            className={`text-lg max-w-2xl leading-relaxed ${
               isDark ? "text-white/60" : "text-slate-600"
             }`}
           >
@@ -146,11 +148,6 @@ export function ProjectsPageClient({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={`p-6 rounded-2xl backdrop-blur-xl border mb-8 ${
-            isDark
-              ? "bg-white/5 border-white/10"
-              : "bg-white/70 border-black/10"
-          }`}
         >
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
@@ -184,7 +181,7 @@ export function ProjectsPageClient({
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
                   className={`
-                    px-4 py-2 rounded-xl text-sm font-medium transition-all
+                    cursor-pointer px-4 py-2 rounded-xl text-xs font-medium transition-all
                     ${
                       selectedCategory === cat.value
                         ? isDark
@@ -259,7 +256,7 @@ export function ProjectsPageClient({
                 onClick={clearFilters}
                 className={`
                   flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium
-                  transition-colors
+                  transition-colors cursor-pointer
                   ${
                     isDark
                       ? "text-white/60 hover:text-white hover:bg-white/10"
@@ -296,7 +293,7 @@ export function ProjectsPageClient({
             className="text-center py-16"
           >
             <p
-              className={`text-lg ${
+              className={`text-sm ${
                 isDark ? "text-white/50" : "text-slate-500"
               }`}
             >
@@ -305,7 +302,7 @@ export function ProjectsPageClient({
             <button
               onClick={clearFilters}
               className={`
-                mt-4 px-6 py-3 rounded-xl font-medium transition-all
+                mt-4 px-6 py-3 rounded-xl font-medium transition-all cursor-pointer
                 ${
                   isDark
                     ? "bg-white/10 text-white hover:bg-white/20"

@@ -127,7 +127,9 @@ const SkillCard = ({
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: index * 0.03 + 0.3 }}
-              className="text-xs font-semibold bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent"
+              className={`text-xs font-semibold ${
+                isDark ? "text-gray-400" : "text-gray-500"
+              }`}
             >
               {skill.level}%
             </motion.span>
@@ -193,7 +195,7 @@ const SkillCard = ({
                 ${
                   skill.category === "design"
                     ? "bg-fuchsia-500/10 text-fuchsia-500"
-                    : "bg-violet-500/10 text-violet-500"
+                    : "bg-teal-500/10 text-teal-500"
                 }
               `}
             >
@@ -283,7 +285,7 @@ const SkillGraph = () => {
           className="flex justify-center gap-6 mb-10"
         >
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-violet-500/20 border border-violet-500/40" />
+            <div className="w-3 h-3 rounded-full bg-teal-500/20 border border-teal-500/40" />
             <span
               className={`text-xs transition-colors duration-300 ${
                 isDark ? "text-white/50" : "text-slate-500"

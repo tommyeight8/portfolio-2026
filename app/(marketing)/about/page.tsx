@@ -30,9 +30,9 @@ const experience = [
 ];
 
 const stats = [
-  { value: "5+", label: "Years Experience" },
+  { value: "8+", label: "Years Experience" },
   { value: "50+", label: "Projects Completed" },
-  { value: "30+", label: "Happy Clients" },
+  { value: "♾️", label: "Happy Clients" },
 ];
 
 export default function AboutPage() {
@@ -51,12 +51,12 @@ export default function AboutPage() {
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div
           className={`absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-violet-500/20" : "bg-violet-400/20"
+            isDark ? "bg-violet-500/30" : "bg-violet-400/30"
           }`}
         />
         <div
           className={`absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-cyan-500/15" : "bg-cyan-400/20"
+            isDark ? "bg-cyan-500/25" : "bg-cyan-400/30"
           }`}
           style={{ animationDelay: "1s" }}
         />
@@ -67,9 +67,11 @@ export default function AboutPage() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className={`mb-16 pb-6 border-b ${
+            isDark ? "border-gray-800" : "border-gray-300"
+          }`}
         >
-          <span
+          {/* <span
             className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 ${
               isDark
                 ? "bg-violet-500/20 text-violet-300"
@@ -77,19 +79,19 @@ export default function AboutPage() {
             }`}
           >
             About Me
-          </span>
+          </span> */}
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
+            className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-6 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             Crafting Digital{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
               Experiences
             </span>
           </h1>
           <p
-            className={`text-lg max-w-2xl mx-auto leading-relaxed ${
+            className={`text-lg max-w-2xl leading-relaxed ${
               isDark ? "text-white/60" : "text-slate-600"
             }`}
           >
@@ -109,13 +111,18 @@ export default function AboutPage() {
             <div className="relative">
               {/* Profile Image Placeholder */}
               <div
-                className={`aspect-[4/5] rounded-3xl flex items-center justify-center ${
+                className={`aspect-[4/5] relative rounded-3xl flex items-center justify-center overflow-hidden ${
                   isDark
                     ? "bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20"
                     : "bg-gradient-to-br from-violet-200 to-fuchsia-200"
                 }`}
               >
-                <span className="text-9xl opacity-30">👨‍💻</span>
+                <Image
+                  src={"/images/profile-1.jpg"}
+                  fill
+                  className="h-full w-full"
+                  alt="profile"
+                />
               </div>
 
               {/* Location Card */}
@@ -135,7 +142,11 @@ export default function AboutPage() {
                       isDark ? "bg-violet-500/20" : "bg-violet-100"
                     }`}
                   >
-                    <MapPin className="w-5 h-5 text-violet-500" />
+                    <MapPin
+                      className={`w-5 h-5 ${
+                        isDark ? "text-violet-400" : "text-violet-500"
+                      }`}
+                    />
                   </div>
                   <div>
                     <p
@@ -143,7 +154,7 @@ export default function AboutPage() {
                         isDark ? "text-white" : "text-slate-900"
                       }`}
                     >
-                      California
+                      Los Angeles CA
                     </p>
                     <p
                       className={`text-sm ${
@@ -259,7 +270,7 @@ export default function AboutPage() {
                   <div className="flex items-start gap-4">
                     <div
                       className={`p-3 rounded-xl ${
-                        isDark ? "bg-violet-500/20" : "bg-violet-100"
+                        isDark ? "bg-violet-600/20" : "bg-violet-100"
                       }`}
                     >
                       <Briefcase className="w-5 h-5 text-violet-500" />

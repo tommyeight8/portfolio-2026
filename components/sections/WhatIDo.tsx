@@ -50,9 +50,9 @@ const categories = [
     description:
       "Custom storefronts, theme development, and backend solutions. From Liquid templates to Shopify APIs, I build scalable e-commerce experiences that convert.",
     icon: IconBrandShopee,
-    gradient: "from-green-500 to-emerald-600",
-    bgGradient: "from-green-500/10 to-emerald-500/10",
-    borderGlow: "group-hover:shadow-green-500/20",
+    gradient: "from-teal-500 to-emerald-600",
+    bgGradient: "from-teal-500/10 to-emerald-500/10",
+    borderGlow: "group-hover:shadow-teal-500/20",
     skills: ["Liquid", "Storefront API", "Admin API", "Theme Dev", "Apps"],
   },
   {
@@ -145,7 +145,7 @@ const CategoryCard = ({
               whileHover={{ rotate: [0, -10, 10, 0], scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className={`
-                inline-flex p-4 rounded-2xl mb-6
+                inline-flex p-4 rounded-full mb-6
                 bg-gradient-to-br ${category.gradient}
                 shadow-lg
               `}
@@ -307,12 +307,11 @@ const WhatIDo = () => {
           </p>
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ y: -3 }}
             whileTap={{ scale: 0.98 }}
             className={`
               inline-flex items-center gap-2 px-8 py-4 rounded-2xl
-              font-medium
-              transition-all duration-300
+              font-medium 
               ${
                 isDark
                   ? "bg-white text-slate-900 shadow-lg shadow-white/20 hover:shadow-xl hover:shadow-white/25"

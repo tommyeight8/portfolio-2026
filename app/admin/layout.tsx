@@ -1,26 +1,20 @@
 // src/app/admin/layout.tsx
 
-"use client";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/auth.config";
+import { AdminLayoutClient } from "./AdminLayoutClient";
 
-import { AdminSidebar } from "@/components/admin/AdminSidebar";
-import { useTheme } from "@/lib/providers/ThemeProvider";
-
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const session = await getServerSession(authOptions);
 
-  return (
-    <div
-      className={`min-h-screen flex transition-colors duration-300 ${
-        isDark ? "bg-slate-950" : "bg-slate-100"
-      }`}
-    >
-      <AdminSidebar />
-      <main className="flex-1 overflow-auto">{children}</main>
-    </div>
-  );
+  if (!session || session.user?.role !== "admin") {
+    redirect("/login");
+  }
+
+  return <AdminLayoutClient session={session}>{children}</AdminLayoutClient>;
 }

@@ -110,7 +110,7 @@ export default function AdminMessagesPage() {
           isDark ? "border-white/10" : "border-black/10"
         }`}
       >
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4">
           <div>
             <h1
               className={`text-2xl font-bold ${
@@ -140,7 +140,7 @@ export default function AdminMessagesPage() {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search messages..."
                 className={`
-                  pl-10 pr-4 py-2 rounded-xl border outline-none w-64
+                  pl-10 pr-4 py-2 rounded-full border outline-none w-64
                   transition-all
                   ${
                     isDark
@@ -152,13 +152,13 @@ export default function AdminMessagesPage() {
             </div>
 
             {/* Filter */}
-            <div className="flex rounded-xl overflow-hidden">
+            <div className="flex rounded-full overflow-hidden">
               {(["all", "unread", "read"] as const).map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
                   className={`
-                    px-4 py-2 text-sm font-medium capitalize transition-colors
+                    px-4 py-2 text-xs text-sm font-medium capitalize transition-colors
                     ${
                       filter === f
                         ? isDark
@@ -240,7 +240,7 @@ export default function AdminMessagesPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <p
-                          className={`font-medium truncate ${
+                          className={`text-sm font-medium truncate ${
                             isDark ? "text-white" : "text-slate-900"
                           } ${!message.read ? "font-semibold" : ""}`}
                         >
@@ -258,15 +258,15 @@ export default function AdminMessagesPage() {
                       </div>
 
                       <p
-                        className={`text-sm truncate mt-0.5 ${
+                        className={`text-xs truncate mt-0.5 ${
                           isDark ? "text-white/70" : "text-slate-700"
-                        } ${!message.read ? "font-medium" : ""}`}
+                        } ${!message.read ? "text-sm font-medium" : ""}`}
                       >
                         {message.subject}
                       </p>
 
                       <p
-                        className={`text-sm truncate mt-1 ${
+                        className={`text-xs truncate mt-1 ${
                           isDark ? "text-white/40" : "text-slate-500"
                         }`}
                       >
@@ -324,7 +324,7 @@ export default function AdminMessagesPage() {
                       </h2>
                     </div>
                     <p
-                      className={`text-sm ${
+                      className={`text-xs ${
                         isDark ? "text-white/50" : "text-slate-500"
                       }`}
                     >
@@ -383,7 +383,7 @@ export default function AdminMessagesPage() {
                 <div className="flex flex-wrap gap-6">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`p-2 rounded-xl ${
+                      className={`p-2 rounded-full ${
                         isDark ? "bg-white/10" : "bg-slate-100"
                       }`}
                     >
@@ -395,14 +395,14 @@ export default function AdminMessagesPage() {
                     </div>
                     <div>
                       <p
-                        className={`text-sm ${
+                        className={`text-xs ${
                           isDark ? "text-white/50" : "text-slate-500"
                         }`}
                       >
                         From
                       </p>
                       <p
-                        className={`font-medium ${
+                        className={`text-sm font-medium ${
                           isDark ? "text-white" : "text-slate-900"
                         }`}
                       >
@@ -413,7 +413,7 @@ export default function AdminMessagesPage() {
 
                   <div className="flex items-center gap-3">
                     <div
-                      className={`p-2 rounded-xl ${
+                      className={`p-2 rounded-full ${
                         isDark ? "bg-white/10" : "bg-slate-100"
                       }`}
                     >
@@ -425,7 +425,7 @@ export default function AdminMessagesPage() {
                     </div>
                     <div>
                       <p
-                        className={`text-sm ${
+                        className={`text-xs ${
                           isDark ? "text-white/50" : "text-slate-500"
                         }`}
                       >
@@ -433,7 +433,7 @@ export default function AdminMessagesPage() {
                       </p>
                       <a
                         href={`mailto:${selectedMessage.email}`}
-                        className={`font-medium hover:text-violet-500 transition-colors ${
+                        className={`text-sm font-medium hover:text-violet-500 transition-colors ${
                           isDark ? "text-white" : "text-slate-900"
                         }`}
                       >
@@ -445,7 +445,7 @@ export default function AdminMessagesPage() {
                   {selectedMessage.company && (
                     <div className="flex items-center gap-3">
                       <div
-                        className={`p-2 rounded-xl ${
+                        className={`p-2 rounded-full ${
                           isDark ? "bg-white/10" : "bg-slate-100"
                         }`}
                       >
@@ -457,14 +457,14 @@ export default function AdminMessagesPage() {
                       </div>
                       <div>
                         <p
-                          className={`text-sm ${
+                          className={`text-xs ${
                             isDark ? "text-white/50" : "text-slate-500"
                           }`}
                         >
                           Company
                         </p>
                         <p
-                          className={`font-medium ${
+                          className={`text-sm font-medium ${
                             isDark ? "text-white" : "text-slate-900"
                           }`}
                         >
@@ -489,8 +489,8 @@ export default function AdminMessagesPage() {
                   `}
                 >
                   <p
-                    className={`leading-relaxed whitespace-pre-wrap ${
-                      isDark ? "text-white/80" : "text-slate-700"
+                    className={`leading-relaxed whitespace-pre-wrap text-sm ${
+                      isDark ? "text-gray-200" : "text-slate-700"
                     }`}
                   >
                     {selectedMessage.message}
@@ -507,7 +507,7 @@ export default function AdminMessagesPage() {
                 <a
                   href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}`}
                   className={`
-                    inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium
+                    inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium
                     transition-all hover:scale-105
                     ${
                       isDark

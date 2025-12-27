@@ -1,13 +1,13 @@
 // src/lib/services/contact.service.ts
 
 import contactRepository from "@/lib/repositories/contact.repository";
+import emailService from "@/lib/services/email.service";
 import {
   createContactSchema,
   updateContactSchema,
   contactQuerySchema,
   CreateContactInput,
   UpdateContactInput,
-  ContactQueryInput,
 } from "@/lib/validations/contact.validation";
 import {
   ContactSubmission,
@@ -18,7 +18,7 @@ import {
 
 class ContactService {
   async getAllContacts(
-    query: ContactQueryInput
+    query: Record<string, unknown> = {}
   ): Promise<PaginatedResult<ContactSubmission>> {
     const validated = contactQuerySchema.parse(query);
 
@@ -49,17 +49,42 @@ class ContactService {
     try {
       const validated = createContactSchema.parse(data);
       const contact = await contactRepository.create(validated);
+
+      // Send emails in the background (don't block the response)
+      this.sendContactEmails(validated).catch((err) => {
+        console.error("Failed to send contact emails:", err);
+      });
+
       return {
         success: true,
         data: contact,
         message: "Message sent successfully",
       };
     } catch (error) {
+      console.error("Create contact error:", error);
       if (error instanceof Error) {
         return { success: false, error: error.message };
       }
       return { success: false, error: "Failed to send message" };
     }
+  }
+
+  private async sendContactEmails(contact: CreateContactInput): Promise<void> {
+    // Send notification to admin
+    await emailService.sendContactNotification({
+      name: contact.name,
+      email: contact.email,
+      company: contact.company,
+      subject: contact.subject,
+      message: contact.message,
+    });
+
+    // Send confirmation to the sender
+    await emailService.sendContactConfirmation({
+      name: contact.name,
+      email: contact.email,
+      subject: contact.subject,
+    });
   }
 
   async updateContact(

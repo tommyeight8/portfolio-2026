@@ -5,6 +5,7 @@ import { Sora, Space_Grotesk } from "next/font/google";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
 import "./globals.css";
+import { AuthProvider } from "@/lib/providers/AuthProvider";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -48,9 +49,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased transition-colors duration-300">
-        <ThemeProvider>
-          <QueryProvider>{children}</QueryProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <QueryProvider>{children}</QueryProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

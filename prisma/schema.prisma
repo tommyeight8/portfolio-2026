@@ -73,3 +73,35 @@ model ContactSubmission {
 
   @@map("contact_submissions")
 }
+
+model LoginPin {
+  id        String   @id @default(cuid())
+  email     String
+  pinHash   String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model SiteSettings {
+  id                 String   @id @default("default")
+  siteName           String   @default("Portfolio")
+  siteDescription    String   @default("Full-stack developer & designer portfolio")
+  ownerName          String   @default("Your Name")
+  ownerEmail         String   @default("hello@example.com")
+  ownerTitle         String   @default("Full-Stack Developer & Designer")
+  ownerBio           String   @default("") @db.Text
+  location           String   @default("California, USA")
+  availability       String   @default("Available for projects")
+  availabilityStatus String   @default("available") // available, busy, unavailable
+  socialGithub       String?
+  socialLinkedin     String?
+  socialTwitter      String?
+  socialInstagram    String?
+  socialDribbble     String?
+  contactEmail       String   @default("hello@example.com")
+  resumeUrl          String?
+  profileImageUrl    String?
+  updatedAt          DateTime @updatedAt
+}

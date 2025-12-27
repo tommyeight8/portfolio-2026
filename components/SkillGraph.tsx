@@ -101,7 +101,7 @@ const SkillCard = ({
             <h4 className="text-sm font-medium text-slate-700 dark:text-white/80 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
               {skill.name}
             </h4>
-            <span className="text-xs font-semibold bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+            <span className="text-xs font-semibold to-fuchsia-500">
               {skill.level}%
             </span>
           </div>

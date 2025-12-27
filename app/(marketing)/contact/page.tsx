@@ -80,29 +80,16 @@ export default function ContactPage() {
           : "bg-gradient-to-br from-slate-50 via-violet-100/30 to-slate-50"
       }`}
     >
-      {/* Background Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div
-          className={`absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-violet-500/20" : "bg-violet-400/20"
-          }`}
-        />
-        <div
-          className={`absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-cyan-500/15" : "bg-cyan-400/20"
-          }`}
-          style={{ animationDelay: "1s" }}
-        />
-      </div>
-
       <div className="relative max-w-6xl mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className={`mb-16 pb-6 border-b ${
+            isDark ? "border-gray-800" : "border-gray-300"
+          }`}
         >
-          <span
+          {/* <span
             className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4 ${
               isDark
                 ? "bg-cyan-500/20 text-cyan-300"
@@ -110,19 +97,19 @@ export default function ContactPage() {
             }`}
           >
             Get in Touch
-          </span>
+          </span> */}
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
+            className={`text-2xl md:text-4xl lg:text-5xl font-bold mb-6 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
             Let&apos;s Work{" "}
-            <span className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
               Together
             </span>
           </h1>
           <p
-            className={`text-lg max-w-2xl mx-auto leading-relaxed ${
+            className={`text-lg max-w-2xl leading-relaxed ${
               isDark ? "text-white/60" : "text-slate-600"
             }`}
           >
@@ -168,7 +155,7 @@ export default function ContactPage() {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    hello@example.com
+                    Tommyvong88@gmail.com
                   </a>
                 </div>
               </div>
@@ -185,10 +172,10 @@ export default function ContactPage() {
               <div className="flex items-center gap-4">
                 <div
                   className={`p-3 rounded-xl ${
-                    isDark ? "bg-cyan-500/20" : "bg-cyan-100"
+                    isDark ? "bg-teal-500/20" : "bg-cyan-100"
                   }`}
                 >
-                  <MapPin className="w-6 h-6 text-cyan-500" />
+                  <MapPin className="w-6 h-6 text-teal-500" />
                 </div>
                 <div>
                   <p
@@ -203,7 +190,7 @@ export default function ContactPage() {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    California, USA
+                    Los Angeles, CA
                   </p>
                 </div>
               </div>
@@ -267,7 +254,7 @@ export default function ContactPage() {
                   isDark ? "text-white/50" : "text-slate-500"
                 }`}
               >
-                Currently accepting new clients
+                Let's create something awesome!
               </p>
             </div>
           </motion.div>
@@ -420,9 +407,9 @@ export default function ContactPage() {
                   <motion.button
                     type="submit"
                     disabled={createContact.isPending}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full py-4 rounded-2xl font-medium flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                    className={`cursor-pointer w-full py-4 rounded-2xl font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
                       isDark
                         ? "bg-white text-slate-900 hover:shadow-lg hover:shadow-white/20"
                         : "bg-slate-900 text-white hover:shadow-lg hover:shadow-slate-900/20"

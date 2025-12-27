@@ -231,8 +231,6 @@ const WhatIDo = () => {
           </p>
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-lg transition-all"
           >
             Let&apos;s Work Together

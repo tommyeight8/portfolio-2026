@@ -20,11 +20,11 @@ export function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <span
-            className={`text-lg font-semibold ${
+            className={`text-lg font-semibold flex items-baseline gap-1 ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            Portfolio<span className="text-violet-500">.</span>
+            Portfolio<span className="bg-violet-500 h-1 w-1 block"></span>
           </span>
 
           <nav className="flex items-center gap-8">
