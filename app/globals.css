@@ -1,26 +1,340 @@
+/* src/app/globals.css */
+
 @import "tailwindcss";
 
+/* Theme Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: 248 250 252;
+  --bg-secondary: 241 245 249;
+  --bg-glass: 255 255 255;
+  --text-primary: 15 23 42;
+  --text-secondary: 71 85 105;
+  --border-color: 0 0 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --bg-primary: 2 6 23;
+  --bg-secondary: 15 23 42;
+  --bg-glass: 255 255 255;
+  --text-primary: 248 250 252;
+  --text-secondary: 148 163 184;
+  --border-color: 255 255 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(var(--bg-primary));
+  color: rgb(var(--text-primary));
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(139, 92, 246, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg-secondary));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--border-color), 0.2);
+  border-radius: 4px;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+}
+
+.plus-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='20' font-size='14' fill='white'%3E+%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Aurora Background */
+.plus-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='0' y='18' font-size='12' fill='white'%3E+%3C/text%3E%3C/svg%3E"),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px, 6px 6px;
+  opacity: 0.05;
+}
+
+.dark .plus-texture {
+  opacity: 0.12;
+}
+
+/* ============================================
+   COSMIC DUST EFFECT - Multi-layer particles
+   ============================================ */
+
+.cosmos-dust {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Layer 1: Large distant particles - slow drift */
+.cosmos-dust::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ccircle cx='20' cy='50' r='2' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='100' cy='120' r='1.5' fill='white' fill-opacity='0.4'/%3E%3Ccircle cx='200' cy='30' r='2.5' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='320' cy='180' r='1.8' fill='white' fill-opacity='0.3'/%3E%3Ccircle cx='50' cy='250' r='2.2' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='180' cy='320' r='1.5' fill='white' fill-opacity='0.4'/%3E%3Ccircle cx='350' cy='80' r='2' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='280' cy='350' r='1.8' fill='white' fill-opacity='0.3'/%3E%3Ccircle cx='380' cy='280' r='2.3' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='150' cy='200' r='1.2' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: dust-drift-slow 240s linear infinite;
+  opacity: 0.15;
+}
+
+/* Layer 2: Medium particles - medium drift */
+.cosmos-dust::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Ccircle cx='30' cy='40' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='80' cy='100' r='0.8' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='150' cy='20' r='1.2' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='220' cy='150' r='0.6' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='45' cy='200' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='180' cy='250' r='0.7' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='260' cy='60' r='1.1' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='100' cy='280' r='0.9' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='280' cy='220' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='200' cy='80' r='0.5' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='60' cy='140' r='0.8' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='240' cy='290' r='1.2' fill='white' fill-opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: dust-drift-medium 120s linear infinite reverse;
+  opacity: 0.2;
+}
+
+/* Layer 3: Small close particles with twinkle - via extra element */
+.cosmos-dust-twinkle {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='20' cy='30' r='0.5' fill='white'/%3E%3Ccircle cx='60' cy='80' r='0.4' fill='white'/%3E%3Ccircle cx='100' cy='15' r='0.6' fill='white'/%3E%3Ccircle cx='140' cy='100' r='0.3' fill='white'/%3E%3Ccircle cx='30' cy='150' r='0.5' fill='white'/%3E%3Ccircle cx='120' cy='180' r='0.4' fill='white'/%3E%3Ccircle cx='180' cy='40' r='0.6' fill='white'/%3E%3Ccircle cx='70' cy='190' r='0.5' fill='white'/%3E%3Ccircle cx='190' cy='140' r='0.4' fill='white'/%3E%3Ccircle cx='150' cy='60' r='0.3' fill='white'/%3E%3Ccircle cx='45' cy='110' r='0.5' fill='white'/%3E%3Ccircle cx='170' cy='170' r='0.6' fill='white'/%3E%3Ccircle cx='90' cy='130' r='0.4' fill='white'/%3E%3Ccircle cx='10' cy='70' r='0.3' fill='white'/%3E%3Ccircle cx='130' cy='10' r='0.5' fill='white'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: dust-drift-fast 60s linear infinite,
+    twinkle 8s ease-in-out infinite;
+  opacity: 0.25;
+}
+
+/* Nebula glow layer */
+.cosmos-nebula {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      ellipse 80% 50% at 20% 40%,
+      rgba(139, 92, 246, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 80% at 80% 20%,
+      rgba(6, 182, 212, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 60% at 60% 80%,
+      rgba(217, 70, 239, 0.05) 0%,
+      transparent 50%
+    );
+  animation: nebula-pulse 20s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes dust-drift-slow {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate(-400px, -400px) rotate(5deg);
+  }
+}
+
+@keyframes dust-drift-medium {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(300px, -300px);
+  }
+}
+
+@keyframes dust-drift-fast {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-200px, -200px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  25% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes nebula-pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Light mode adjustments */
+.cosmos-dust::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ccircle cx='20' cy='50' r='2' fill='%2364748b' fill-opacity='0.3'/%3E%3Ccircle cx='100' cy='120' r='1.5' fill='%2364748b' fill-opacity='0.2'/%3E%3Ccircle cx='200' cy='30' r='2.5' fill='%2364748b' fill-opacity='0.25'/%3E%3Ccircle cx='320' cy='180' r='1.8' fill='%2364748b' fill-opacity='0.15'/%3E%3Ccircle cx='50' cy='250' r='2.2' fill='%2364748b' fill-opacity='0.25'/%3E%3Ccircle cx='180' cy='320' r='1.5' fill='%2364748b' fill-opacity='0.2'/%3E%3Ccircle cx='350' cy='80' r='2' fill='%2364748b' fill-opacity='0.3'/%3E%3Ccircle cx='280' cy='350' r='1.8' fill='%2364748b' fill-opacity='0.15'/%3E%3Ccircle cx='380' cy='280' r='2.3' fill='%2364748b' fill-opacity='0.25'/%3E%3Ccircle cx='150' cy='200' r='1.2' fill='%2364748b' fill-opacity='0.2'/%3E%3C/svg%3E");
+  opacity: 0.08;
+}
+
+.cosmos-dust::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Ccircle cx='30' cy='40' r='1' fill='%2364748b' fill-opacity='0.4'/%3E%3Ccircle cx='80' cy='100' r='0.8' fill='%2364748b' fill-opacity='0.3'/%3E%3Ccircle cx='150' cy='20' r='1.2' fill='%2364748b' fill-opacity='0.35'/%3E%3Ccircle cx='220' cy='150' r='0.6' fill='%2364748b' fill-opacity='0.25'/%3E%3Ccircle cx='45' cy='200' r='1' fill='%2364748b' fill-opacity='0.4'/%3E%3Ccircle cx='180' cy='250' r='0.7' fill='%2364748b' fill-opacity='0.3'/%3E%3Ccircle cx='260' cy='60' r='1.1' fill='%2364748b' fill-opacity='0.35'/%3E%3Ccircle cx='100' cy='280' r='0.9' fill='%2364748b' fill-opacity='0.25'/%3E%3Ccircle cx='280' cy='220' r='1' fill='%2364748b' fill-opacity='0.4'/%3E%3Ccircle cx='200' cy='80' r='0.5' fill='%2364748b' fill-opacity='0.3'/%3E%3Ccircle cx='60' cy='140' r='0.8' fill='%2364748b' fill-opacity='0.35'/%3E%3Ccircle cx='240' cy='290' r='1.2' fill='%2364748b' fill-opacity='0.25'/%3E%3C/svg%3E");
+  opacity: 0.1;
+}
+
+.cosmos-dust-twinkle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='20' cy='30' r='0.5' fill='%2364748b'/%3E%3Ccircle cx='60' cy='80' r='0.4' fill='%2364748b'/%3E%3Ccircle cx='100' cy='15' r='0.6' fill='%2364748b'/%3E%3Ccircle cx='140' cy='100' r='0.3' fill='%2364748b'/%3E%3Ccircle cx='30' cy='150' r='0.5' fill='%2364748b'/%3E%3Ccircle cx='120' cy='180' r='0.4' fill='%2364748b'/%3E%3Ccircle cx='180' cy='40' r='0.6' fill='%2364748b'/%3E%3Ccircle cx='70' cy='190' r='0.5' fill='%2364748b'/%3E%3Ccircle cx='190' cy='140' r='0.4' fill='%2364748b'/%3E%3Ccircle cx='150' cy='60' r='0.3' fill='%2364748b'/%3E%3Ccircle cx='45' cy='110' r='0.5' fill='%2364748b'/%3E%3Ccircle cx='170' cy='170' r='0.6' fill='%2364748b'/%3E%3Ccircle cx='90' cy='130' r='0.4' fill='%2364748b'/%3E%3Ccircle cx='10' cy='70' r='0.3' fill='%2364748b'/%3E%3Ccircle cx='130' cy='10' r='0.5' fill='%2364748b'/%3E%3C/svg%3E");
+  opacity: 0.12;
+}
+
+.cosmos-nebula {
+  background: radial-gradient(
+      ellipse 80% 50% at 20% 40%,
+      rgba(139, 92, 246, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 80% at 80% 20%,
+      rgba(6, 182, 212, 0.02) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 60% at 60% 80%,
+      rgba(217, 70, 239, 0.025) 0%,
+      transparent 50%
+    );
+}
+
+/* Dark mode - restore full effect */
+.dark .cosmos-dust::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Ccircle cx='20' cy='50' r='2' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='100' cy='120' r='1.5' fill='white' fill-opacity='0.4'/%3E%3Ccircle cx='200' cy='30' r='2.5' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='320' cy='180' r='1.8' fill='white' fill-opacity='0.3'/%3E%3Ccircle cx='50' cy='250' r='2.2' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='180' cy='320' r='1.5' fill='white' fill-opacity='0.4'/%3E%3Ccircle cx='350' cy='80' r='2' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='280' cy='350' r='1.8' fill='white' fill-opacity='0.3'/%3E%3Ccircle cx='380' cy='280' r='2.3' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='150' cy='200' r='1.2' fill='white' fill-opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.15;
+}
+
+.dark .cosmos-dust::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Ccircle cx='30' cy='40' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='80' cy='100' r='0.8' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='150' cy='20' r='1.2' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='220' cy='150' r='0.6' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='45' cy='200' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='180' cy='250' r='0.7' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='260' cy='60' r='1.1' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='100' cy='280' r='0.9' fill='white' fill-opacity='0.5'/%3E%3Ccircle cx='280' cy='220' r='1' fill='white' fill-opacity='0.8'/%3E%3Ccircle cx='200' cy='80' r='0.5' fill='white' fill-opacity='0.6'/%3E%3Ccircle cx='60' cy='140' r='0.8' fill='white' fill-opacity='0.7'/%3E%3Ccircle cx='240' cy='290' r='1.2' fill='white' fill-opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.2;
+}
+
+.dark .cosmos-dust-twinkle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='20' cy='30' r='0.5' fill='white'/%3E%3Ccircle cx='60' cy='80' r='0.4' fill='white'/%3E%3Ccircle cx='100' cy='15' r='0.6' fill='white'/%3E%3Ccircle cx='140' cy='100' r='0.3' fill='white'/%3E%3Ccircle cx='30' cy='150' r='0.5' fill='white'/%3E%3Ccircle cx='120' cy='180' r='0.4' fill='white'/%3E%3Ccircle cx='180' cy='40' r='0.6' fill='white'/%3E%3Ccircle cx='70' cy='190' r='0.5' fill='white'/%3E%3Ccircle cx='190' cy='140' r='0.4' fill='white'/%3E%3Ccircle cx='150' cy='60' r='0.3' fill='white'/%3E%3Ccircle cx='45' cy='110' r='0.5' fill='white'/%3E%3Ccircle cx='170' cy='170' r='0.6' fill='white'/%3E%3Ccircle cx='90' cy='130' r='0.4' fill='white'/%3E%3Ccircle cx='10' cy='70' r='0.3' fill='white'/%3E%3Ccircle cx='130' cy='10' r='0.5' fill='white'/%3E%3C/svg%3E");
+  opacity: 0.25;
+}
+
+.dark .cosmos-nebula {
+  background: radial-gradient(
+      ellipse 80% 50% at 20% 40%,
+      rgba(139, 92, 246, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 80% at 80% 20%,
+      rgba(6, 182, 212, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 60% at 60% 80%,
+      rgba(217, 70, 239, 0.06) 0%,
+      transparent 50%
+    );
+}
+
+.aurora-background::before {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle at top left, #8b5cf6 20%, #d946ef 80%);
+  border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+  left: -20%;
+  top: -20%;
+  filter: blur(120px);
+  opacity: 0.4;
+  animation: blobify 8s ease-in-out infinite;
+}
+
+.aurora-background::after {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle at bottom right, #06b6d4, #8b5cf6 80%);
+  border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+  right: -15%;
+  bottom: -30%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: blobify 10s ease-in-out infinite reverse;
+}
+
+/* Dark mode */
+:is(.dark .aurora-background) {
+  background: linear-gradient(135deg, #0a0a0a, #0f0a1a);
+}
+
+:is(.dark .aurora-background)::before {
+  background: radial-gradient(circle at top left, #0ec7ce 20%, #4505ad 80%);
+  opacity: 0.25;
+}
+
+:is(.dark .aurora-background)::after {
+  background: radial-gradient(circle at bottom right, #0891b2, #7c3aed 80%);
+  opacity: 0.2;
+}
+
+@keyframes blobify {
+  0% {
+    border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  33% {
+    border-radius: 50% 50% 40% 60% / 40% 50% 50% 60%;
+    transform: translateX(50px) translateY(30px) scale(1.05);
+  }
+  66% {
+    border-radius: 30% 70% 70% 30% / 60% 40% 40% 60%;
+    transform: translateX(-30px) translateY(50px) scale(1.1);
+  }
+  100% {
+    border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+    transform: translateX(0) translateY(0) scale(1);
+  }
 }

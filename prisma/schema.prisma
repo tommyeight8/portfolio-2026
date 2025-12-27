@@ -1,0 +1,75 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ProjectCategory {
+  WEB_DEVELOPMENT
+  GRAPHIC_DESIGN
+  BRANDING
+  UI_UX
+  FULL_STACK
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  description String
+  content     String?         @db.Text
+
+  category    ProjectCategory
+  tags        String[]
+
+  thumbnail   String
+  images      String[]
+  liveUrl     String?
+  githubUrl   String?
+
+  client      String?
+  role        String?
+  duration    String?
+  year        Int
+
+  techStack   String[]
+  tools       String[]
+
+  status      ProjectStatus   @default(DRAFT)
+  featured    Boolean         @default(false)
+  order       Int             @default(0)
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  publishedAt DateTime?
+
+  @@index([category])
+  @@index([status])
+  @@index([featured])
+  @@map("projects")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("contact_submissions")
+}
