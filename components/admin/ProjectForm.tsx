@@ -40,6 +40,31 @@ function generateSlug(title: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+// Convert null values to undefined for form compatibility
+function sanitizeForForm(data: Project): CreateProjectInput {
+  return {
+    title: data.title,
+    slug: data.slug,
+    description: data.description,
+    content: data.content ?? undefined,
+    category: data.category,
+    tags: data.tags ?? [],
+    thumbnail: data.thumbnail,
+    images: data.images ?? [],
+    liveUrl: data.liveUrl ?? "",
+    githubUrl: data.githubUrl ?? "",
+    client: data.client ?? undefined,
+    role: data.role ?? undefined,
+    duration: data.duration ?? undefined,
+    year: data.year,
+    techStack: data.techStack ?? [],
+    tools: data.tools ?? [],
+    status: data.status,
+    featured: data.featured,
+    order: data.order,
+  };
+}
+
 export function ProjectForm({
   initialData,
   onSubmit,
@@ -58,13 +83,7 @@ export function ProjectForm({
   } = useForm<CreateProjectInput>({
     resolver: zodResolver(createProjectSchema),
     defaultValues: initialData
-      ? {
-          ...initialData,
-          tags: initialData.tags ?? [],
-          techStack: initialData.techStack ?? [],
-          tools: initialData.tools ?? [],
-          images: initialData.images ?? [],
-        }
+      ? sanitizeForForm(initialData)
       : {
           status: "DRAFT",
           featured: false,
