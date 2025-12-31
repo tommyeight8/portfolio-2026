@@ -1,16 +1,16 @@
 // src/app/api/projects/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import projectService from "@/lib/services/project.service";
+import { projectService } from "@/lib/services/project.service";
+import { projectQuerySchema } from "@/lib/validations/project.validation";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-
-    // Check if requesting all projects (for admin) or just published (for public)
     const includeAll = searchParams.get("all") === "true";
 
-    const query = {
+    // Parse raw params through Zod schema - this converts strings to proper types
+    const rawQuery = {
       page: searchParams.get("page") ?? undefined,
       limit: searchParams.get("limit") ?? undefined,
       category: searchParams.get("category") ?? undefined,
@@ -22,16 +22,18 @@ export async function GET(request: NextRequest) {
       sortOrder: searchParams.get("sortOrder") ?? undefined,
     };
 
-    // If "all" param is true, get all projects; otherwise only published
+    // Zod schema handles coercion (string -> number) and defaults
+    const query = projectQuerySchema.parse(rawQuery);
+
     const result = includeAll
       ? await projectService.getAllProjects(query)
       : await projectService.getPublishedProjects(query);
 
     return NextResponse.json(result);
   } catch (error) {
-    console.error("Failed to fetch projects:", error);
+    console.error("Error fetching projects:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to fetch projects" },
+      { error: "Failed to fetch projects" },
       { status: 500 }
     );
   }
