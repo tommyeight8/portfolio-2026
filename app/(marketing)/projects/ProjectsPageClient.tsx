@@ -272,7 +272,7 @@ export function ProjectsPageClient({
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <ProjectCard
@@ -376,7 +376,7 @@ function ProjectCard({
                     p-4 rounded-full
                     ${
                       isDark
-                        ? "bg-white/30 text-slate-900"
+                        ? "bg-white/60 text-slate-900"
                         : "bg-slate-900/30 text-white"
                     }
                   `}

@@ -30,28 +30,7 @@ export function ProjectDetailClient({
   const isDark = theme === "dark";
 
   return (
-    <main
-      className={`min-h-screen pt-32 pb-24 transition-colors duration-500 ${
-        isDark
-          ? "bg-gradient-to-br from-slate-950 via-violet-950/20 to-slate-950"
-          : "bg-gradient-to-br from-slate-50 via-violet-100/30 to-slate-50"
-      }`}
-    >
-      {/* Background Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div
-          className={`absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-violet-500/15" : "bg-violet-400/15"
-          }`}
-        />
-        <div
-          className={`absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full blur-[150px] animate-pulse ${
-            isDark ? "bg-cyan-500/10" : "bg-cyan-400/15"
-          }`}
-          style={{ animationDelay: "1s" }}
-        />
-      </div>
-
+    <main className={`min-h-screen pt-32 pb-24 transition-colors duration-500`}>
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Back Link */}
         <motion.div
@@ -82,7 +61,7 @@ export function ProjectDetailClient({
         >
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span
-              className={`px-3 py-1 rounded-full text-sm font-medium ${
+              className={`px-3 py-1 rounded-full text-xs ${
                 isDark
                   ? "bg-violet-500/20 text-violet-300"
                   : "bg-violet-100 text-violet-600"
@@ -104,7 +83,7 @@ export function ProjectDetailClient({
           </div>
 
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
+            className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 capitalize ${
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
@@ -112,7 +91,7 @@ export function ProjectDetailClient({
           </h1>
 
           <p
-            className={`text-xl leading-relaxed max-w-3xl ${
+            className={`text-md leading-relaxed max-w-3xl ${
               isDark ? "text-white/60" : "text-slate-600"
             }`}
           >

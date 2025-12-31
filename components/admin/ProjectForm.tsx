@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useForm, useWatch, useFieldArray } from "react-hook-form";
+import { useForm, useWatch, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import {
@@ -10,9 +10,11 @@ import {
   CreateProjectInput,
 } from "@/lib/validations/project.validation";
 import { Project, ProjectCategory } from "@/types/project.types";
-import { Loader2, Wand2, Plus, Trash2, Image as ImageIcon } from "lucide-react";
+import { Loader2, Wand2 } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
 import { useEffect, useState } from "react";
+import { ImageUpload } from "@/components/ui/ImageUpload";
+import { MultiImageUpload } from "@/components/ui/MultiImageUpload";
 
 interface ProjectFormProps {
   initialData?: Project;
@@ -73,12 +75,6 @@ export function ProjectForm({
           images: [],
           year: new Date().getFullYear(),
         },
-  });
-
-  // Field array for images
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "images" as never,
   });
 
   // Watch title for auto-slug
@@ -150,8 +146,7 @@ export function ProjectForm({
                 }
               }}
               className={`
-                flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium
-                transition-colors
+                flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors
                 ${
                   autoSlug
                     ? isDark
@@ -296,121 +291,40 @@ export function ProjectForm({
         </h2>
 
         {/* Featured Image */}
-        <div>
-          <label className={labelClass}>Featured Image *</label>
-          <input
-            {...register("thumbnail")}
-            className={inputClass}
-            placeholder="https://example.com/image.jpg"
-          />
-          {errors.thumbnail && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.thumbnail.message}
-            </p>
+        <Controller
+          name="thumbnail"
+          control={control}
+          render={({ field }) => (
+            <ImageUpload
+              value={field.value}
+              onChange={field.onChange}
+              folder="portfolio/projects"
+              label="Featured Image *"
+              hint="Main image displayed on project cards and hero section"
+              disabled={isSubmitting}
+            />
           )}
-          <p
-            className={`mt-1 text-xs ${
-              isDark ? "text-white/40" : "text-slate-400"
-            }`}
-          >
-            Main image displayed on project cards and hero section
-          </p>
-        </div>
+        />
+        {errors.thumbnail && (
+          <p className="text-sm text-red-400">{errors.thumbnail.message}</p>
+        )}
 
         {/* Additional Images */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <label
-              className={`text-sm font-medium ${
-                isDark ? "text-white/80" : "text-slate-700"
-              }`}
-            >
-              Additional Images
-            </label>
-            <button
-              type="button"
-              onClick={() => append("")}
-              className={`
-                flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
-                transition-colors
-                ${
-                  isDark
-                    ? "bg-white/10 text-white/70 hover:bg-white/20"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }
-              `}
-            >
-              <Plus className="w-3 h-3" />
-              Add Image
-            </button>
-          </div>
-
-          {fields.length === 0 ? (
-            <div
-              className={`
-                flex flex-col items-center justify-center py-8 rounded-xl border-2 border-dashed
-                ${
-                  isDark
-                    ? "border-white/10 text-white/30"
-                    : "border-slate-200 text-slate-400"
-                }
-              `}
-            >
-              <ImageIcon className="w-8 h-8 mb-2" />
-              <p className="text-sm">No additional images</p>
-              <button
-                type="button"
-                onClick={() => append("")}
-                className={`
-                  mt-2 text-xs font-medium transition-colors
-                  ${
-                    isDark
-                      ? "text-violet-400 hover:text-violet-300"
-                      : "text-violet-600 hover:text-violet-500"
-                  }
-                `}
-              >
-                + Add your first image
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex items-center gap-3">
-                  <span
-                    className={`text-xs font-medium w-6 text-center ${
-                      isDark ? "text-white/40" : "text-slate-400"
-                    }`}
-                  >
-                    {index + 1}
-                  </span>
-                  <input
-                    {...register(`images.${index}` as const)}
-                    className={`${inputClass} flex-1`}
-                    placeholder="https://example.com/image.jpg"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => remove(index)}
-                    className={`
-                      p-2 rounded-lg transition-colors
-                      ${
-                        isDark
-                          ? "text-white/40 hover:text-red-400 hover:bg-red-500/10"
-                          : "text-slate-400 hover:text-red-500 hover:bg-red-50"
-                      }
-                    `}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
+        <Controller
+          name="images"
+          control={control}
+          render={({ field }) => (
+            <MultiImageUpload
+              value={field.value || []}
+              onChange={field.onChange}
+              folder="portfolio/projects"
+              label="Gallery Images"
+              hint="Drag to reorder. These images will appear in the project gallery."
+              disabled={isSubmitting}
+              maxImages={10}
+            />
           )}
-          {errors.images && (
-            <p className="mt-1 text-sm text-red-400">{errors.images.message}</p>
-          )}
-        </div>
+        />
       </div>
 
       {/* Links */}
@@ -557,10 +471,8 @@ export function ProjectForm({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            px-8 py-4 rounded-2xl font-medium
-            flex items-center gap-2
-            transition-all duration-300
-            disabled:opacity-50 disabled:cursor-not-allowed
+            px-8 py-4 rounded-2xl font-medium flex items-center gap-2 cursor-pointer
+            transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
             ${
               isDark
                 ? "bg-white text-slate-900 hover:shadow-lg hover:shadow-white/20"

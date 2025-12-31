@@ -10,9 +10,18 @@ export const projectStatusSchema = z.nativeEnum(ProjectStatus);
 const emptyStringToNull = z
   .string()
   .transform((val) => (val === "" ? null : val));
-const optionalUrl = emptyStringToNull
-  .pipe(z.string().url().nullable())
-  .or(z.literal(null))
+
+// Helper to transform empty strings to undefined (not null)
+const optionalString = z
+  .string()
+  .transform((val) => (val === "" ? undefined : val))
+  .optional();
+
+// For URL fields - empty string becomes undefined
+const optionalUrl = z
+  .string()
+  .transform((val) => (val === "" ? undefined : val))
+  .pipe(z.string().url().optional())
   .optional();
 
 const projectBaseSchema = z.object({
@@ -29,7 +38,7 @@ const projectBaseSchema = z.object({
     .string()
     .min(10, "Description must be at least 10 characters")
     .max(500),
-  content: emptyStringToNull.nullable().optional(),
+  content: optionalString,
   category: projectCategorySchema,
   tags: z
     .array(z.string().min(1).max(30))
@@ -39,9 +48,9 @@ const projectBaseSchema = z.object({
   images: z.array(z.string().url()).max(20).optional().default([]),
   liveUrl: optionalUrl,
   githubUrl: optionalUrl,
-  client: emptyStringToNull.nullable().optional(),
-  role: emptyStringToNull.nullable().optional(),
-  duration: emptyStringToNull.nullable().optional(),
+  client: optionalString,
+  role: optionalString,
+  duration: optionalString,
   year: z
     .number()
     .int()

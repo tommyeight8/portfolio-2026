@@ -25,7 +25,15 @@ export default function EditProjectPage({
   const updateProject = useUpdateProject();
 
   const handleSubmit = async (formData: CreateProjectInput) => {
-    await updateProject.mutateAsync({ id, data: formData });
+    // Sanitize null values to undefined for UpdateProjectDTO compatibility
+    const sanitizedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [
+        key,
+        value === null ? undefined : value,
+      ])
+    );
+
+    await updateProject.mutateAsync({ id, data: sanitizedData });
     router.push("/admin/projects");
   };
 

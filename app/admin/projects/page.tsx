@@ -300,7 +300,7 @@ export default function AdminProjectsPage() {
                         disabled={
                           publishProject.isPending || unpublishProject.isPending
                         }
-                        className={`p-2 rounded-lg transition-colors disabled:opacity-50 ${
+                        className={`p-2 rounded-lg transition-colors disabled:opacity-50 cursor-pointer ${
                           isDark
                             ? "text-white/50 hover:text-white hover:bg-white/10"
                             : "text-slate-400 hover:text-slate-900 hover:bg-black/5"

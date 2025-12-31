@@ -4,7 +4,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { MapPin, Calendar, Award, Briefcase } from "lucide-react";
+import {
+  MapPin,
+  Calendar,
+  Award,
+  Briefcase,
+  Infinity as InfinityIcon,
+} from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
 
 const experience = [
@@ -32,7 +38,7 @@ const experience = [
 const stats = [
   { value: "8+", label: "Years Experience" },
   { value: "50+", label: "Projects Completed" },
-  { value: "♾️", label: "Happy Clients" },
+  { value: "infinity", label: "Happy Clients" },
 ];
 
 export default function AboutPage() {
@@ -186,7 +192,11 @@ export default function AboutPage() {
                       isDark ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    {stat.value}
+                    {stat.value === "infinity" ? (
+                      <InfinityIcon className="w-8 h-8 mx-auto" />
+                    ) : (
+                      stat.value
+                    )}
                   </p>
                   <p
                     className={`text-xs ${

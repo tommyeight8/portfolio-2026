@@ -200,7 +200,7 @@ export const Header = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
         className={`
-          text-3xl sm:text-5xl md:text-7xl font-bold 
+          text-3xl sm:text-5xl md:text-6xl font-bold 
           flex flex-col gap-2 md:gap-4
           transition-colors duration-300
           ${isDark ? "text-white" : "text-slate-900"}
@@ -248,7 +248,7 @@ export const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            inline-flex items-center gap-2 px-8 py-4 rounded-2xl
+            inline-flex items-center gap-2 px-6 py-3 rounded-lg
             font-medium text-sm
             transition-all duration-300
             ${
@@ -267,7 +267,7 @@ export const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            inline-flex items-center gap-2 px-8 py-4 rounded-2xl
+            inline-flex items-center gap-2 px-6 py-3 rounded-lg
             backdrop-blur-xl border
             font-medium text-sm
             transition-all duration-300
