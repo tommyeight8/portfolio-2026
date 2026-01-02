@@ -117,7 +117,7 @@ export function LoginForm() {
         animate={{ opacity: 1, y: 0 }}
         className="relative w-full max-w-md"
       >
-        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl">
+        <div className="backdrop-blur-xl bg-white/5 border border-gray-300/10 rounded-3xl p-8 shadow-2xl">
           {/* Logo */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white">
@@ -168,7 +168,7 @@ export function LoginForm() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       placeholder="admin@example.com"
-                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all"
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-gray-300/10 text-white placeholder:text-white/30 outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all"
                       disabled={isLoading}
                     />
                   </div>
@@ -237,7 +237,7 @@ export function LoginForm() {
                       required
                       placeholder="000000"
                       maxLength={6}
-                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white text-center text-2xl font-mono tracking-[0.5em] placeholder:text-white/30 placeholder:tracking-[0.5em] outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all"
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-gray-300/10 text-white text-center text-2xl font-mono tracking-[0.5em] placeholder:text-white/30 placeholder:tracking-[0.5em] outline-none focus:border-violet-500/50 focus:bg-white/10 transition-all"
                       disabled={isLoading}
                       autoFocus
                     />

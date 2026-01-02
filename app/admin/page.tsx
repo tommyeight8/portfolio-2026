@@ -186,11 +186,11 @@ export default function AdminDashboardPage() {
                 <Link href={stat.href}>
                   <div
                     className={`
-                      p-6 rounded-2xl border backdrop-blur-xl
+                      p-6 rounded-md border backdrop-blur-xl
                       transition-all duration-300 hover:-translate-y-1
                       ${
                         isDark
-                          ? "bg-white/5 border-white/10 hover:border-white/20"
+                          ? "bg-white/5 border-gray-300/10 hover:border-white/20"
                           : "bg-white/70 border-black/10 hover:shadow-lg"
                       }
                     `}
@@ -244,11 +244,11 @@ export default function AdminDashboardPage() {
                 <Link href={stat.href}>
                   <div
                     className={`
-                      p-6 rounded-2xl border backdrop-blur-xl
+                      p-6 rounded-md border backdrop-blur-xl
                       transition-all duration-300 hover:-translate-y-1
                       ${
                         isDark
-                          ? "bg-white/5 border-white/10 hover:border-white/20"
+                          ? "bg-white/5 border-gray-300/10 hover:border-white/20"
                           : "bg-white/70 border-black/10 hover:shadow-lg"
                       }
                     `}
@@ -310,12 +310,12 @@ export default function AdminDashboardPage() {
                 >
                   <div
                     className={`
-                      p-4 rounded-2xl border backdrop-blur-xl
+                      p-4 rounded-md border backdrop-blur-xl
                       flex items-center gap-4
                       transition-all duration-300 hover:-translate-y-1
                       ${
                         isDark
-                          ? "bg-white/5 border-white/10 hover:border-white/20"
+                          ? "bg-white/5 border-gray-300/10 hover:border-white/20"
                           : "bg-white/70 border-black/10 hover:shadow-lg"
                       }
                     `}

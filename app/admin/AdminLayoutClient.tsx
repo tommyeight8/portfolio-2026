@@ -22,9 +22,7 @@ export function AdminLayoutClient({
   return (
     <SessionProvider session={session}>
       <div
-        className={`flex h-screen overflow-hidden transition-colors duration-300 ${
-          isDark ? "bg-slate-950" : "bg-slate-100"
-        }`}
+        className={`flex h-screen overflow-hidden transition-colors duration-300`}
       >
         <AdminSidebar />
         <main className="flex-1 overflow-auto">{children}</main>

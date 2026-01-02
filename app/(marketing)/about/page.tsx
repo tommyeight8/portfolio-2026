@@ -181,7 +181,7 @@ export default function AboutPage() {
               transition={{ delay: 0.5 }}
               className={`mt-12 grid grid-cols-3 gap-4 p-6 rounded-2xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >
@@ -220,7 +220,7 @@ export default function AboutPage() {
             <div
               className={`p-8 rounded-3xl backdrop-blur-xl border mb-8 ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >
@@ -273,7 +273,7 @@ export default function AboutPage() {
                   transition={{ delay: 0.4 + index * 0.1 }}
                   className={`p-6 rounded-2xl backdrop-blur-xl border transition-all hover:-translate-y-1 ${
                     isDark
-                      ? "bg-white/5 border-white/10 hover:border-white/20"
+                      ? "bg-white/5 border-gray-300/10 hover:border-white/20"
                       : "bg-white/70 border-black/10 hover:shadow-xl"
                   }`}
                 >

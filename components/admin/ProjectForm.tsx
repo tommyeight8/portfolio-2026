@@ -109,7 +109,7 @@ export function ProjectForm({
     w-full px-4 py-3 rounded-xl border outline-none transition-all
     ${
       isDark
-        ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
+        ? "bg-white/5 border-gray-300/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
         : "bg-white border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-violet-500 focus:shadow-lg"
     }
   `;
@@ -120,7 +120,7 @@ export function ProjectForm({
 
   const sectionClass = `
     rounded-2xl p-6 space-y-6 backdrop-blur-xl border
-    ${isDark ? "bg-white/5 border-white/10" : "bg-white/70 border-black/10"}
+    ${isDark ? "bg-white/5 border-gray-300/10" : "bg-white/70 border-black/10"}
   `;
 
   return (
@@ -230,7 +230,11 @@ export function ProjectForm({
             <select {...register("category")} className={inputClass}>
               <option value="">Select category</option>
               {CATEGORIES.map((cat) => (
-                <option key={cat.value} value={cat.value}>
+                <option
+                  className="text-gray-600"
+                  key={cat.value}
+                  value={cat.value}
+                >
                   {cat.label}
                 </option>
               ))}
@@ -487,15 +491,14 @@ export function ProjectForm({
         <motion.button
           type="submit"
           disabled={isSubmitting}
-          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            px-8 py-4 rounded-2xl font-medium flex items-center gap-2 cursor-pointer
+            px-4 py-2 rounded-md flex items-center gap-2 cursor-pointer
             transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
             ${
               isDark
-                ? "bg-white text-slate-900 hover:shadow-lg hover:shadow-white/20"
-                : "bg-slate-900 text-white hover:shadow-lg hover:shadow-slate-900/20"
+                ? "bg-gray-200 hover:bg-white transition text-slate-900"
+                : "bg-violet-500 hover:bg-violet-600 transiton text-white"
             }
           `}
         >

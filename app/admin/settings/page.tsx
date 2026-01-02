@@ -120,7 +120,7 @@ export default function AdminSettingsPage() {
 
   const inputClass = `w-full px-4 py-3 rounded-xl border outline-none transition-all ${
     isDark
-      ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
+      ? "bg-white/5 border-gray-300/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
       : "bg-white border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-violet-500"
   }`;
 
@@ -129,7 +129,7 @@ export default function AdminSettingsPage() {
   }`;
 
   const cardClass = `p-6 rounded-2xl backdrop-blur-xl border ${
-    isDark ? "bg-white/5 border-white/10" : "bg-white/70 border-black/10"
+    isDark ? "bg-white/5 border-gray-300/10" : "bg-white/70 border-black/10"
   }`;
 
   if (isLoading) {
@@ -159,7 +159,7 @@ export default function AdminSettingsPage() {
         <div
           className={`sticky top-0 z-10 p-6 border-b backdrop-blur-xl ${
             isDark
-              ? "bg-slate-950/80 border-white/10"
+              ? "bg-slate-950/80 border-gray-300/10"
               : "bg-slate-100/80 border-black/10"
           }`}
         >
@@ -184,15 +184,14 @@ export default function AdminSettingsPage() {
             <motion.button
               type="submit"
               disabled={!hasChanges || updateSettings.isPending}
-              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`
                 px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all
-                disabled:opacity-50 disabled:cursor-not-allowed
+                disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer
                 ${
                   isDark
-                    ? "bg-white text-slate-900 hover:shadow-lg hover:shadow-white/20"
-                    : "bg-slate-900 text-white hover:shadow-lg hover:shadow-slate-900/20"
+                    ? "bg-white text-slate-900 hover:opacity-90"
+                    : "bg-slate-900 text-white hover:opacity-90"
                 }
               `}
             >
@@ -421,7 +420,13 @@ export default function AdminSettingsPage() {
                       className={inputClass}
                     >
                       {AVAILABILITY_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>
+                        <option
+                          className={`${
+                            isDark ? "text-gray-700" : "text-gray-700"
+                          }`}
+                          key={option.value}
+                          value={option.value}
+                        >
                           {option.label}
                         </option>
                       ))}

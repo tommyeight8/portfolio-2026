@@ -72,6 +72,9 @@ const SkillCard = ({
 
   const filledBars = Math.round(skill.level / 5);
 
+  // Accent color based on category
+  const accentColor = skill.category === "design" ? "#d946ef" : "#14b8a6";
+
   return (
     <motion.div
       ref={ref}
@@ -91,51 +94,62 @@ const SkillCard = ({
         className={`
           relative p-5 rounded-2xl overflow-hidden
           backdrop-blur-xl
-          hover:shadow-xl hover:shadow-violet-500/10
-          hover:-translate-y-0.5
+          shadow-md
           transition-all duration-300
+          hover:-translate-y-0.5
           ${
             isDark
-              ? "bg-white/5 border border-white/10 shadow-black/20 hover:border-white/20"
-              : "bg-white/70 border border-black/10 shadow-black/5 hover:border-black/20 hover:shadow-xl"
+              ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+              : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
           }
         `}
       >
+        {/* Accent glow */}
         <div
-          className="
-            absolute inset-0 opacity-0 group-hover:opacity-100
-            bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5
-            transition-opacity duration-500
-          "
+          className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+          style={{ backgroundColor: accentColor }}
         />
 
         <div className="relative z-10">
+          {/* Header with icon accent */}
           <div className="flex items-center justify-between mb-4">
-            <h4
-              className={`
-                text-sm font-medium transition-colors duration-300
-                ${
-                  isDark
-                    ? "text-white/80 group-hover:text-white"
-                    : "text-slate-700 group-hover:text-slate-900"
-                }
-              `}
-            >
-              {skill.name}
-            </h4>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: index * 0.03 + 0.3 }}
-              className={`text-xs font-semibold ${
-                isDark ? "text-gray-400" : "text-gray-500"
-              }`}
-            >
-              {skill.level}%
-            </motion.span>
+            <div className="flex items-center gap-3">
+              <div
+                className="p-2 rounded-xl"
+                style={{ backgroundColor: `${accentColor}20` }}
+              >
+                <IconChartBar
+                  className="w-4 h-4"
+                  style={{ color: accentColor }}
+                />
+              </div>
+              <h4
+                className={`
+                  text-xs font-medium uppercase tracking-wide
+                  transition-colors duration-300
+                  ${isDark ? "text-zinc-400" : "text-slate-500"}
+                `}
+              >
+                {skill.name}
+              </h4>
+            </div>
           </div>
 
-          <div className="flex items-end gap-[3px] h-[24px] w-full">
+          {/* Level as main value */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: index * 0.03 + 0.3 }}
+            className={`
+              text-lg sm:text-xl font-bold tracking-tight mb-1
+              ${isDark ? "text-gray-300" : "text-slate-500"}
+            `}
+          >
+            {skill.level}%
+          </motion.p>
+
+          {/* Bar visualization */}
+          <div className="flex items-end gap-[3px] h-[20px] w-full mb-3">
             {Array.from({ length: 20 }).map((_, i) => {
               const isFilled = i < filledBars;
               return (
@@ -145,7 +159,7 @@ const SkillCard = ({
                   initial={{
                     height: "100%",
                     backgroundColor: isFilled
-                      ? "rgb(139, 92, 246)"
+                      ? accentColor
                       : isDark
                       ? "rgba(148, 163, 184, 0.15)"
                       : "rgba(100, 116, 139, 0.2)",
@@ -155,15 +169,6 @@ const SkillCard = ({
                     isInView
                       ? {
                           opacity: isFilled ? 1 : 0.4,
-                          backgroundColor: isFilled
-                            ? [
-                                "rgb(139, 92, 246)",
-                                "rgb(192, 132, 252)",
-                                "rgb(139, 92, 246)",
-                              ]
-                            : isDark
-                            ? "rgba(148, 163, 184, 0.15)"
-                            : "rgba(100, 116, 139, 0.2)",
                         }
                       : {}
                   }
@@ -172,36 +177,21 @@ const SkillCard = ({
                       delay: index * 0.03 + i * 0.02,
                       duration: 0.3,
                     },
-                    backgroundColor: {
-                      delay: index * 0.03 + i * 0.02,
-                      duration: 1.5,
-                      repeat: 0,
-                    },
                   }}
                   style={{
-                    boxShadow: isFilled
-                      ? "0 0 8px rgba(139, 92, 246, 0.3)"
-                      : "none",
+                    boxShadow: isFilled ? `0 0 8px ${accentColor}50` : "none",
                   }}
                 />
               );
             })}
           </div>
 
-          <div className="mt-3 flex justify-end">
-            <span
-              className={`
-                text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full
-                ${
-                  skill.category === "design"
-                    ? "bg-fuchsia-500/10 text-fuchsia-500"
-                    : "bg-teal-500/10 text-teal-500"
-                }
-              `}
-            >
-              {skill.category}
-            </span>
-          </div>
+          {/* Category as subtitle */}
+          <p
+            className={`text-sm ${isDark ? "text-zinc-500" : "text-slate-500"}`}
+          >
+            {skill.category === "design" ? "Design" : "Development"}
+          </p>
         </div>
       </div>
     </motion.div>
@@ -233,22 +223,26 @@ const SkillGraph = () => {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
             className={`
-              inline-flex items-center gap-2 px-4 py-2 rounded-full
-              backdrop-blur-xl mb-6
-              transition-colors duration-300
-              ${
-                isDark
-                  ? "bg-white/10 border border-white/20 shadow-black/10"
-                  : "bg-white/70 border border-black/10 shadow-black/5"
-              }
-              shadow-lg
-            `}
+    inline-flex items-center gap-2 px-4 py-2 rounded-full
+    backdrop-blur-xl mb-6
+    shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+    transition-all duration-300
+    ${
+      isDark
+        ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+        : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+    }
+  `}
           >
-            <IconChartBar className="w-4 h-4 text-violet-500" />
+            <div className="p-1.5 rounded-full bg-violet-500/10">
+              <IconChartBar className="w-3.5 h-3.5 text-violet-500" />
+            </div>
             <span
-              className={`text-sm font-medium transition-colors duration-300 ${
-                isDark ? "text-white/80" : "text-slate-700"
-              }`}
+              className={`
+      text-xs font-medium uppercase tracking-wide
+      transition-colors duration-300
+      ${isDark ? "text-zinc-400" : "text-slate-500"}
+    `}
             >
               Skills
             </span>

@@ -50,7 +50,7 @@ export function AdminSidebar() {
         border-r transition-all duration-300
         ${
           isDark
-            ? "bg-slate-900/50 border-white/10"
+            ? "bg-slate/20 border-gray-300/10"
             : "bg-white/70 border-black/10"
         }
         backdrop-blur-xl
@@ -59,7 +59,7 @@ export function AdminSidebar() {
       {/* Header */}
       <div
         className={`p-6 border-b ${
-          isDark ? "border-white/10" : "border-black/10"
+          isDark ? "border-gray-300/10" : "border-black/10"
         }`}
       >
         <div className="flex items-center justify-between">
@@ -75,7 +75,7 @@ export function AdminSidebar() {
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className={`p-2 rounded-lg transition-colors ${
+            className={`p-2 rounded-md transition-colors cursor-pointer ${
               isDark
                 ? "hover:bg-white/10 text-white/60"
                 : "hover:bg-black/5 text-slate-500"
@@ -94,12 +94,12 @@ export function AdminSidebar() {
       {session?.user && (
         <div
           className={`px-4 py-3 border-b ${
-            isDark ? "border-white/10" : "border-black/10"
+            isDark ? "border-gray-300/10" : "border-black/10"
           }`}
         >
           <div className="flex items-center gap-3">
             <div
-              className={`p-2 rounded-xl ${
+              className={`p-2 rounded-md ${
                 isDark ? "bg-violet-500/20" : "bg-violet-100"
               }`}
             >
@@ -140,15 +140,15 @@ export function AdminSidebar() {
             <Link key={item.href} href={item.href}>
               <motion.div
                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-xl
-                  transition-all duration-200
+                  flex items-center gap-3 px-4 py-3 rounded-md
+                  transition-all duration-200 text-sm tracking-wide
                   ${
                     isActive
                       ? isDark
-                        ? "bg-violet-500/20 text-violet-400"
+                        ? "bg-violet-500/20 text-violet-300"
                         : "bg-violet-100 text-violet-600"
                       : isDark
-                      ? "text-white/60 hover:text-white hover:bg-white/10"
+                      ? "text-white/60 hover:text-white hover:bg-slate-900/60"
                       : "text-slate-600 hover:text-slate-900 hover:bg-black/5"
                   }
                 `}
@@ -178,18 +178,18 @@ export function AdminSidebar() {
       {/* Footer */}
       <div
         className={`p-4 border-t ${
-          isDark ? "border-white/10" : "border-black/10"
+          isDark ? "border-gray-300/10" : "border-black/10"
         }`}
       >
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
           className={`
-            w-full flex items-center gap-3 px-4 py-3 rounded-xl
-            transition-colors mb-2 cursor-pointer
+            w-full flex items-center gap-3 px-4 py-3 rounded-md
+            transition-colors mb-2 cursor-pointer text-sm tracking-wide
             ${
               isDark
-                ? "text-white/60 hover:text-white hover:bg-white/10"
+                ? "text-white/60 hover:text-white hover:bg-slate-900/60"
                 : "text-slate-600 hover:text-slate-900 hover:bg-black/5"
             }
           `}
@@ -206,11 +206,11 @@ export function AdminSidebar() {
         <Link href="/">
           <div
             className={`
-              flex items-center gap-3 px-4 py-3 rounded-xl mb-2
-              transition-colors
+              flex items-center gap-3 px-4 py-3 rounded-md mb-2
+              transition-colors text-sm tracking-wide
               ${
                 isDark
-                  ? "text-white/60 hover:text-white hover:bg-white/10"
+                  ? "text-white/60 hover:text-white hover:bg-slate-900/60"
                   : "text-slate-600 hover:text-slate-900 hover:bg-black/5"
               }
             `}
@@ -224,8 +224,8 @@ export function AdminSidebar() {
         <button
           onClick={handleLogout}
           className={`
-            w-full flex items-center gap-3 px-4 py-3 rounded-xl
-            transition-colors cursor-pointer
+            w-full flex items-center gap-3 px-4 py-3 rounded-md
+            transition-colors cursor-pointer text-sm tracking-wide
             ${
               isDark
                 ? "text-red-400/80 hover:text-red-400 hover:bg-red-500/10"

@@ -173,22 +173,26 @@ export const Header = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className={`
-          inline-flex items-center gap-2 px-4 py-2 rounded-full
-          backdrop-blur-xl max-w-fit mb-8
-          transition-colors duration-300
-          ${
-            isDark
-              ? "bg-white/10 border-white/20 shadow-black/10"
-              : "bg-white/70 border-black/10 shadow-black/5"
-          }
-          border shadow-lg
-        `}
+    inline-flex items-center gap-2 px-4 py-2 rounded-full
+    backdrop-blur-xl max-w-fit mb-8
+    shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+    transition-all duration-300
+    ${
+      isDark
+        ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+        : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+    }
+  `}
       >
-        {/* <Sparkles className="w-4 h-4 text-fuchsia-500" /> */}
+        <div className="p-1.5 rounded-full bg-fuchsia-500/10">
+          <Sparkles className="w-3.5 h-3.5 text-fuchsia-500" />
+        </div>
         <span
-          className={`text-sm font-medium transition-colors duration-300 ${
-            isDark ? "text-white/80" : "text-slate-700"
-          }`}
+          className={`
+      text-xs font-medium uppercase tracking-wide
+      transition-colors duration-300
+      ${isDark ? "text-gray-300" : "text-slate-500"}
+    `}
         >
           Creative Developer & Designer
         </span>
@@ -237,46 +241,44 @@ export const Header = () => {
       </motion.p>
 
       {/* CTA Buttons */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="flex flex-wrap gap-4 mt-10"
-      >
+      <motion.div className="flex flex-wrap gap-4 mt-10">
+        {/* Primary - solid button stays similar */}
         <motion.a
           href="#contact"
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            inline-flex items-center gap-2 px-6 py-3 rounded-lg
-            font-medium text-sm
-            transition-all duration-300
-            ${
-              isDark
-                ? "bg-white text-slate-900 shadow-lg shadow-white/20 hover:shadow-xl hover:shadow-white/25"
-                : "bg-slate-900 text-white shadow-lg shadow-slate-900/20 hover:shadow-xl hover:shadow-slate-900/25"
-            }
-          `}
+      inline-flex items-center gap-2 px-6 py-3 rounded-full
+      font-medium text-sm
+      transition-all duration-300
+      ${
+        isDark
+          ? "bg-white text-slate-900 shadow-[0_8px_32px_rgba(255,255,255,0.2)] hover:shadow-[0_12px_40px_rgba(255,255,255,0.25)]"
+          : "bg-slate-900 text-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+      }
+    `}
         >
           Let&apos;s Talk
           <ArrowUpRight className="w-4 h-4" />
         </motion.a>
 
+        {/* Secondary - glass style */}
         <motion.a
           href="/projects"
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            inline-flex items-center gap-2 px-6 py-3 rounded-lg
-            backdrop-blur-xl border
-            font-medium text-sm
-            transition-all duration-300
-            ${
-              isDark
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30"
-                : "bg-white/70 border-black/10 text-slate-900 hover:bg-white hover:shadow-xl"
-            }
-          `}
+      inline-flex items-center gap-2 px-6 py-3 rounded-full
+      backdrop-blur-xl
+      font-medium text-sm
+      shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+      transition-all duration-300
+      ${
+        isDark
+          ? "bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12]"
+          : "bg-black/[0.02] border border-black/[0.06] text-slate-900 hover:bg-black/[0.04] hover:border-black/[0.10]"
+      }
+    `}
         >
           View Projects
         </motion.a>
@@ -329,7 +331,7 @@ export const ProductCard = ({
             group-hover/product:shadow-2xl group-hover/product:shadow-violet-500/10
             ${
               isDark
-                ? "bg-white/5 border border-white/10 shadow-black/30 group-hover/product:border-white/20"
+                ? "bg-white/5 border border-gray-300/10 shadow-black/30 group-hover/product:border-white/20"
                 : "bg-white/70 border border-black/10 shadow-black/10 group-hover/product:border-black/20"
             }
           `}
@@ -387,7 +389,7 @@ export const ProductCard = ({
                 transition-colors duration-300
                 ${
                   isDark
-                    ? "bg-slate-900/80 border border-white/10"
+                    ? "bg-slate-900/80 border border-gray-300/10"
                     : "bg-white/80 border border-black/10"
                 }
               `}

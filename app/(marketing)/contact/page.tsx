@@ -64,7 +64,7 @@ export default function ContactPage() {
 
   const inputClass = `w-full px-4 py-3 rounded-xl border outline-none transition-all ${
     isDark
-      ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
+      ? "bg-white/5 border-gray-300/10 text-white placeholder:text-white/30 focus:border-violet-500/50 focus:bg-white/10"
       : "bg-white border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-violet-500 focus:shadow-lg"
   }`;
 
@@ -129,7 +129,7 @@ export default function ContactPage() {
             <div
               className={`p-6 rounded-2xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >
@@ -165,7 +165,7 @@ export default function ContactPage() {
             <div
               className={`p-6 rounded-2xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >
@@ -200,7 +200,7 @@ export default function ContactPage() {
             <div
               className={`p-6 rounded-2xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >
@@ -235,7 +235,7 @@ export default function ContactPage() {
             <div
               className={`p-6 rounded-2xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border-white/10"
+                  ? "bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border-gray-300/10"
                   : "bg-gradient-to-br from-violet-100/50 to-fuchsia-100/50 border-black/10"
               }`}
             >
@@ -269,7 +269,7 @@ export default function ContactPage() {
             <div
               className={`p-8 rounded-3xl backdrop-blur-xl border ${
                 isDark
-                  ? "bg-white/5 border-white/10"
+                  ? "bg-white/5 border-gray-300/10"
                   : "bg-white/70 border-black/10"
               }`}
             >

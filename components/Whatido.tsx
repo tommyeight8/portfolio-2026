@@ -106,7 +106,7 @@ const CategoryCard = ({
             relative h-full p-6 sm:p-8 rounded-3xl overflow-hidden
             backdrop-blur-xl
             bg-white/70 dark:bg-white/5
-            border border-black/10 dark:border-white/10
+            border border-black/10 dark:border-gray-300/10
             shadow-black/5 dark:shadow-black/20
             transition-all duration-500
             ${category.borderGlow}
@@ -156,7 +156,7 @@ const CategoryCard = ({
                     px-3 py-1.5 text-xs font-medium rounded-full
                     backdrop-blur-sm
                     bg-white/80 dark:bg-white/10
-                    border border-black/10 dark:border-white/10
+                    border border-black/10 dark:border-gray-300/10
                     text-slate-700 dark:text-white/70
                   "
                 >
