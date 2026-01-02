@@ -89,7 +89,14 @@ export function ProjectsPageClient({
     search || selectedCategory !== "ALL" || selectedTags.length > 0;
 
   return (
-    <main className={`min-h-screen pt-32 pb-24 transition-colors duration-500`}>
+    <main
+      className={`min-h-screen pt-32 pb-24 transition-colors duration-500
+    ${
+      isDark
+        ? "bg-slate-950"
+        : "bg-gradient-to-br from-slate-50 via-violet-100/30 to-slate-50"
+    }`}
+    >
       {/* Background Orbs */}
       {/* <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div
@@ -111,7 +118,7 @@ export function ProjectsPageClient({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           className={`mb-6 pb-6 border-b ${
-            isDark ? "border-gray-800" : "border-gray-300"
+            isDark ? "border-gray-300/10" : "border-gray-300/10"
           }`}
         >
           {/* <span
@@ -167,7 +174,7 @@ export function ProjectsPageClient({
                   transition-all
                   ${
                     isDark
-                      ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50"
+                      ? "bg-white/5 border-gray-300/10 text-white placeholder:text-white/30 focus:border-violet-500/50"
                       : "bg-white border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-violet-500"
                   }
                 `}
@@ -188,7 +195,7 @@ export function ProjectsPageClient({
                           ? "bg-violet-500/20 text-violet-400 border border-violet-500/30"
                           : "bg-violet-100 text-violet-600 border border-violet-200"
                         : isDark
-                        ? "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10"
+                        ? "bg-white/5 text-white/60 border border-gray-300/10 hover:bg-white/10"
                         : "bg-white text-slate-600 border border-black/10 hover:bg-slate-50"
                     }
                   `}
@@ -201,7 +208,7 @@ export function ProjectsPageClient({
 
           {/* Tags */}
           {allTags.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-white/10">
+            <div className="mt-4">
               <div className="flex items-center gap-2 mb-3">
                 <Filter
                   className={`w-4 h-4 ${
@@ -222,14 +229,14 @@ export function ProjectsPageClient({
                     key={tag}
                     onClick={() => toggleTag(tag)}
                     className={`
-                      px-3 py-1.5 rounded-lg text-xs font-medium transition-all
+                      cursor-pointer px-3 py-1.5 rounded-lg text-xs font-medium transition-all
                       ${
                         selectedTags.includes(tag)
                           ? isDark
                             ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
                             : "bg-cyan-100 text-cyan-600 border border-cyan-200"
                           : isDark
-                          ? "bg-white/5 text-white/50 border border-white/10 hover:bg-white/10"
+                          ? "bg-white/5 text-white/50 border border-gray-300/10 hover:bg-white/10"
                           : "bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200"
                       }
                     `}
@@ -337,19 +344,12 @@ function ProjectCard({
       transition={{ delay: index * 0.05 }}
     >
       <Link href={`/projects/${project.slug}`}>
-        <motion.article
-          whileHover={{ y: -8 }}
-          className="group relative h-full"
-        >
+        <motion.article className="group relative h-full">
           <div
             className={`
-              relative rounded-3xl overflow-hidden backdrop-blur-xl border
-              transition-all duration-500
-              ${
-                isDark
-                  ? "bg-white/5 border-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-violet-500/10"
-                  : "bg-white/70 border-black/10 hover:border-black/20 hover:shadow-xl"
-              }
+              relative rounded-md overflow-hidden 
+              transition-all duration-500 border-1
+${isDark ? "border-gray-300/10" : "border-black/10"}
             `}
           >
             {/* Image */}
@@ -358,32 +358,8 @@ function ProjectCard({
                 src={project.thumbnail}
                 alt={project.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-
-              {/* Hover overlay */}
-              <div
-                className={`
-                  absolute inset-0 flex items-center justify-center
-                  opacity-0 group-hover:opacity-100
-                  transition-opacity duration-300
-                  ${isDark ? "bg-black/30" : "bg-white/20"}
-                 
-                `}
-              >
-                <div
-                  className={`
-                    p-4 rounded-full
-                    ${
-                      isDark
-                        ? "bg-white/60 text-slate-900"
-                        : "bg-slate-900/30 text-white"
-                    }
-                  `}
-                >
-                  <ArrowUpRight className="w-6 h-6" />
-                </div>
-              </div>
 
               {/* Featured badge */}
               {project.featured && (
@@ -405,58 +381,14 @@ function ProjectCard({
             </div>
 
             {/* Content */}
-            <div className="p-6">
-              <span
-                className={`text-sm ${
-                  isDark ? "text-white/50" : "text-slate-500"
-                }`}
-              >
-                {project.category.replace("_", " ")}
-              </span>
-              <h3
-                className={`text-xl font-semibold mt-1 mb-3 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                {project.title}
-              </h3>
-              <p
-                className={`text-sm leading-relaxed line-clamp-2 mb-4 ${
-                  isDark ? "text-white/60" : "text-slate-600"
-                }`}
-              >
-                {project.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {project.tags.slice(0, 3).map((tag) => (
-                  <span
-                    key={tag}
-                    className={`
-                      px-2 py-1 text-xs rounded-md
-                      ${
-                        isDark
-                          ? "bg-white/10 text-white/60"
-                          : "bg-slate-100 text-slate-600"
-                      }
-                    `}
-                  >
-                    {tag}
-                  </span>
-                ))}
-                {project.tags.length > 3 && (
-                  <span
-                    className={`px-2 py-1 text-xs ${
-                      isDark ? "text-white/40" : "text-slate-400"
-                    }`}
-                  >
-                    +{project.tags.length - 3}
-                  </span>
-                )}
-              </div>
-            </div>
           </div>
+          <p
+            className={`mt-3 font-bold ${
+              isDark ? "text-gray-400" : "text-gray-700"
+            }`}
+          >
+            {project.title}
+          </p>
         </motion.article>
       </Link>
     </motion.div>

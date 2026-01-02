@@ -117,7 +117,7 @@ export function ImageUpload({
             <div
               className={`
                 relative aspect-video rounded-xl overflow-hidden border
-                ${isDark ? "border-white/10" : "border-black/10"}
+                ${isDark ? "border-gray-300/10" : "border-black/10"}
               `}
             >
               <Image

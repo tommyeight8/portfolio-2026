@@ -116,7 +116,7 @@ export const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
           className={`
-            inline-flex items-center gap-2 px-8 py-4 rounded-2xl
+            inline-flex items-center gap-2 px-8 py-4 rounded-full
             backdrop-blur-xl border
             font-medium text-sm
             transition-all duration-300

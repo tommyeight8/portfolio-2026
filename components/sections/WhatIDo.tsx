@@ -111,70 +111,68 @@ const CategoryCard = ({
       >
         <div
           className={`
-            relative h-full p-6 sm:p-8 rounded-3xl overflow-hidden
+            relative h-full p-6 sm:p-8 rounded-2xl overflow-hidden
             backdrop-blur-xl
-            transition-all duration-500
-            ${category.borderGlow}
-            group-hover:shadow-2xl
+            transition-all duration-300
+            shadow-[0_8px_32px_rgba(0,0,0,0.3)]
             group-hover:-translate-y-1
             ${
               isDark
-                ? "bg-white/5 border border-white/10 shadow-black/20 group-hover:border-white/20"
-                : "bg-white/70 border border-black/10 shadow-black/5 group-hover:border-black/20 group-hover:shadow-xl"
+                ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+                : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
             }
           `}
         >
-          <div
-            className={`
-              absolute inset-0 opacity-0 group-hover:opacity-100
-              bg-gradient-to-br ${category.bgGradient}
-              transition-opacity duration-500
-            `}
-          />
-
+          {/* Accent glow - matches MetricCard style */}
           <div
             className={`
               absolute -top-20 -right-20 w-40 h-40 rounded-full
-              bg-gradient-to-br ${category.gradient} opacity-10
-              blur-3xl group-hover:opacity-20 transition-opacity duration-500
+              blur-3xl opacity-20 group-hover:opacity-30
+              transition-opacity duration-300
+              bg-gradient-to-br ${category.gradient}
             `}
           />
 
           <div className="relative z-10">
+            {/* Icon with accent background */}
             <motion.div
               whileHover={{ rotate: [0, -10, 10, 0], scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className={`
-                inline-flex p-4 rounded-full mb-6
+                inline-flex p-3 rounded-xl mb-6
                 bg-gradient-to-br ${category.gradient}
                 shadow-lg
               `}
             >
-              <Icon className="w-7 h-7 text-white" stroke={1.5} />
+              <Icon className="w-6 h-6 text-white" stroke={1.5} />
             </motion.div>
 
+            {/* Title - uppercase tracking like MetricCard */}
             <h3
               className={`
-                text-xl sm:text-2xl font-semibold mb-3 
+                text-xs sm:text-sm font-medium mb-4 
+                tracking-wide uppercase
                 flex items-center gap-2
                 transition-colors duration-300
-                ${isDark ? "text-white" : "text-slate-900"}
+                ${isDark ? "text-zinc-400" : "text-slate-500"}
               `}
             >
               {category.title}
-              <IconArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-50 transition-opacity" />
+              <IconArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-50 transition-opacity" />
             </h3>
 
+            {/* Description as the "value" - larger text */}
             <p
               className={`
-                text-sm sm:text-base leading-relaxed mb-6
+                text-lg sm:text-xl font-semibold leading-relaxed mb-6
                 transition-colors duration-300
-                ${isDark ? "text-white/60" : "text-slate-600"}
+                ${isDark ? "text-white" : "text-slate-900"}
               `}
             >
               {category.description}
             </p>
 
+            {/* Skills as subtle tags */}
             <div className="flex flex-wrap gap-2">
               {category.skills.map((skill, idx) => (
                 <motion.span
@@ -183,13 +181,12 @@ const CategoryCard = ({
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: index * 0.15 + idx * 0.05 + 0.3 }}
                   className={`
-                    px-3 py-1.5 text-xs font-medium rounded-full
-                    backdrop-blur-sm
+                    px-3 py-1.5 text-xs font-medium rounded-xl
                     transition-colors duration-300
                     ${
                       isDark
-                        ? "bg-white/10 text-white/70 border border-white/10 group-hover:bg-white/15"
-                        : "bg-white/80 text-slate-700 border border-black/10 group-hover:bg-white"
+                        ? "bg-white/[0.05] text-zinc-500 group-hover:text-zinc-400"
+                        : "bg-black/[0.03] text-slate-500 group-hover:text-slate-600"
                     }
                   `}
                 >
@@ -198,15 +195,6 @@ const CategoryCard = ({
               ))}
             </div>
           </div>
-
-          <div
-            className={`
-              absolute bottom-0 left-0 right-0 h-1
-              bg-gradient-to-r ${category.gradient}
-              opacity-0 group-hover:opacity-100
-              transition-opacity duration-500
-            `}
-          />
         </div>
       </motion.div>
     </motion.div>
@@ -236,22 +224,26 @@ const WhatIDo = () => {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
             className={`
-              inline-flex items-center gap-2 px-4 py-2 rounded-full
-              backdrop-blur-xl mb-6
-              transition-colors duration-300
-              ${
-                isDark
-                  ? "bg-white/10 border border-white/20 shadow-black/10"
-                  : "bg-white/70 border border-black/10 shadow-black/5"
-              }
-              shadow-lg
-            `}
+    inline-flex items-center gap-2 px-4 py-2 rounded-full
+    backdrop-blur-xl mb-6
+    shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+    transition-all duration-300
+    ${
+      isDark
+        ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+        : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+    }
+  `}
           >
-            <IconSparkles className="w-4 h-4 text-violet-500" />
+            <div className="p-1.5 rounded-full bg-violet-500/10">
+              <IconSparkles className="w-3.5 h-3.5 text-violet-500" />
+            </div>
             <span
-              className={`text-sm font-medium transition-colors duration-300 ${
-                isDark ? "text-white/80" : "text-slate-700"
-              }`}
+              className={`
+      text-xs font-medium uppercase tracking-wide
+      transition-colors duration-300
+      ${isDark ? "text-zinc-400" : "text-slate-500"}
+    `}
             >
               Services
             </span>
@@ -310,7 +302,7 @@ const WhatIDo = () => {
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.98 }}
             className={`
-              inline-flex items-center gap-2 px-8 py-4 rounded-2xl
+              inline-flex items-center gap-2 px-8 py-4 rounded-full
               font-medium 
               ${
                 isDark

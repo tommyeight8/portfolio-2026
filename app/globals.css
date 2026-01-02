@@ -354,7 +354,7 @@ body {
   position: absolute;
   width: 80%;
   height: 80%;
-  background: radial-gradient(circle at top left, #8b5cf6 20%, #d946ef 80%);
+  background: radial-gradient(circle at top left, #ffffff 20%, #ffffff 80%);
   border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
   left: -20%;
   top: -20%;
@@ -368,7 +368,7 @@ body {
   position: absolute;
   width: 80%;
   height: 80%;
-  background: radial-gradient(circle at bottom right, #06b6d4, #8b5cf6 80%);
+  background: radial-gradient(circle at bottom right, #c5c5c5, #895eff 80%);
   border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
   right: -15%;
   bottom: -30%;
@@ -383,12 +383,12 @@ body {
 }
 
 :is(.dark .aurora-background)::before {
-  background: radial-gradient(circle at top left, #0ec7ce 20%, #4505ad 80%);
+  background: radial-gradient(circle at top left, #000000 20%, #000000 80%);
   opacity: 0.25;
 }
 
 :is(.dark .aurora-background)::after {
-  background: radial-gradient(circle at bottom right, #0891b2, #7c3aed 80%);
+  background: radial-gradient(circle at bottom right, #0835b2, #052658 80%);
   opacity: 0.2;
 }
 

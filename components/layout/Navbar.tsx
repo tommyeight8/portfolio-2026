@@ -69,10 +69,10 @@ export function Navbar() {
       >
         <nav
           className={`
-            px-2 py-2 rounded-2xl backdrop-blur-xl border shadow-lg transition-all duration-300
+            px-2 py-2 rounded-full backdrop-blur-xl border shadow-lg transition-all duration-300
             ${
               isDark
-                ? "bg-white/10 border-white/20 shadow-black/10"
+                ? "bg-linear-to-b from-white/10 to-black/10 border-white/20 shadow-black/10"
                 : "bg-white/70 border-black/10 shadow-black/5"
             }
           `}
@@ -146,10 +146,10 @@ export function Navbar() {
               <div className="relative" ref={userMenuRef}>
                 <motion.button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  // whileHover={{ scale: 1.05 }}
+                  // whileTap={{ scale: 0.95 }}
                   className={`
-                    flex items-center gap-2 px-3 py-2 rounded-xl transition-colors cursor-pointer
+                    flex items-center gap-2 px-3 py-2 rounded-full transition-colors cursor-pointer
                     ${
                       isDark
                         ? "bg-white/10 text-white/80 hover:bg-white/20"
@@ -194,18 +194,18 @@ export function Navbar() {
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
                       className={`
-                        absolute right-0 top-full mt-2 w-56 py-2 rounded-xl border shadow-xl backdrop-blur-xl
+                        absolute right-0 top-full mt-2 w-56 py-2 rounded-md border shadow-xl backdrop-blur-xl
                         ${
                           isDark
-                            ? "bg-slate-900/90 border-white/10"
-                            : "bg-white/90 border-black/10"
+                            ? "bg-slate-950 border-gray-300/10"
+                            : "bg-white border-black/10"
                         }
                       `}
                     >
                       {/* User Info */}
                       <div
                         className={`px-4 py-3 border-b ${
-                          isDark ? "border-white/10" : "border-black/10"
+                          isDark ? "border-gray-300/10" : "border-black/10"
                         }`}
                       >
                         <p
@@ -246,13 +246,13 @@ export function Navbar() {
                       {/* Logout */}
                       <div
                         className={`pt-1 border-t ${
-                          isDark ? "border-white/10" : "border-black/10"
+                          isDark ? "border-gray-300/10" : "border-black/10"
                         }`}
                       >
                         <button
                           onClick={handleLogout}
                           className={`
-                            w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors
+                            cursor-pointer w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors
                             ${
                               isDark
                                 ? "text-red-400/80 hover:text-red-400 hover:bg-red-500/10"
@@ -286,10 +286,10 @@ export function Navbar() {
             )}
 
             {/* CTA */}
-            <Link
+            {/* <Link
               href="/contact"
               className={`
-                ml-1 px-4 py-2 text-sm font-medium rounded-xl transition-colors whitespace-nowrap
+                hidden md:inline-flex ml-1 px-4 py-1 text-sm font-medium rounded-md transition-colors whitespace-nowrap
                 ${
                   isDark
                     ? "bg-white/20 text-white hover:bg-white/30"
@@ -298,7 +298,7 @@ export function Navbar() {
               `}
             >
               Let's Talk
-            </Link>
+            </Link> */}
 
             {/* Mobile Menu Button */}
             <button
@@ -330,8 +330,8 @@ export function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`absolute inset-0 backdrop-blur-xl ${
-                isDark ? "bg-slate-950/95" : "bg-white/95"
+              className={`absolute inset-0 ${
+                isDark ? "bg-slate-950" : "bg-white/95"
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             />
@@ -358,7 +358,7 @@ export function Navbar() {
               {/* Mobile User Section */}
               <div
                 className={`mt-4 pt-8 border-t w-48 text-center ${
-                  isDark ? "border-white/10" : "border-black/10"
+                  isDark ? "border-gray-300/10" : "border-black/10"
                 }`}
               >
                 {session ? (

@@ -155,7 +155,7 @@ export function MultiImageUpload({
                 exit={{ opacity: 0, scale: 0.8 }}
                 className={`
                   relative w-32 h-32 rounded-xl overflow-hidden border cursor-grab active:cursor-grabbing
-                  ${isDark ? "border-white/10" : "border-black/10"}
+                  ${isDark ? "border-gray-300/10" : "border-black/10"}
                 `}
               >
                 <Image

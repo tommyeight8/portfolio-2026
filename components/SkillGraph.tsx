@@ -85,7 +85,7 @@ const SkillCard = ({
           relative p-5 rounded-2xl overflow-hidden
           backdrop-blur-xl
           bg-white/70 dark:bg-white/5
-          border border-black/10 dark:border-white/10
+          border border-black/10 dark:border-gray-300/10
           shadow-black/5 dark:shadow-black/20
           hover:shadow-xl hover:shadow-violet-500/10
           hover:-translate-y-0.5

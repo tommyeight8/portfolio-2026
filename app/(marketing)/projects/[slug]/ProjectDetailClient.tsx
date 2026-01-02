@@ -1,8 +1,7 @@
-// src/app/(marketing)/projects/[slug]/ProjectDetailClient.tsx
-
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Project } from "@/types/project.types";
@@ -15,11 +14,82 @@ import {
   Clock,
   ExternalLink,
   Github,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Layers,
+  Wrench,
+  Tag,
+  Images,
+  FileText,
 } from "lucide-react";
 
 interface ProjectDetailClientProps {
   project: Project;
   relatedProjects: Project[];
+}
+
+// ============ GLASS CARD ============
+
+function GlassCard({
+  children,
+  className = "",
+  isDark,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  isDark: boolean;
+}) {
+  return (
+    <div
+      className={`
+        relative overflow-hidden rounded-2xl 
+        backdrop-blur-xl
+        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+        transition-all duration-300
+        ${
+          isDark
+            ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+            : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+        }
+        ${className}
+      `}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ============ SECTION HEADER ============
+
+function SectionHeader({
+  icon,
+  title,
+  isDark,
+  accentColor = "#8b5cf6",
+}: {
+  icon: React.ReactNode;
+  title: string;
+  isDark: boolean;
+  accentColor?: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <div
+        className="p-2.5 rounded-full"
+        style={{ backgroundColor: `${accentColor}20` }}
+      >
+        <span style={{ color: accentColor }}>{icon}</span>
+      </div>
+      <h3
+        className={`text-lg font-semibold ${
+          isDark ? "text-white" : "text-slate-900"
+        }`}
+      >
+        {title}
+      </h3>
+    </div>
+  );
 }
 
 export function ProjectDetailClient({
@@ -28,9 +98,52 @@ export function ProjectDetailClient({
 }: ProjectDetailClientProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const openModal = (index: number) => {
+    setActiveIndex(index);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const goToPrev = useCallback(() => {
+    if (!project.images) return;
+    setActiveIndex((prev) =>
+      prev === 0 ? project.images!.length - 1 : prev - 1
+    );
+  }, [project.images]);
+
+  const goToNext = useCallback(() => {
+    if (!project.images) return;
+    setActiveIndex((prev) =>
+      prev === project.images!.length - 1 ? 0 : prev + 1
+    );
+  }, [project.images]);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowLeft") goToPrev();
+      if (e.key === "ArrowRight") goToNext();
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [modalOpen, goToPrev, goToNext]);
 
   return (
-    <main className={`min-h-screen pt-32 pb-24 transition-colors duration-500`}>
+    <main className="min-h-screen pt-32 pb-24 transition-colors duration-500">
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Back Link */}
         <motion.div
@@ -40,10 +153,10 @@ export function ProjectDetailClient({
           <Link
             href="/projects"
             className={`
-              inline-flex items-center gap-2 mb-8 transition-colors
+              inline-flex items-center gap-2 mb-8 text-sm transition-colors
               ${
                 isDark
-                  ? "text-white/60 hover:text-white"
+                  ? "text-zinc-400 hover:text-white"
                   : "text-slate-500 hover:text-slate-900"
               }
             `}
@@ -61,21 +174,29 @@ export function ProjectDetailClient({
         >
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span
-              className={`px-3 py-1 rounded-full text-xs ${
-                isDark
-                  ? "bg-violet-500/20 text-violet-300"
-                  : "bg-violet-100 text-violet-600"
-              }`}
+              className={`
+                px-3 py-1.5 rounded-full text-xs font-medium
+                shadow-[0_4px_16px_rgba(0,0,0,0.2)]
+                ${
+                  isDark
+                    ? "bg-violet-500/20 text-violet-300 border border-violet-500/20"
+                    : "bg-violet-500/10 text-violet-600 border border-violet-500/20"
+                }
+              `}
             >
               {project.category.replace("_", " ")}
             </span>
             {project.featured && (
               <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  isDark
-                    ? "bg-fuchsia-500/20 text-fuchsia-300"
-                    : "bg-fuchsia-100 text-fuchsia-600"
-                }`}
+                className={`
+                  px-3 py-1.5 rounded-full text-xs font-medium
+                  shadow-[0_4px_16px_rgba(0,0,0,0.2)]
+                  ${
+                    isDark
+                      ? "bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/20"
+                      : "bg-fuchsia-500/10 text-fuchsia-600 border border-fuchsia-500/20"
+                  }
+                `}
               >
                 Featured
               </span>
@@ -84,19 +205,11 @@ export function ProjectDetailClient({
 
           <h1
             className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-6 capitalize ${
-              isDark ? "text-white" : "text-slate-900"
+              isDark ? "text-gray-200" : "text-slate-900"
             }`}
           >
             {project.title}
           </h1>
-
-          <p
-            className={`text-md leading-relaxed max-w-3xl ${
-              isDark ? "text-white/60" : "text-slate-600"
-            }`}
-          >
-            {project.description}
-          </p>
         </motion.div>
 
         {/* Hero Image */}
@@ -104,101 +217,103 @@ export function ProjectDetailClient({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className={`
-            relative aspect-video rounded-3xl overflow-hidden mb-12
-            backdrop-blur-xl border
-            ${
-              isDark
-                ? "bg-white/5 border-white/10"
-                : "bg-white/70 border-black/10"
-            }
-          `}
         >
-          <Image
-            src={project.thumbnail}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
+          <GlassCard isDark={isDark} className="mb-12">
+            <div className="relative aspect-video">
+              <Image
+                src={project.thumbnail}
+                alt={project.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </GlassCard>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="lg:col-span-2"
+            className="lg:col-span-2 space-y-8"
           >
             {/* Project Content */}
             {project.content && (
-              <div
-                className={`
-                  p-8 rounded-3xl backdrop-blur-xl border mb-8
-                  ${
-                    isDark
-                      ? "bg-white/5 border-white/10"
-                      : "bg-white/70 border-black/10"
-                  }
-                `}
-              >
-                <h2
-                  className={`text-2xl font-bold mb-6 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  About the Project
-                </h2>
+              <GlassCard isDark={isDark} className="p-8 group">
                 <div
-                  className={`prose max-w-none ${
-                    isDark
-                      ? "prose-invert prose-p:text-white/70"
-                      : "prose-slate"
-                  }`}
-                  dangerouslySetInnerHTML={{ __html: project.content }}
+                  className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                  style={{ backgroundColor: "#8b5cf6" }}
                 />
-              </div>
+                <div className="relative">
+                  <SectionHeader
+                    icon={<FileText className="w-5 h-5" />}
+                    title="About the Project"
+                    isDark={isDark}
+                    accentColor="#8b5cf6"
+                  />
+                  <div
+                    className={`prose max-w-none ${
+                      isDark
+                        ? "prose-invert prose-p:text-zinc-400"
+                        : "prose-slate"
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: project.content }}
+                  />
+                </div>
+              </GlassCard>
             )}
 
             {/* Project Gallery */}
             {project.images && project.images.length > 0 && (
-              <div
-                className={`
-                  p-8 rounded-3xl backdrop-blur-xl border
-                  ${
-                    isDark
-                      ? "bg-white/5 border-white/10"
-                      : "bg-white/70 border-black/10"
-                  }
-                `}
-              >
-                <h2
-                  className={`text-2xl font-bold mb-6 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Gallery
-                </h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {project.images.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`
-                        relative aspect-video rounded-2xl overflow-hidden
-                        ${isDark ? "bg-white/5" : "bg-slate-100"}
-                      `}
-                    >
-                      <Image
-                        src={image}
-                        alt={`${project.title} - Image ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
+              <GlassCard isDark={isDark} className="p-8 group">
+                <div
+                  className="absolute -top-20 -right-20 w-40 h-40 rounded-xl blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                  style={{ backgroundColor: "#ec4899" }}
+                />
+                <div className="relative">
+                  <SectionHeader
+                    icon={<Images className="w-5 h-5" />}
+                    title="Gallery"
+                    isDark={isDark}
+                    accentColor="#ec4899"
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    {project.images.map((image, index) => (
+                      <button
+                        key={index}
+                        onClick={() => openModal(index)}
+                        className={`
+                          relative aspect-video rounded-xl overflow-hidden cursor-pointer
+                          transition-all duration-300 hover:scale-[1.02]
+                          shadow-[0_4px_16px_rgba(0,0,0,0.2)]
+                          hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                          ${
+                            isDark
+                              ? "bg-white/[0.03] border border-white/[0.08]"
+                              : "bg-black/[0.02] border border-black/[0.06]"
+                          }
+                        `}
+                      >
+                        <Image
+                          src={image}
+                          alt={`${project.title} - Image ${index + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                        <div
+                          className={`
+                            absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300
+                            flex items-center justify-center
+                            ${isDark ? "bg-black/40" : "bg-white/40"}
+                          `}
+                        ></div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </GlassCard>
             )}
           </motion.div>
 
@@ -210,310 +325,289 @@ export function ProjectDetailClient({
             className="space-y-6"
           >
             {/* Project Info */}
-            <div
-              className={`
-                p-6 rounded-3xl backdrop-blur-xl border
-                ${
-                  isDark
-                    ? "bg-white/5 border-white/10"
-                    : "bg-white/70 border-black/10"
-                }
-              `}
-            >
-              <h3
-                className={`text-lg font-semibold mb-4 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Project Details
-              </h3>
-
-              <div className="space-y-4">
-                {project.client && (
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`p-2 rounded-xl ${
-                        isDark ? "bg-white/10" : "bg-slate-100"
-                      }`}
-                    >
-                      <User
-                        className={`w-4 h-4 ${
-                          isDark ? "text-white/70" : "text-slate-600"
-                        }`}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className={`text-xs ${
-                          isDark ? "text-white/50" : "text-slate-500"
-                        }`}
-                      >
-                        Client
-                      </p>
-                      <p
-                        className={`font-medium ${
-                          isDark ? "text-white" : "text-slate-900"
-                        }`}
-                      >
-                        {project.client}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {project.role && (
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`p-2 rounded-xl ${
-                        isDark ? "bg-white/10" : "bg-slate-100"
-                      }`}
-                    >
-                      <User
-                        className={`w-4 h-4 ${
-                          isDark ? "text-white/70" : "text-slate-600"
-                        }`}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className={`text-xs ${
-                          isDark ? "text-white/50" : "text-slate-500"
-                        }`}
-                      >
-                        Role
-                      </p>
-                      <p
-                        className={`font-medium ${
-                          isDark ? "text-white" : "text-slate-900"
-                        }`}
-                      >
-                        {project.role}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`p-2 rounded-xl ${
-                      isDark ? "bg-white/10" : "bg-slate-100"
-                    }`}
-                  >
-                    <Calendar
-                      className={`w-4 h-4 ${
-                        isDark ? "text-white/70" : "text-slate-600"
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <p
-                      className={`text-xs ${
-                        isDark ? "text-white/50" : "text-slate-500"
-                      }`}
-                    >
-                      Year
-                    </p>
-                    <p
-                      className={`font-medium ${
-                        isDark ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      {project.year}
-                    </p>
-                  </div>
-                </div>
-
-                {project.duration && (
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`p-2 rounded-xl ${
-                        isDark ? "bg-white/10" : "bg-slate-100"
-                      }`}
-                    >
-                      <Clock
-                        className={`w-4 h-4 ${
-                          isDark ? "text-white/70" : "text-slate-600"
-                        }`}
-                      />
-                    </div>
-                    <div>
-                      <p
-                        className={`text-xs ${
-                          isDark ? "text-white/50" : "text-slate-500"
-                        }`}
-                      >
-                        Duration
-                      </p>
-                      <p
-                        className={`font-medium ${
-                          isDark ? "text-white" : "text-slate-900"
-                        }`}
-                      >
-                        {project.duration}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Links */}
-              <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`
-                      flex items-center justify-center gap-2 w-full py-3 rounded-xl
-                      font-medium transition-all
-                      ${
-                        isDark
-                          ? "bg-white text-slate-900 hover:shadow-lg hover:shadow-white/20"
-                          : "bg-slate-900 text-white hover:shadow-lg hover:shadow-slate-900/20"
-                      }
-                    `}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    View Live Site
-                  </a>
-                )}
-
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`
-                      flex items-center justify-center gap-2 w-full py-3 rounded-xl
-                      font-medium border transition-all
-                      ${
-                        isDark
-                          ? "bg-white/10 text-white border-white/20 hover:bg-white/20"
-                          : "bg-white text-slate-900 border-black/10 hover:shadow-lg"
-                      }
-                    `}
-                  >
-                    <Github className="w-4 h-4" />
-                    View Code
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {/* Tech Stack */}
-            {project.techStack && project.techStack.length > 0 && (
+            <GlassCard isDark={isDark} className="p-6 group">
               <div
-                className={`
-                  p-6 rounded-3xl backdrop-blur-xl border
-                  ${
-                    isDark
-                      ? "bg-white/5 border-white/10"
-                      : "bg-white/70 border-black/10"
-                  }
-                `}
-              >
+                className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                style={{ backgroundColor: "#06b6d4" }}
+              />
+              <div className="relative">
                 <h3
-                  className={`text-lg font-semibold mb-4 ${
-                    isDark ? "text-white" : "text-slate-900"
+                  className={`text-xs font-medium uppercase tracking-wide mb-6 ${
+                    isDark ? "text-zinc-400" : "text-slate-500"
                   }`}
                 >
-                  Tech Stack
+                  Project Details
                 </h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
+
+                <div className="space-y-4">
+                  {project.client && (
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`p-2 rounded-full ${
+                          isDark ? "bg-cyan-500/10" : "bg-cyan-500/10"
+                        }`}
+                      >
+                        <User className="w-4 h-4 text-cyan-500" />
+                      </div>
+                      <div>
+                        <p
+                          className={`text-xs ${
+                            isDark ? "text-zinc-500" : "text-slate-500"
+                          }`}
+                        >
+                          Client
+                        </p>
+                        <p
+                          className={`font-semibold ${
+                            isDark ? "text-white" : "text-slate-900"
+                          }`}
+                        >
+                          {project.client}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {project.role && (
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`p-2 rounded-full ${
+                          isDark ? "bg-violet-500/10" : "bg-violet-500/10"
+                        }`}
+                      >
+                        <User className="w-4 h-4 text-violet-500" />
+                      </div>
+                      <div>
+                        <p
+                          className={`text-xs ${
+                            isDark ? "text-zinc-500" : "text-slate-500"
+                          }`}
+                        >
+                          Role
+                        </p>
+                        <p
+                          className={`font-semibold ${
+                            isDark ? "text-white" : "text-slate-900"
+                          }`}
+                        >
+                          {project.role}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`p-2 rounded-full ${
+                        isDark ? "bg-emerald-500/10" : "bg-emerald-500/10"
+                      }`}
+                    >
+                      <Calendar className="w-4 h-4 text-emerald-500" />
+                    </div>
+                    <div>
+                      <p
+                        className={`text-xs ${
+                          isDark ? "text-zinc-500" : "text-slate-500"
+                        }`}
+                      >
+                        Year
+                      </p>
+                      <p
+                        className={`font-semibold ${
+                          isDark ? "text-white" : "text-slate-900"
+                        }`}
+                      >
+                        {project.year}
+                      </p>
+                    </div>
+                  </div>
+
+                  {project.duration && (
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`p-2 rounded-full ${
+                          isDark ? "bg-amber-500/10" : "bg-amber-500/10"
+                        }`}
+                      >
+                        <Clock className="w-4 h-4 text-amber-500" />
+                      </div>
+                      <div>
+                        <p
+                          className={`text-xs ${
+                            isDark ? "text-zinc-500" : "text-slate-500"
+                          }`}
+                        >
+                          Duration
+                        </p>
+                        <p
+                          className={`font-semibold ${
+                            isDark ? "text-white" : "text-slate-900"
+                          }`}
+                        >
+                          {project.duration}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Links */}
+                <div
+                  className={`mt-6 pt-6 space-y-3 border-t ${
+                    isDark ? "border-white/[0.08]" : "border-black/[0.06]"
+                  }`}
+                >
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`
-                        px-3 py-1.5 rounded-lg text-sm font-medium
+                        flex items-center justify-center gap-2 w-full py-3 rounded-full
+                        font-medium transition-all duration-300
+                        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
                         ${
                           isDark
-                            ? "bg-violet-500/20 text-violet-300"
-                            : "bg-violet-100 text-violet-600"
+                            ? "bg-white text-slate-900 hover:shadow-[0_12px_40px_rgba(255,255,255,0.2)]"
+                            : "bg-slate-900 text-white hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
                         }
                       `}
                     >
-                      {tech}
-                    </span>
-                  ))}
+                      <ExternalLink className="w-4 h-4" />
+                      View Live Site
+                    </a>
+                  )}
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`
+                        flex items-center justify-center gap-2 w-full py-3 rounded-full
+                        font-medium backdrop-blur-xl
+                        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                        transition-all duration-300
+                        ${
+                          isDark
+                            ? "bg-white/[0.03] text-white border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+                            : "bg-black/[0.02] text-slate-900 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+                        }
+                      `}
+                    >
+                      <Github className="w-4 h-4" />
+                      View Code
+                    </a>
+                  )}
                 </div>
               </div>
+            </GlassCard>
+
+            {/* Tech Stack */}
+            {project.techStack && project.techStack.length > 0 && (
+              <GlassCard isDark={isDark} className="p-6 group">
+                <div
+                  className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                  style={{ backgroundColor: "#8b5cf6" }}
+                />
+                <div className="relative">
+                  <SectionHeader
+                    icon={<Layers className="w-5 h-5" />}
+                    title="Tech Stack"
+                    isDark={isDark}
+                    accentColor="#8b5cf6"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className={`
+                          px-3 py-1.5 rounded-full text-xs font-medium
+                          transition-colors duration-300
+                          ${
+                            isDark
+                              ? "bg-violet-500/10 text-violet-300 hover:bg-violet-500/20"
+                              : "bg-violet-500/10 text-violet-600 hover:bg-violet-500/20"
+                          }
+                        `}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </GlassCard>
             )}
 
             {/* Tools */}
             {project.tools && project.tools.length > 0 && (
+              <GlassCard isDark={isDark} className="p-6 group">
+                <div
+                  className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                  style={{ backgroundColor: "#06b6d4" }}
+                />
+                <div className="relative">
+                  <SectionHeader
+                    icon={<Wrench className="w-5 h-5" />}
+                    title="Tools Used"
+                    isDark={isDark}
+                    accentColor="#06b6d4"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    {project.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className={`
+                          px-3 py-1.5 rounded-full text-xs font-medium
+                          transition-colors duration-300
+                          ${
+                            isDark
+                              ? "bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20"
+                              : "bg-cyan-500/10 text-cyan-600 hover:bg-cyan-500/20"
+                          }
+                        `}
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </GlassCard>
+            )}
+
+            {/* Tags */}
+            <GlassCard isDark={isDark} className="p-6 group">
               <div
-                className={`
-                  p-6 rounded-3xl backdrop-blur-xl border
-                  ${
-                    isDark
-                      ? "bg-white/5 border-white/10"
-                      : "bg-white/70 border-black/10"
-                  }
-                `}
-              >
-                <h3
-                  className={`text-lg font-semibold mb-4 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  Tools Used
-                </h3>
+                className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                style={{ backgroundColor: "#f97316" }}
+              />
+              <div className="relative">
+                <SectionHeader
+                  icon={<Tag className="w-5 h-5" />}
+                  title="Tags"
+                  isDark={isDark}
+                  accentColor="#f97316"
+                />
                 <div className="flex flex-wrap gap-2">
-                  {project.tools.map((tool) => (
+                  {project.tags.map((tag) => (
                     <span
-                      key={tool}
+                      key={tag}
                       className={`
-                        px-3 py-1.5 rounded-lg text-sm font-medium
+                        px-3 py-1.5 rounded-full text-xs font-medium
+                        transition-colors duration-300
                         ${
                           isDark
-                            ? "bg-cyan-500/20 text-cyan-300"
-                            : "bg-cyan-100 text-cyan-600"
+                            ? "bg-white/[0.05] text-zinc-400 hover:bg-white/[0.08]"
+                            : "bg-black/[0.03] text-slate-500 hover:bg-black/[0.05]"
                         }
                       `}
                     >
-                      {tool}
+                      {tag}
                     </span>
                   ))}
                 </div>
               </div>
-            )}
-
-            {/* Tags */}
-            <div
-              className={`
-                p-6 rounded-3xl backdrop-blur-xl border
-                ${
-                  isDark
-                    ? "bg-white/5 border-white/10"
-                    : "bg-white/70 border-black/10"
-                }
-              `}
-            >
-              <h3
-                className={`text-lg font-semibold mb-4 ${
-                  isDark ? "text-white" : "text-slate-900"
-                }`}
-              >
-                Tags
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className={`
-                      px-3 py-1.5 rounded-lg text-sm
-                      ${
-                        isDark
-                          ? "bg-white/10 text-white/60"
-                          : "bg-slate-100 text-slate-600"
-                      }
-                    `}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+            </GlassCard>
           </motion.div>
         </div>
 
@@ -536,17 +630,9 @@ export function ProjectDetailClient({
             <div className="grid md:grid-cols-2 gap-6">
               {relatedProjects.map((related) => (
                 <Link key={related.id} href={`/projects/${related.slug}`}>
-                  <motion.div
-                    whileHover={{ y: -8 }}
-                    className={`
-                      group relative rounded-3xl overflow-hidden backdrop-blur-xl border
-                      transition-all duration-500
-                      ${
-                        isDark
-                          ? "bg-white/5 border-white/10 hover:border-white/20"
-                          : "bg-white/70 border-black/10 hover:shadow-xl"
-                      }
-                    `}
+                  <GlassCard
+                    isDark={isDark}
+                    className="group overflow-hidden hover:-translate-y-1"
                   >
                     <div className="relative aspect-video overflow-hidden">
                       <Image
@@ -566,8 +652,8 @@ export function ProjectDetailClient({
 
                     <div className="p-6">
                       <span
-                        className={`text-sm ${
-                          isDark ? "text-white/50" : "text-slate-500"
+                        className={`text-xs uppercase tracking-wide ${
+                          isDark ? "text-zinc-500" : "text-slate-500"
                         }`}
                       >
                         {related.category.replace("_", " ")}
@@ -581,7 +667,7 @@ export function ProjectDetailClient({
                         <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </h3>
                     </div>
-                  </motion.div>
+                  </GlassCard>
                 </Link>
               ))}
             </div>
@@ -598,12 +684,14 @@ export function ProjectDetailClient({
           <Link
             href="/projects"
             className={`
-              inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-medium
-              transition-all hover:scale-105
+              inline-flex items-center gap-2 px-6 py-3 rounded-full
+              backdrop-blur-xl font-medium text-sm
+              shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+              transition-all duration-300
               ${
                 isDark
-                  ? "bg-white/10 text-white border border-white/20 hover:bg-white/20"
-                  : "bg-white text-slate-900 border border-black/10 hover:shadow-xl"
+                  ? "bg-white/[0.03] text-white border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+                  : "bg-black/[0.02] text-slate-900 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
               }
             `}
           >
@@ -612,6 +700,112 @@ export function ProjectDetailClient({
           </Link>
         </motion.div>
       </div>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {modalOpen && project.images && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center"
+            onClick={closeModal}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" />
+
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+              aria-label="Close modal"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Image Counter */}
+            <div className="absolute top-6 left-6 z-10 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+              {activeIndex + 1} / {project.images.length}
+            </div>
+
+            {/* Navigation Buttons */}
+            {project.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToPrev();
+                  }}
+                  className="absolute left-4 md:left-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToNext();
+                  }}
+                  className="absolute right-4 md:right-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            {/* Image */}
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="relative w-[90vw] h-[80vh] max-w-6xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={project.images[activeIndex]}
+                alt={`${project.title} - Image ${activeIndex + 1}`}
+                fill
+                className="object-contain"
+                sizes="90vw"
+              />
+            </motion.div>
+
+            {/* Thumbnail Strip */}
+            {project.images.length > 1 && (
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-x-auto">
+                {project.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveIndex(index);
+                    }}
+                    className={`
+                      cursor-pointer relative w-16 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300
+                      ${
+                        activeIndex === index
+                          ? "ring-2 ring-white opacity-100 scale-100"
+                          : "opacity-50 hover:opacity-75 scale-95"
+                      }
+                    `}
+                  >
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

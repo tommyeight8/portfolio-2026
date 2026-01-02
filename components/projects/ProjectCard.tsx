@@ -99,7 +99,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Content */}
           <div className="p-6">
-            {/* Category Badge */}
             <span
               className={`inline-block px-3 py-1 text-xs font-medium rounded-full border ${
                 categoryColors[project.category]
@@ -108,7 +107,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               {categoryLabels[project.category]}
             </span>
 
-            {/* Title & Description */}
             <h3 className="mt-4 text-xl font-semibold text-white group-hover:text-neutral-200 transition-colors">
               {project.title}
             </h3>
@@ -116,7 +114,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               {project.description}
             </p>
 
-            {/* Tech Stack / Tools */}
             <div className="mt-4 flex flex-wrap gap-2">
               {(project.techStack.length > 0
                 ? project.techStack
@@ -140,7 +137,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               )}
             </div>
 
-            {/* Meta */}
             <div className="mt-4 pt-4 border-t border-neutral-800 flex items-center justify-between text-sm text-neutral-500">
               <span>{project.year}</span>
               {project.client && <span>{project.client}</span>}

@@ -14,20 +14,24 @@ export function Footer() {
   return (
     <footer
       className={`relative py-12 px-6 border-t transition-colors duration-300 ${
-        isDark ? "border-white/10 bg-slate-950" : "border-black/10 bg-white"
+        isDark ? "border-gray-300/10 bg-[#00030A]" : "border-black/10 bg-white"
       }`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <span
-            className={`text-lg font-semibold flex items-baseline gap-1 ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}
-          >
-            Portfolio<span className="bg-violet-500 h-1 w-1 block"></span>
-          </span>
+          {/* Logo - Left */}
+          <div className="flex-1 flex justify-center md:justify-start">
+            <span
+              className={`text-lg font-semibold flex items-baseline gap-1 ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              Portfolio<span className="bg-violet-500 h-1 w-1 block"></span>
+            </span>
+          </div>
 
-          <nav className="flex items-center gap-8">
+          {/* Nav - Center */}
+          <nav className="flex-1 flex items-center justify-center gap-8">
             {["Projects", "About", "Contact"].map((link) => (
               <Link
                 key={link}
@@ -43,7 +47,8 @@ export function Footer() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          {/* Social - Right */}
+          <div className="flex-1 flex items-center justify-center md:justify-end gap-3">
             {[
               { icon: Github, href: "https://github.com" },
               { icon: Linkedin, href: "https://linkedin.com" },
@@ -69,7 +74,7 @@ export function Footer() {
         <div
           className={`mt-8 pt-8 border-t text-center text-sm ${
             isDark
-              ? "border-white/10 text-white/30"
+              ? "border-gray-300/10 text-white/30"
               : "border-black/10 text-slate-400"
           }`}
         >

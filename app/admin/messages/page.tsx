@@ -107,7 +107,7 @@ export default function AdminMessagesPage() {
       {/* Header */}
       <div
         className={`p-6 border-b ${
-          isDark ? "border-white/10" : "border-black/10"
+          isDark ? "border-gray-300/10" : "border-black/10"
         }`}
       >
         <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-4">
@@ -126,7 +126,7 @@ export default function AdminMessagesPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col w-full gap-3 sm:flex-row sm:items-center sm:gap-4">
             {/* Search */}
             <div className="relative">
               <Search
@@ -140,35 +140,40 @@ export default function AdminMessagesPage() {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search messages..."
                 className={`
-                  pl-10 pr-4 py-2 rounded-full border outline-none w-64
-                  transition-all
-                  ${
-                    isDark
-                      ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50"
-                      : "bg-white border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-violet-500"
-                  }
-                `}
+        w-full max-w-3xl pl-10 pr-4 py-2.5 rounded-full border outline-none
+        text-sm transition-all
+        ${
+          isDark
+            ? "bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-violet-500/50"
+            : "bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-violet-500"
+        }
+      `}
               />
             </div>
 
             {/* Filter */}
-            <div className="flex rounded-full overflow-hidden">
+            <div
+              className={`
+      flex rounded-full p-1 shrink-0
+      ${isDark ? "bg-white/5" : "bg-slate-100"}
+    `}
+            >
               {(["all", "unread", "read"] as const).map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
                   className={`
-                    px-4 py-2 text-xs text-sm font-medium capitalize transition-colors
-                    ${
-                      filter === f
-                        ? isDark
-                          ? "bg-violet-500/20 text-violet-400"
-                          : "bg-violet-100 text-violet-600"
-                        : isDark
-                        ? "bg-white/5 text-white/60 hover:bg-white/10"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                    }
-                  `}
+          cursor-pointer px-3 py-1.5 text-xs font-medium capitalize rounded-full transition-all
+          ${
+            filter === f
+              ? isDark
+                ? "bg-violet-500 text-white shadow-sm"
+                : "bg-white text-violet-600 shadow-sm"
+              : isDark
+              ? "text-white/60 hover:text-white"
+              : "text-slate-500 hover:text-slate-700"
+          }
+        `}
                 >
                   {f}
                 </button>
@@ -183,7 +188,7 @@ export default function AdminMessagesPage() {
         {/* Message List */}
         <div
           className={`w-full md:w-[200px] lg:w-[250px] border-r overflow-y-auto ${
-            isDark ? "border-white/10" : "border-black/10"
+            isDark ? "border-gray-300/10" : "border-black/10"
           } ${selectedMessage ? "hidden md:block" : ""}`}
         >
           <AnimatePresence>
@@ -208,7 +213,7 @@ export default function AdminMessagesPage() {
                   onClick={() => handleSelectMessage(message)}
                   className={`
                     p-4 border-b cursor-pointer transition-colors
-                    ${isDark ? "border-white/10" : "border-black/10"}
+                    ${isDark ? "border-gray-300/10" : "border-black/10"}
                     ${
                       selectedMessage?.id === message.id
                         ? isDark
@@ -301,15 +306,15 @@ export default function AdminMessagesPage() {
               {/* Detail Header */}
               <div
                 className={`p-6 border-b ${
-                  isDark ? "border-white/10" : "border-black/10"
+                  isDark ? "border-gray-300/10" : "border-black/10"
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col md:flex-row items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex flex-col md:flex-row gap-2 mb-1">
                       <button
                         onClick={() => setSelectedMessage(null)}
-                        className={`md:hidden p-1 rounded-lg ${
+                        className={`md:hidden p-1 rounded w-fit ${
                           isDark ? "hover:bg-white/10" : "hover:bg-black/5"
                         }`}
                       >
@@ -377,7 +382,7 @@ export default function AdminMessagesPage() {
               {/* Sender Info */}
               <div
                 className={`p-6 border-b ${
-                  isDark ? "border-white/10" : "border-black/10"
+                  isDark ? "border-gray-300/10" : "border-black/10"
                 }`}
               >
                 <div className="flex flex-wrap gap-6">
@@ -483,7 +488,7 @@ export default function AdminMessagesPage() {
                     p-6 rounded-2xl backdrop-blur-xl border
                     ${
                       isDark
-                        ? "bg-white/5 border-white/10"
+                        ? "bg-white/5 border-gray-300/10"
                         : "bg-white/70 border-black/10"
                     }
                   `}
@@ -501,7 +506,7 @@ export default function AdminMessagesPage() {
               {/* Reply Action */}
               <div
                 className={`p-6 border-t ${
-                  isDark ? "border-white/10" : "border-black/10"
+                  isDark ? "border-gray-300/10" : "border-black/10"
                 }`}
               >
                 <a
