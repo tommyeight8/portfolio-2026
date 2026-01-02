@@ -108,6 +108,10 @@ body {
   background-color: rgba(139, 92, 246, 0.3);
 }
 
+.scrollbar-hide {
+  -webkit-overflow-scrolling: touch;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
