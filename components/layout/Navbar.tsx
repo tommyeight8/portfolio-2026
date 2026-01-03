@@ -72,7 +72,7 @@ export function Navbar() {
             px-2 py-2 rounded-full backdrop-blur-xl border shadow-lg transition-all duration-300
             ${
               isDark
-                ? "bg-linear-to-b from-white/10 to-black/10 border-white/20 shadow-black/10"
+                ? "bg-linear-to-b from-white/10 to-gray-200/10 border-white/20 shadow-black/10"
                 : "bg-white/70 border-black/10 shadow-black/5"
             }
           `}

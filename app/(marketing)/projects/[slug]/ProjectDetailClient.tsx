@@ -43,7 +43,7 @@ function GlassCard({
   return (
     <div
       className={`
-        relative overflow-hidden rounded-2xl 
+        relative overflow-hidden rounded-md 
         backdrop-blur-xl
         shadow-[0_8px_32px_rgba(0,0,0,0.3)]
         transition-all duration-300
@@ -144,7 +144,7 @@ export function ProjectDetailClient({
 
   return (
     <main className="min-h-screen pt-32 pb-24 transition-colors duration-500">
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-3 md:px-6">
         {/* Back Link */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -217,8 +217,12 @@ export function ProjectDetailClient({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          className="-mx-6 md:mx-0"
         >
-          <GlassCard isDark={isDark} className="mb-12">
+          <GlassCard
+            isDark={isDark}
+            className="mb-8 md:mb-12 rounded-none md:rounded-md"
+          >
             <div className="relative aspect-video">
               <Image
                 src={project.thumbnail}
@@ -285,7 +289,7 @@ export function ProjectDetailClient({
                         key={index}
                         onClick={() => openModal(index)}
                         className={`
-                          relative aspect-video rounded-xl overflow-hidden cursor-pointer
+                          relative aspect-video rounded-md overflow-hidden cursor-pointer
                           transition-all duration-300 hover:scale-[1.02]
                           shadow-[0_4px_16px_rgba(0,0,0,0.2)]
                           hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]

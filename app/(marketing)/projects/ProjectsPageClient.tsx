@@ -100,7 +100,7 @@ export function ProjectsPageClient({
           : "bg-gradient-to-br from-slate-50 via-violet-100/30 to-slate-50"
       }`}
     >
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-3 md:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -387,7 +387,7 @@ function ProjectCard({
         <motion.article className="group relative h-full">
           <div
             className={`
-              relative rounded-2xl overflow-hidden 
+              relative rounded-md overflow-hidden 
               backdrop-blur-xl
               shadow-[0_8px_32px_rgba(0,0,0,0.3)]
               transition-all duration-300
