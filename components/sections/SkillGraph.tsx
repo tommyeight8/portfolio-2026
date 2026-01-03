@@ -92,7 +92,7 @@ const SkillCard = ({
     >
       <div
         className={`
-          relative p-5 rounded-2xl overflow-hidden
+          relative p-5 rounded-lg overflow-hidden
           backdrop-blur-xl
           shadow-md
           transition-all duration-300
@@ -115,7 +115,7 @@ const SkillCard = ({
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div
-                className="p-2 rounded-xl"
+                className="p-2 rounded-full"
                 style={{ backgroundColor: `${accentColor}20` }}
               >
                 <IconChartBar
@@ -149,7 +149,7 @@ const SkillCard = ({
           </motion.p>
 
           {/* Bar visualization */}
-          <div className="flex items-end gap-[3px] h-[20px] w-full mb-3">
+          <div className="flex items-end gap-[6px] h-[20px] w-full mb-3">
             {Array.from({ length: 20 }).map((_, i) => {
               const isFilled = i < filledBars;
               return (

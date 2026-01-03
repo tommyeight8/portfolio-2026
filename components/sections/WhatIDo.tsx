@@ -111,7 +111,7 @@ const CategoryCard = ({
       >
         <div
           className={`
-            relative h-full p-6 sm:p-8 rounded-2xl overflow-hidden
+            relative h-full p-6 sm:p-8 rounded-xl overflow-hidden
             backdrop-blur-xl
             transition-all duration-300
             shadow-[0_8px_32px_rgba(0,0,0,0.3)]
@@ -139,7 +139,7 @@ const CategoryCard = ({
               whileHover={{ rotate: [0, -10, 10, 0], scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className={`
-                inline-flex p-3 rounded-xl mb-6
+                inline-flex p-3 rounded-full mb-6
                 bg-gradient-to-br ${category.gradient}
                 shadow-lg
               `}
