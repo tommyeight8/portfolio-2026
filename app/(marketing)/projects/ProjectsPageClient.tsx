@@ -346,7 +346,7 @@ export function ProjectsPageClient({
               className={`
                 cursor-pointer mt-4 px-6 py-3 rounded-xl text-sm font-medium
                 backdrop-blur-xl
-                shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                shadow-[0_8px_32px_rgba(0,0,0,0.1)]
                 transition-all duration-300
                 ${
                   isDark
@@ -389,7 +389,7 @@ function ProjectCard({
             className={`
               relative rounded-md overflow-hidden 
               backdrop-blur-xl
-              shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+              shadow-[0_8px_32px_rgba(0,0,0,0.1)]
               transition-all duration-300
               ${
                 isDark
@@ -422,7 +422,7 @@ function ProjectCard({
                     className={`
                       px-3 py-1.5 rounded-xl text-xs font-medium
                       backdrop-blur-xl
-                      shadow-[0_4px_16px_rgba(0,0,0,0.2)]
+                      shadow-[0_4px_16px_rgba(0,0,0,0.1)]
                       ${
                         isDark
                           ? "bg-violet-500/20 text-violet-300 border border-violet-500/30"

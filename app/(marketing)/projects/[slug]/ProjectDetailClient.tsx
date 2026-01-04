@@ -45,7 +45,7 @@ function GlassCard({
       className={`
         relative overflow-hidden rounded-md 
         backdrop-blur-xl
-        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+        shadow-[0_6px_24px_rgba(0,0,0,0.1)]
         transition-all duration-300
         ${
           isDark
@@ -176,7 +176,6 @@ export function ProjectDetailClient({
             <span
               className={`
                 px-3 py-1.5 rounded-full text-xs font-medium
-                shadow-[0_4px_16px_rgba(0,0,0,0.2)]
                 ${
                   isDark
                     ? "bg-violet-500/20 text-violet-300 border border-violet-500/20"
@@ -217,7 +216,7 @@ export function ProjectDetailClient({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="-mx-6 md:mx-0"
+          className="w-screen md:w-auto md:mx-0 -mx-3"
         >
           <GlassCard
             isDark={isDark}
@@ -292,7 +291,7 @@ export function ProjectDetailClient({
                           relative aspect-video rounded-md overflow-hidden cursor-pointer
                           transition-all duration-300 hover:scale-[1.02]
                           shadow-[0_4px_16px_rgba(0,0,0,0.2)]
-                          hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                          hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)]
                           ${
                             isDark
                               ? "bg-white/[0.03] border border-white/[0.08]"
@@ -325,7 +324,7 @@ export function ProjectDetailClient({
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.1 }}
             className="space-y-6"
           >
             {/* Project Info */}
@@ -469,11 +468,11 @@ export function ProjectDetailClient({
                       className={`
                         flex items-center justify-center gap-2 w-full py-3 rounded-full
                         font-medium transition-all duration-300
-                        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                        shadow-[0_8px_32px_rgba(0,0,0,0.1)]
                         ${
                           isDark
                             ? "bg-white text-slate-900 hover:shadow-[0_12px_40px_rgba(255,255,255,0.2)]"
-                            : "bg-slate-900 text-white hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+                            : "bg-slate-900 text-white hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]"
                         }
                       `}
                     >
@@ -490,7 +489,7 @@ export function ProjectDetailClient({
                       className={`
                         flex items-center justify-center gap-2 w-full py-3 rounded-full
                         font-medium backdrop-blur-xl
-                        shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                        shadow-[0_8px_32px_rgba(0,0,0,0.1)]
                         transition-all duration-300
                         ${
                           isDark
@@ -690,7 +689,7 @@ export function ProjectDetailClient({
             className={`
               inline-flex items-center gap-2 px-6 py-3 rounded-full
               backdrop-blur-xl font-medium text-sm
-              shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+              shadow-[0_8px_32px_rgba(0,0,0,0.1)]
               transition-all duration-300
               ${
                 isDark
@@ -721,14 +720,14 @@ export function ProjectDetailClient({
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+              className="absolute top-6 right-6 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
               aria-label="Close modal"
             >
               <X className="w-6 h-6" />
             </button>
 
             {/* Image Counter */}
-            <div className="absolute top-6 left-6 z-10 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+            <div className="absolute top-6 left-6 z-10 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.08] text-white text-xs font-medium shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
               {activeIndex + 1} / {project.images.length}
             </div>
 
@@ -740,7 +739,7 @@ export function ProjectDetailClient({
                     e.stopPropagation();
                     goToPrev();
                   }}
-                  className="absolute left-4 md:left-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="absolute left-4 md:left-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="w-6 h-6" />
@@ -750,7 +749,7 @@ export function ProjectDetailClient({
                     e.stopPropagation();
                     goToNext();
                   }}
-                  className="absolute right-4 md:right-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="absolute right-4 md:right-8 z-10 p-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.05] hover:border-white/[0.12] transition-all shadow-[0_8px_32px_rgba(0,0,0,0.1)]"
                   aria-label="Next image"
                 >
                   <ChevronRight className="w-6 h-6" />
@@ -779,7 +778,7 @@ export function ProjectDetailClient({
 
             {/* Thumbnail Strip */}
             {project.images.length > 1 && (
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-x-auto">
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] overflow-x-auto">
                 {project.images.map((image, index) => (
                   <button
                     key={index}
