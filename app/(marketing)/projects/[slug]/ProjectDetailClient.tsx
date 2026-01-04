@@ -49,8 +49,8 @@ function GlassCard({
         transition-all duration-300
         ${
           isDark
-            ? "bg-white/[0.03] border-0 md:border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
-            : "bg-black/[0.02] border-0  md:border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+            ? "bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+            : "bg-black/[0.02] border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
         }
         ${className}
       `}
@@ -220,7 +220,7 @@ export function ProjectDetailClient({
         >
           <GlassCard
             isDark={isDark}
-            className="mb-8 md:mb-12 rounded-none md:rounded-md"
+            className="mb-8 md:mb-12 border-0 md:border  rounded-none md:rounded-md"
           >
             <div className="relative aspect-video">
               <Image
