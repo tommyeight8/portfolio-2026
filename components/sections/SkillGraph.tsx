@@ -149,7 +149,7 @@ const SkillCard = ({
           </motion.p>
 
           {/* Bar visualization */}
-          <div className="flex items-end gap-[6px] h-[20px] w-full mb-3">
+          <div className="flex items-end gap-[4px] h-[20px] w-full mb-3">
             {Array.from({ length: 20 }).map((_, i) => {
               const isFilled = i < filledBars;
               return (
