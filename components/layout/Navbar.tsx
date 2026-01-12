@@ -82,17 +82,11 @@ export function Navbar() {
             {/* Logo */}
             <Link
               href="/"
-              className={`px-4 py-2 text-sm font-semibold transition-colors flex items-baseline gap-1 ${
+              className={`px-4 py-2 text-sm font-semibold transition-colors flex items-baseline gap-1 whitespace-nowrap ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
               Tommy V<span className="bg-violet-500 h-1 w-1 block"></span>
-              {/* <Image
-                src={`/images/T-logo.png`}
-                width={40}
-                height={20}
-                alt="Tommy vong"
-              /> */}
             </Link>
 
             {/* Desktop Links */}
