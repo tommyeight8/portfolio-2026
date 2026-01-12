@@ -86,13 +86,13 @@ export function Navbar() {
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
-              {/* Portfolio<span className="bg-violet-500 h-1 w-1 block"></span> */}
-              <Image
+              Tommy V<span className="bg-violet-500 h-1 w-1 block"></span>
+              {/* <Image
                 src={`/images/T-logo.png`}
                 width={40}
                 height={20}
                 alt="Tommy vong"
-              />
+              /> */}
             </Link>
 
             {/* Desktop Links */}
