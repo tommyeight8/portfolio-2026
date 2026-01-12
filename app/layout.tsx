@@ -22,6 +22,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Portfolio | Web Developer & Graphic Designer",
   description: "Creative developer crafting digital experiences.",
+  icons: {
+    icon: "/images/T-logo-48x48.png",
+  },
 };
 
 export default function RootLayout({

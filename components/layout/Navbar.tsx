@@ -17,6 +17,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
+import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/projects", label: "Projects" },
@@ -85,7 +86,13 @@ export function Navbar() {
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
-              Portfolio<span className="bg-violet-500 h-1 w-1 block"></span>
+              {/* Portfolio<span className="bg-violet-500 h-1 w-1 block"></span> */}
+              <Image
+                src={`/images/T-logo.png`}
+                width={40}
+                height={20}
+                alt="Tommy vong"
+              />
             </Link>
 
             {/* Desktop Links */}
@@ -272,7 +279,7 @@ export function Navbar() {
               <Link
                 href="/login"
                 className={`
-                  flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-colors
+                  flex items-center gap-2 px-3 py-2 rounded-full text-sm transition-colors
                   ${
                     isDark
                       ? "bg-white/10 text-white/80 hover:bg-white/20"
