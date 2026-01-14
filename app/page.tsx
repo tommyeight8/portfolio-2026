@@ -1,43 +1,20 @@
-"use client";
+// app/page.tsx
+import projectService from "@/lib/services/project.service";
+import PortfolioLanding from "@/components/landing/PortfolioLanding";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  ArrowUpRight,
-  Github,
-  Linkedin,
-  Mail,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
-import WhatIDo from "@/components/sections/WhatIDo";
-import SkillGraph from "@/components/sections/SkillGraph";
-import { HeroParallaxHero } from "@/components/ui/HeroParallax";
+export default async function Home() {
+  const { data: projects } = await projectService.getPublishedProjects({
+    limit: 15,
+    sortBy: "order",
+    sortOrder: "asc",
+  });
 
-// ============ MAIN ============
-export default function GlassmorphicLanding() {
-  return (
-    <>
-      {/* FX WRAPPER */}
-      <div className="fx-wrapper">
-        <div className="aurora-background" />
-        <div className="cosmos-nebula" />
-        <div className="cosmos-dust" />
-        <div className="cosmos-dust-twinkle" />
-      </div>
+  const parallaxItems = projects.map((project) => ({
+    title: project.title,
+    // link: project.liveUrl || `/projects/${project.slug}`,
+    link: `/projects/${project.slug}`,
+    thumbnail: project.thumbnail,
+  }));
 
-      {/* CONTENT */}
-      <main className="relative z-10 text-white">
-        <Navbar />
-        <HeroParallaxHero />
-        <WhatIDo />
-        <SkillGraph />
-        <Footer />
-      </main>
-    </>
-  );
+  return <PortfolioLanding projects={parallaxItems} />;
 }

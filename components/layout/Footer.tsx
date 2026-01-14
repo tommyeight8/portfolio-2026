@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
+import Image from "next/image";
 
 export function Footer() {
   const { theme } = useTheme();
@@ -21,13 +22,19 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo - Left */}
           <div className="flex-1 flex justify-center md:justify-start">
-            <span
+            <Image
+              src={"/images/portfolio-logo.png"}
+              alt="tommy logo"
+              width={50}
+              height={50}
+            />
+            {/* <span
               className={`text-lg font-semibold flex items-baseline gap-1 ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
               Portfolio<span className="bg-violet-500 h-1 w-1 block"></span>
-            </span>
+            </span> */}
           </div>
 
           {/* Nav - Center */}
