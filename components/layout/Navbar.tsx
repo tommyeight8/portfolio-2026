@@ -2,9 +2,10 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import {
   Menu,
@@ -17,7 +18,6 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
-import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/projects", label: "Projects" },
@@ -33,10 +33,21 @@ export function Navbar() {
   const { data: session, status } = useSession();
   const isDark = theme === "dark";
   const userMenuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
+  // Throttled scroll handler
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -50,15 +61,39 @@ export function Navbar() {
         setIsUserMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  // Immediate navigation for mobile - closes menu first, then navigates
+  const handleMobileNav = useCallback(
+    (href: string) => {
+      setIsMobileMenuOpen(false);
+      // Small delay to let menu close animation start, then navigate
+      requestAnimationFrame(() => {
+        router.push(href);
+      });
+    },
+    [router],
+  );
+
+  const handleLogout = useCallback(() => {
     setIsUserMenuOpen(false);
+    setIsMobileMenuOpen(false);
     signOut({ callbackUrl: "/" });
-  };
+  }, []);
 
   return (
     <>
@@ -70,11 +105,11 @@ export function Navbar() {
       >
         <nav
           className={`
-            px-2 py-2 rounded-full backdrop-blur-xl border shadow-lg transition-all duration-300
+            px-2 py-2 rounded-full border shadow-lg transition-all duration-300
             ${
               isDark
-                ? "bg-linear-to-b from-white/10 to-gray-200/10 border-white/20 shadow-black/10"
-                : "bg-white/70 border-black/10 shadow-black/5"
+                ? "bg-slate-900/90 md:bg-white/10 md:backdrop-blur-xl border-white/20 shadow-black/10"
+                : "bg-white/95 md:bg-white/70 md:backdrop-blur-xl border-black/10 shadow-black/5"
             }
           `}
         >
@@ -134,21 +169,11 @@ export function Navbar() {
               </motion.div>
             </motion.button>
 
-            {/* User Button */}
-            {status === "loading" ? (
-              <div
-                className={`p-2 rounded-full ${
-                  isDark ? "bg-white/10" : "bg-black/5"
-                }`}
-              >
-                <div className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin opacity-50" />
-              </div>
-            ) : session ? (
+            {/* User Button - Show sign in link optimistically during loading */}
+            {status === "authenticated" && session ? (
               <div className="relative" ref={userMenuRef}>
                 <motion.button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  // whileHover={{ scale: 1.05 }}
-                  // whileTap={{ scale: 0.95 }}
                   className={`
                     flex items-center gap-2 px-3 py-2 rounded-full transition-colors cursor-pointer
                     ${
@@ -195,7 +220,7 @@ export function Navbar() {
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
                       className={`
-                        absolute right-0 top-full mt-2 w-56 py-2 rounded-md border shadow-xl backdrop-blur-xl
+                        absolute right-0 top-full mt-2 w-56 py-2 rounded-md border shadow-xl
                         ${
                           isDark
                             ? "bg-slate-950 border-gray-300/10"
@@ -286,27 +311,13 @@ export function Navbar() {
               </Link>
             )}
 
-            {/* CTA */}
-            {/* <Link
-              href="/contact"
-              className={`
-                hidden md:inline-flex ml-1 px-4 py-1 text-sm font-medium rounded-md transition-colors whitespace-nowrap
-                ${
-                  isDark
-                    ? "bg-white/20 text-white hover:bg-white/30"
-                    : "bg-slate-900 text-white hover:bg-slate-800"
-                }
-              `}
-            >
-              Let's Talk
-            </Link> */}
-
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 rounded-xl ${
+              className={`md:hidden p-2 rounded-xl cursor-pointer ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
+              aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -318,42 +329,49 @@ export function Navbar() {
         </nav>
       </motion.header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
+      {/* Mobile Menu - Simplified animations, no backdrop-blur */}
+      <AnimatePresence mode="sync">
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
             className="fixed inset-0 z-40 md:hidden"
           >
+            {/* Backdrop - solid color, no blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`absolute inset-0 ${
-                isDark ? "bg-slate-950" : "bg-white/95"
+              transition={{ duration: 0.15 }}
+              className={`absolute inset-0 z-0 ${
+                isDark ? "bg-slate-950" : "bg-white"
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             />
 
+            {/* Nav content */}
             <motion.nav
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="relative flex flex-col items-center justify-center min-h-screen gap-8"
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="relative z-10 flex flex-col items-center justify-center min-h-screen gap-8"
             >
               {NAV_LINKS.map((link) => (
-                <Link
+                <button
                   key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-3xl font-medium transition-colors ${
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMobileNav(link.href);
+                  }}
+                  className={`text-3xl font-medium transition-colors cursor-pointer ${
                     isDark ? "text-white" : "text-slate-900"
                   }`}
                 >
                   {link.label}
-                </Link>
+                </button>
               ))}
 
               {/* Mobile User Section */}
@@ -362,23 +380,25 @@ export function Navbar() {
                   isDark ? "border-gray-300/10" : "border-black/10"
                 }`}
               >
-                {session ? (
+                {status === "authenticated" && session ? (
                   <div className="space-y-4">
-                    <Link
-                      href="/admin"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block text-lg font-medium ${
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMobileNav("/admin");
+                      }}
+                      className={`block w-full text-lg font-medium cursor-pointer ${
                         isDark ? "text-white/70" : "text-slate-600"
                       }`}
                     >
                       Admin Dashboard
-                    </Link>
+                    </button>
                     <button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleLogout();
                       }}
-                      className={`text-lg font-medium ${
+                      className={`text-lg font-medium cursor-pointer ${
                         isDark ? "text-red-400" : "text-red-500"
                       }`}
                     >
@@ -386,15 +406,17 @@ export function Navbar() {
                     </button>
                   </div>
                 ) : (
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`text-lg font-medium ${
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMobileNav("/login");
+                    }}
+                    className={`text-lg font-medium cursor-pointer ${
                       isDark ? "text-white/70" : "text-slate-600"
                     }`}
                   >
                     Sign In
-                  </Link>
+                  </button>
                 )}
               </div>
             </motion.nav>

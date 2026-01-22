@@ -35,7 +35,7 @@ const useMagnetic = (strength: number = 0.1) => {
       x.set(deltaX);
       y.set(deltaY);
     },
-    [strength, x, y]
+    [strength, x, y],
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -67,53 +67,53 @@ export const HeroParallax = ({
     offset: ["start start", "end start"],
   });
 
-  const [minHeight, setMinHeight] = useState<string>("150vh");
+  // const [minHeight, setMinHeight] = useState<string>("150vh");
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, 1000]),
-    springConfig
+    springConfig,
   );
   const translateXReverse = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, -1000]),
-    springConfig
+    springConfig,
   );
   const rotateX = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
+    springConfig,
   );
   const opacity = useSpring(
     useTransform(scrollYProgress, [0, 0.5], [0.5, 1]),
-    springConfig
+    springConfig,
   );
   const rotateZ = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
+    springConfig,
   );
   const translateY = useSpring(
     useTransform(scrollYProgress, [0, 0.2], [-700, 200]),
-    springConfig
+    springConfig,
   );
 
-  useEffect(() => {
-    const updateHeight = () => {
-      const vw = window.innerWidth;
-      const height = vw < 768 ? 2000 : 2247;
-      setMinHeight(`${height}px`);
-    };
+  // useEffect(() => {
+  //   const updateHeight = () => {
+  //     const vw = window.innerWidth;
+  //     const height = vw < 768 ? 2000 : 2247;
+  //     setMinHeight(`${height}px`);
+  //   };
 
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
+  //   updateHeight();
+  //   window.addEventListener("resize", updateHeight);
 
-    return () => window.removeEventListener("resize", updateHeight);
-  }, []);
+  //   return () => window.removeEventListener("resize", updateHeight);
+  // }, []);
 
   return (
     <div
       ref={ref}
       className="-mt-20 md:-mt-24 pb-60 relative overflow-hidden antialiased flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
-      style={{ minHeight }}
+      // style={{ minHeight }}
     >
       <Header />
 
@@ -166,7 +166,7 @@ export const Header = () => {
   const isDark = theme === "dark";
 
   return (
-    <div className="max-w-7xl mx-auto px-4 w-full relative z-20 min-h-screen flex flex-col justify-center pt-32 md:pt-40">
+    <div className="max-w-7xl mx-auto px-4 w-full relative z-20 min-h-dvh flex flex-col justify-center pt-32 md:pt-40">
       {/* Badge */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
