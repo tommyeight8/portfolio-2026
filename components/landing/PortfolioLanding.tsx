@@ -20,8 +20,34 @@ export default function PortfolioLanding({
 }) {
   return (
     <>
-      {/* FX WRAPPER */}
-      <div className="fx-wrapper">
+      {/* MOBILE GRADIENT BACKGROUND WITH STARS */}
+      <div className="fixed inset-0 md:hidden z-0">
+        {/* Dark gradient base */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(145deg, #050208 0%, #0a0a12 25%, #0F0A1A 50%, #031a3d 80%, #052658 100%)",
+          }}
+        />
+
+        {/* Star layers */}
+        <div className="stars-sm absolute inset-0" />
+        <div className="stars-md absolute inset-0" />
+        <div className="stars-lg absolute inset-0" />
+
+        {/* Subtle glow accent */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            background:
+              "radial-gradient(ellipse at 80% 20%, rgba(5, 38, 88, 0.5) 0%, transparent 50%)",
+          }}
+        />
+      </div>
+
+      {/* FX WRAPPER - hidden on mobile */}
+      <div className="fx-wrapper hidden md:block">
         <div className="aurora-background" />
         <div className="cosmos-nebula" />
         <div className="cosmos-dust" />

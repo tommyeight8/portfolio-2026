@@ -20,7 +20,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Web Developer & Graphic Designer",
+  title: "Tommy V. | Web Developer & Graphic Designer",
   description: "Creative developer crafting digital experiences.",
   icons: {
     icon: "/images/portfolio-logo.png",

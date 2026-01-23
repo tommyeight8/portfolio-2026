@@ -173,7 +173,7 @@ export const Header = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className={`
-    inline-flex items-center gap-2 px-4 py-2 rounded-full
+    hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-full
     backdrop-blur-xl max-w-fit mb-8
     shadow-[0_8px_32px_rgba(0,0,0,0.3)]
     transition-all duration-300
@@ -210,13 +210,13 @@ export const Header = () => {
           ${isDark ? "text-white" : "text-slate-900"}
         `}
       >
-        <span>Designing Bold Brands</span>
-        <span className="flex items-center gap-4">
+        <span>Designing Bold Brands Building Modern Websites</span>
+        {/* <span className="flex items-center gap-4">
           <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
             &
           </span>{" "}
           Building Modern Websites
-        </span>
+        </span> */}
       </motion.h1>
 
       {/* Subtitle */}
