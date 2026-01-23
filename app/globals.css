@@ -495,4 +495,21 @@ body {
   .fx-wrapper {
     display: none;
   }
+
+  .dark body {
+    background: linear-gradient(
+      145deg,
+      #050208 0%,
+      #0a0a12 25%,
+      #0f0a1a 50%,
+      #031a3d 80%,
+      #052658 100%
+    );
+    background-attachment: fixed;
+  }
+
+  /* Light mode stays white/light */
+  body {
+    background: rgb(var(--bg-primary));
+  }
 }
