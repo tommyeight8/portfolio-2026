@@ -487,8 +487,18 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /* Remove bg-background from here */
   }
+}
+
+/* Then handle body background manually */
+body {
+  background-color: rgb(var(--bg-primary));
+}
+
+.dark body {
+  background-color: rgb(var(--bg-primary));
 }
 
 @media (max-width: 767px) {
@@ -506,10 +516,5 @@ body {
       #052658 100%
     );
     background-attachment: fixed;
-  }
-
-  /* Light mode stays white/light */
-  body {
-    background: rgb(var(--bg-primary));
   }
 }
