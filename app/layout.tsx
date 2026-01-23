@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Sora, Space_Grotesk } from "next/font/google";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
@@ -18,16 +18,6 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
   display: "swap",
 });
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#050208" },
-  ],
-};
 
 export const metadata: Metadata = {
   title: "Tommy V. | Web Developer & Graphic Designer",
@@ -57,22 +47,12 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-      (function() {
-        const theme = localStorage.getItem('theme') || 
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.add(theme);
-        
-        // Set theme-color meta for safe areas
-        const themeColor = theme === 'dark' ? '#050208' : '#f8fafc';
-        let meta = document.querySelector('meta[name="theme-color"]');
-        if (!meta) {
-          meta = document.createElement('meta');
-          meta.name = 'theme-color';
-          document.head.appendChild(meta);
-        }
-        meta.content = themeColor;
-      })();
-    `,
+              (function() {
+                const theme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.classList.add(theme);
+              })();
+            `,
           }}
         />
       </head>
