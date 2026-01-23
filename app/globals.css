@@ -112,6 +112,12 @@ body {
   min-height: -webkit-fill-available; /* Safari fallback */
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 /* iOS Safari specific fix */
 @supports (-webkit-touch-callout: none) {
   html,

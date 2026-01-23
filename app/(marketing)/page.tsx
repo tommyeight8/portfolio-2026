@@ -39,8 +39,8 @@ export default function HomePage() {
           style={{ animationDelay: "2s" }}
         />
       </div>
-
       <Header />
+
       <WhatIDo />
       <SkillGraph />
     </main>
