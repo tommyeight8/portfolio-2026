@@ -506,6 +506,11 @@ body {
     display: none;
   }
 
+  /* This fills the safe areas */
+  .dark html {
+    background-color: #050208 !important;
+  }
+
   .dark body {
     background: linear-gradient(
       145deg,
@@ -514,7 +519,12 @@ body {
       #0f0a1a 50%,
       #031a3d 80%,
       #052658 100%
-    );
+    ) !important;
     background-attachment: fixed;
+  }
+
+  /* Light mode safe areas */
+  html {
+    background-color: #f8fafc !important;
   }
 }
