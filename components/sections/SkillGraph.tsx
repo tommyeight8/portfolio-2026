@@ -45,7 +45,7 @@ const useMagnetic = (strength: number = 0.15) => {
       x.set(deltaX);
       y.set(deltaY);
     },
-    [strength, x, y]
+    [strength, x, y],
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -161,8 +161,8 @@ const SkillCard = ({
                     backgroundColor: isFilled
                       ? accentColor
                       : isDark
-                      ? "rgba(148, 163, 184, 0.15)"
-                      : "rgba(100, 116, 139, 0.2)",
+                        ? "rgba(148, 163, 184, 0.15)"
+                        : "rgba(100, 116, 139, 0.2)",
                     opacity: isFilled ? 0 : 0.4,
                   }}
                   animate={
@@ -225,7 +225,7 @@ const SkillGraph = () => {
             className={`
     inline-flex items-center gap-2 px-4 py-2 rounded-full
     backdrop-blur-xl mb-6
-    shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+    shadow-[0_8px_32px_rgba(0,0,0,0.1)]
     transition-all duration-300
     ${
       isDark

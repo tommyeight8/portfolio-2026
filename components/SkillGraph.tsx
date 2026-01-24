@@ -42,7 +42,7 @@ const useMagnetic = (strength = 0.15) => {
       x.set((e.clientX - (rect.left + rect.width / 2)) * strength);
       y.set((e.clientY - (rect.top + rect.height / 2)) * strength);
     },
-    [strength, x, y]
+    [strength, x, y],
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -175,7 +175,7 @@ const SkillGraph = () => {
       <div className="max-w-[1100px] mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-xl shadow-lg mb-6">
+          <div className="inline-flex gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-white/10 backdrop-blur-xl shadow-xs mb-6">
             <IconChartBar className="w-4 h-4 text-violet-500" />
             <span className="text-sm text-slate-700 dark:text-white/80">
               Skills

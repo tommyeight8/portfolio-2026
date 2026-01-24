@@ -35,10 +35,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     // Update theme-color meta for safe areas
     const themeColor = theme === "dark" ? "#050208" : "#f8fafc";
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", themeColor);
+    let meta = document.querySelector('meta[name="theme-color"]');
+
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      document.head.appendChild(meta);
     }
+
+    meta.setAttribute("content", themeColor);
   }, [theme, mounted]);
 
   const toggleTheme = () => {

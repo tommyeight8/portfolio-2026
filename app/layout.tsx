@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { Sora, Space_Grotesk } from "next/font/google";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { ThemeProvider } from "@/lib/providers/ThemeProvider";
-import "./globals.css";
 import { AuthProvider } from "@/lib/providers/AuthProvider";
+import "./globals.css";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -18,6 +18,13 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
   display: "swap",
 });
+
+/* ✅ THIS IS REQUIRED */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Tommy V. | Web Developer & Graphic Designer",
@@ -39,17 +46,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover"
-        />
-
+        {/* Theme pre-hydration script is OK */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const theme = localStorage.getItem('theme') || 
-                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                const theme =
+                  localStorage.getItem('theme') ||
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches
+                    ? 'dark'
+                    : 'light');
                 document.documentElement.classList.add(theme);
               })();
             `,

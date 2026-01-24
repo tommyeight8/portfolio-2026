@@ -13,7 +13,7 @@ import {
 } from "@tabler/icons-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
 
-const useMagnetic = (strength: number = 0.3) => {
+const useMagnetic = (strength: number = 0.1) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -33,7 +33,7 @@ const useMagnetic = (strength: number = 0.3) => {
       x.set(deltaX);
       y.set(deltaY);
     },
-    [strength, x, y]
+    [strength, x, y],
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -100,7 +100,7 @@ const CategoryCard = ({
       transition={{
         duration: 0.6,
         delay: index * 0.15,
-        ease: [0.21, 0.47, 0.32, 0.98],
+        ease: [0.21, 0.47, 0.12, 0.98],
       }}
     >
       <motion.div
@@ -114,7 +114,7 @@ const CategoryCard = ({
             relative h-full p-6 sm:p-8 rounded-xl overflow-hidden
             backdrop-blur-xl
             transition-all duration-300
-            shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+            shadow-[0_8px_32px_rgba(0,0,0,0.1)]
             group-hover:-translate-y-1
             ${
               isDark
@@ -179,7 +179,7 @@ const CategoryCard = ({
                   key={skill}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: index * 0.15 + idx * 0.05 + 0.3 }}
+                  transition={{ delay: index * 0.15 + idx * 0.05 + 0.1 }}
                   className={`
                     px-3 py-1.5 text-xs font-medium rounded-xl
                     transition-colors duration-300
@@ -226,7 +226,7 @@ const WhatIDo = () => {
             className={`
     inline-flex items-center gap-2 px-4 py-2 rounded-full
     backdrop-blur-xl mb-6
-    shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+    shadow-[0_8px_32px_rgba(0,0,0,0.1)]
     transition-all duration-300
     ${
       isDark
