@@ -64,7 +64,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased transition-colors duration-300 bg-background">
+      <body className="antialiased transition-colors duration-300">
         <AuthProvider>
           <ThemeProvider>
             <QueryProvider>{children}</QueryProvider>
