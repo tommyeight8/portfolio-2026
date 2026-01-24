@@ -47,6 +47,8 @@ export default function RootLayout({
     >
       <head>
         {/* Theme pre-hydration script is OK */}
+        <meta name="theme-color" content="#020617" />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `
