@@ -104,7 +104,7 @@ export default function ResumePage() {
   return (
     <main
       ref={containerRef}
-      className={`min-h-screen relative ${isDark ? "bg-slate-950" : "bg-slate-50"}`}
+      //   className={`min-h-screen relative ${isDark ? "bg-slate-950" : "bg-slate-50"}`}
     >
       {/* Parallax Background */}
       <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
