@@ -11,6 +11,7 @@ export default function MarketingLayout({
   return (
     <>
       <Navbar />
+      TESTING TESTING
       {children}
       <Footer />
     </>
