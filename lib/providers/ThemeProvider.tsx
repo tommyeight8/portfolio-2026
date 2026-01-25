@@ -25,6 +25,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(stored ?? "dark");
   }, []);
 
+  // useEffect(() => {
+  //   if (!mounted) return;
+
+  //   const root = document.documentElement;
+  //   root.classList.remove("light", "dark");
+  //   root.classList.add(theme);
+  //   localStorage.setItem("theme", theme);
+
+  //   // Update theme-color meta for safe areas
+  //   const themeColor = theme === "dark" ? "#050208" : "#f8fafc";
+  //   let meta = document.querySelector('meta[name="theme-color"]');
+
+  //   if (!meta) {
+  //     meta = document.createElement("meta");
+  //     meta.setAttribute("name", "theme-color");
+  //     document.head.appendChild(meta);
+  //   }
+
+  //   meta.setAttribute("content", themeColor);
+  // }, [theme, mounted]);
+
   useEffect(() => {
     if (!mounted) return;
 
@@ -33,16 +54,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.classList.add(theme);
     localStorage.setItem("theme", theme);
 
-    // Update theme-color meta for safe areas
-    const themeColor = theme === "dark" ? "#050208" : "#f8fafc";
-    let meta = document.querySelector('meta[name="theme-color"]');
+    // Update safe area colors
+    const themeColor = theme === "dark" ? "#020617" : "#f8fafc";
+    root.style.backgroundColor = themeColor;
 
+    let meta = document.querySelector('meta[name="theme-color"]');
     if (!meta) {
       meta = document.createElement("meta");
       meta.setAttribute("name", "theme-color");
       document.head.appendChild(meta);
     }
-
     meta.setAttribute("content", themeColor);
   }, [theme, mounted]);
 

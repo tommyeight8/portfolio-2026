@@ -361,3 +361,21 @@ body {
     transform: translateX(0) translateY(0) scale(1);
   }
 }
+
+/* Add after your html rules */
+html {
+  scroll-behavior: smooth;
+  background-color: #f8fafc; /* Light mode default */
+}
+
+.dark html,
+html.dark {
+  background-color: #020617; /* Dark mode */
+}
+
+/* For /resume page specifically on mobile */
+@media (max-width: 767px) {
+  html.dark {
+    background-color: #020617;
+  }
+}

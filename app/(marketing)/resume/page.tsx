@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Download, Mail, MapPin, Globe, Check } from "lucide-react";
 import Image from "next/image";
@@ -100,6 +100,17 @@ export default function ResumePage() {
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 0.15], ["0%", "-20%"]);
+
+  // Update safe area background on theme change
+  useEffect(() => {
+    const bgColor = isDark ? "#020617" : "#f8fafc";
+    document.documentElement.style.backgroundColor = bgColor;
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute("content", bgColor);
+    }
+  }, [isDark]);
 
   return (
     <main
