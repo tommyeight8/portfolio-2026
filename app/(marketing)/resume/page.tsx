@@ -519,7 +519,7 @@ export default function ResumePage() {
                 className="flex flex-wrap justify-center gap-4"
               >
                 <a
-                  href="mailto:Tommyvong88@gmail.com"
+                  href="/contact"
                   className="inline-flex items-center gap-2 bg-violet-500 text-white px-6 py-3 rounded-full font-medium hover:bg-violet-600 transition shadow-lg shadow-violet-500/25"
                 >
                   <Mail className="w-5 h-5" />
