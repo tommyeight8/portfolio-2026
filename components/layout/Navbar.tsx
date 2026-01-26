@@ -358,7 +358,7 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 flex flex-col items-center justify-center min-h-screen gap-8"
+              className="relative z-10 flex flex-col items-center justify-center min-h-screen gap-6"
             >
               {NAV_LINKS.map((link) => (
                 <button
@@ -367,8 +367,8 @@ export function Navbar() {
                     e.stopPropagation();
                     handleMobileNav(link.href);
                   }}
-                  className={`text-3xl font-medium transition-colors cursor-pointer ${
-                    isDark ? "text-white" : "text-slate-900"
+                  className={`text-2xl transition-colors cursor-pointer ${
+                    isDark ? "text-slate-400" : "text-slate-900"
                   }`}
                 >
                   {link.label}
