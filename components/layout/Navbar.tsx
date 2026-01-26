@@ -16,6 +16,7 @@ import {
   LogOut,
   LayoutDashboard,
   ChevronDown,
+  LogInIcon,
 } from "lucide-react";
 import { useTheme } from "@/lib/providers/ThemeProvider";
 
@@ -367,8 +368,8 @@ export function Navbar() {
                     e.stopPropagation();
                     handleMobileNav(link.href);
                   }}
-                  className={`text-2xl transition-colors cursor-pointer ${
-                    isDark ? "text-slate-400" : "text-slate-900"
+                  className={`text-4xl font-extralight transition-colors cursor-pointer tracking-wider ${
+                    isDark ? "text-gray-500" : "text-slate-900"
                   }`}
                 >
                   {link.label}
@@ -412,10 +413,11 @@ export function Navbar() {
                       e.stopPropagation();
                       handleMobileNav("/login");
                     }}
-                    className={`text-lg font-medium cursor-pointer ${
-                      isDark ? "text-white/70" : "text-slate-600"
+                    className={`text-lg font-medium cursor-pointer flex items-center justify-center w-full gap-2 ${
+                      isDark ? "text-violet-500" : "text-slate-600"
                     }`}
                   >
+                    <User />
                     Sign In
                   </button>
                 )}
