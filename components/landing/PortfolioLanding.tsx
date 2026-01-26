@@ -20,17 +20,11 @@ export default function PortfolioLanding({
 }) {
   return (
     <>
-      {/* MOBILE GRADIENT BACKGROUND - slightly richer */}
+      {/* MOBILE GRADIENT BACKGROUND */}
       <div
-        className="fixed inset-0 md:hidden"
+        className="fixed inset-0 z-0 md:hidden"
         style={{
-          background: `linear-gradient(
-      160deg,
-      hsl(185, 60%, 8%) 0%,
-      hsl(220, 45%, 10%) 40%,
-      hsl(260, 50%, 11%) 70%,
-      hsl(277, 55%, 9%) 100%
-    )`,
+          background: `linear-gradient(135deg, #08203e, #8E2DE2)`,
         }}
       />
       {/* FX WRAPPER - hidden on mobile */}
