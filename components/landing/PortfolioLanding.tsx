@@ -24,7 +24,7 @@ export default function PortfolioLanding({
       <div
         className="fixed inset-0 z-0 md:hidden"
         style={{
-          background: `linear-gradient(135deg, #08203e, #8E2DE2)`,
+          background: `linear-gradient(135deg, #08203e, #4A00E0)`,
         }}
       />
       {/* FX WRAPPER - hidden on mobile */}
