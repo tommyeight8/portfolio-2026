@@ -45,7 +45,7 @@ const experience = [
   {
     title: "Full-Stack Developer",
     company: "Cultivated Agency",
-    location: "Los Angeles, CA",
+    location: "Walnut, CA",
     period: "2020 – Present",
     highlights: [
       "Build custom Shopify storefronts and headless e-commerce solutions using Storefront API, Liquid templating, and React/Next.js",
