@@ -369,7 +369,7 @@ export function Navbar() {
                     handleMobileNav(link.href);
                   }}
                   className={`text-4xl font-extralight transition-colors cursor-pointer tracking-wider ${
-                    isDark ? "text-gray-500" : "text-slate-900"
+                    isDark ? "text-gray-300" : "text-slate-900"
                   }`}
                 >
                   {link.label}
