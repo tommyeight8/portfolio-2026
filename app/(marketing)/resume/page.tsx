@@ -43,7 +43,7 @@ const skills = {
 
 const experience = [
   {
-    title: "Founder & Full-Stack Developer",
+    title: "Full-Stack Developer",
     company: "Cultivated Agency",
     location: "Los Angeles, CA",
     period: "2020 – Present",
