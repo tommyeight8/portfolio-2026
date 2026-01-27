@@ -21,12 +21,12 @@ export default function PortfolioLanding({
   return (
     <>
       {/* MOBILE GRADIENT BACKGROUND */}
-      <div
+      {/* <div
         className="fixed inset-0 z-0 md:hidden"
         style={{
           background: `linear-gradient(135deg, #08203e, #4A00E0)`,
         }}
-      />
+      /> */}
       {/* FX WRAPPER - hidden on mobile */}
       <div className="fx-wrapper hidden md:block min-h-screen">
         <div className="aurora-background" />
