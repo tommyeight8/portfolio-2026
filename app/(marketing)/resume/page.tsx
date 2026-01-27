@@ -214,7 +214,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              href="/Tommy_Vong_Senior_Graphic_Designer.docx"
+              href="Tommy_Vong_Senior_Full_Stack_Engineer.docx"
               download
               className="inline-flex items-center gap-2 bg-violet-500 text-white px-6 py-3 rounded-full font-medium hover:bg-violet-600 transition w-fit shadow-lg shadow-violet-500/25"
             >
@@ -526,7 +526,7 @@ export default function ResumePage() {
                   Get in touch
                 </a>
                 <a
-                  href="/Tommy_Vong_Senior_Graphic_Designer.docx"
+                  href="Tommy_Vong_Senior_Full_Stack_Engineer.docx"
                   download
                   className={`inline-flex items-center gap-2 border px-6 py-3 rounded-full font-medium transition ${
                     isDark
