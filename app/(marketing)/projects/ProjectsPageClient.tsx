@@ -42,7 +42,7 @@ export function ProjectsPageClient({
   const allTags = useMemo(() => {
     const tags = new Set<string>();
     initialProjects.forEach((project) => {
-      project.tags.forEach((tag) => tags.add(tag));
+      project.tags.forEach((tag: string) => tags.add(tag));
     });
     return Array.from(tags).sort();
   }, [initialProjects]);
@@ -68,7 +68,7 @@ export function ProjectsPageClient({
       // Tags filter
       if (selectedTags.length > 0) {
         const hasAllTags = selectedTags.every((tag) =>
-          project.tags.includes(tag)
+          project.tags.includes(tag),
         );
         if (!hasAllTags) return false;
       }
@@ -79,7 +79,7 @@ export function ProjectsPageClient({
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -194,8 +194,8 @@ export function ProjectsPageClient({
                     ? "bg-violet-500/20 text-violet-400 border border-violet-500/30"
                     : "bg-violet-500/10 text-violet-600 border border-violet-500/20"
                   : isDark
-                  ? "bg-white/[0.03] text-zinc-400 border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
-                  : "bg-black/[0.02] text-slate-600 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+                    ? "bg-white/[0.03] text-zinc-400 border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+                    : "bg-black/[0.02] text-slate-600 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
               }
             `}
                   >
@@ -260,8 +260,8 @@ export function ProjectsPageClient({
                       ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
                       : "bg-cyan-500/10 text-cyan-600 border border-cyan-500/20"
                     : isDark
-                    ? "bg-white/[0.03] text-zinc-500 border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
-                    : "bg-black/[0.02] text-slate-500 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
+                      ? "bg-white/[0.03] text-zinc-500 border border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.12]"
+                      : "bg-black/[0.02] text-slate-500 border border-black/[0.06] hover:bg-black/[0.04] hover:border-black/[0.10]"
                 }
               `}
                     >
