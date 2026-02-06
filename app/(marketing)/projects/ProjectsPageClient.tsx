@@ -56,7 +56,9 @@ export function ProjectsPageClient({
         const matchesSearch =
           project.title.toLowerCase().includes(searchLower) ||
           project.description.toLowerCase().includes(searchLower) ||
-          project.tags.some((tag) => tag.toLowerCase().includes(searchLower));
+          project.tags.some((tag: string) =>
+            tag.toLowerCase().includes(searchLower),
+          );
         if (!matchesSearch) return false;
       }
 
