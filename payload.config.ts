@@ -19,8 +19,10 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 const gcsBucket = process.env.GCS_BUCKET;
+// The key is a JSON string. A local .env wraps it in single quotes; if those quotes are
+// pasted into a host's settings they become part of the value, so strip them first.
 const gcsCredentials = process.env.GCS_CREDENTIALS
-  ? JSON.parse(process.env.GCS_CREDENTIALS)
+  ? JSON.parse(process.env.GCS_CREDENTIALS.trim().replace(/^'([\s\S]*)'$/, "$1"))
   : undefined;
 
 export default buildConfig({
