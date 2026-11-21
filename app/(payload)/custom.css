@@ -2,6 +2,16 @@
 :root {
   --brand: #2563eb; /* blue-600 */
   --brand-hover: #1d4ed8; /* blue-700 */
+
+  /* Rounded corners to match the public site (Payload defaults: 3px / 4px / 8px). */
+  --style-radius-s: 10px;
+  --style-radius-m: 12px;
+  --style-radius-l: 16px;
+}
+
+/* Pill buttons, as on the public site. */
+.btn {
+  border-radius: 9999px;
 }
 
 .btn--style-primary {
