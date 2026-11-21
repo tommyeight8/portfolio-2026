@@ -1,32 +1,11 @@
-// next.config.ts
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.supabase.co",
-      },
-      {
-        protocol: "https",
-        hostname: "tommyvong.com",
-      },
-      // optional but recommended for dev
-      {
-        protocol: "http",
-        hostname: "localhost",
-      },
-    ],
+    // Media is served by Payload from this app (/api/media/file/...), backed by GCS.
+    localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/images/**" }],
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

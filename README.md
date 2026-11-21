@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# my-portfolio
 
-## Getting Started
+Portfolio site and admin in one Next.js app.
 
-First, run the development server:
+- **Admin / CMS:** Payload 3 at `/admin`
+- **Database:** Supabase Postgres (`@payloadcms/db-postgres`)
+- **Media:** Google Cloud Storage (`@payloadcms/storage-gcs`)
+- **Email:** Resend (`@payloadcms/email-resend`)
+- **Hosting:** Vercel
+
+## Layout
+
+| Path | What |
+|---|---|
+| `payload.config.ts` | Payload config: database, storage, email |
+| `collections/` | Projects, Media, Messages (contact submissions), Users |
+| `globals/` | Site Settings, Home Page, Resume |
+| `app/(payload)/` | Payload admin and REST API |
+| `app/(site)/` | Public pages, rendered from Payload's Local API |
+| `lib/data.ts` | Data fetchers used by the public pages |
+| `migrations/` | Database migrations (run in production) |
+| `scripts/migrate-legacy.ts` | One-time import from the old Prisma DB + Cloudinary |
+
+## Setup
+
+1. Copy `.env.example` to `.env` and fill it in.
+2. `npm install`
+3. `npm run dev`, then open `/admin` and create the first admin user.
+
+In development Payload syncs the schema to the database automatically. Without
+`GCS_BUCKET` uploads go to `./media`; without `RESEND_API_KEY` emails are logged
+to the console.
+
+## Changing the content model
+
+After editing a collection or global:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run generate:types
+npm run payload -- migrate:create <name>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploying to Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Set the build command to `npm run ci` (runs `payload migrate`, then `next build`)
+and add the variables from `.env.example` to the Vercel project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Migrating the old site's content
 
-## Learn More
+Set `LEGACY_DATABASE_URL` to the old database, then:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run migrate:legacy
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+It copies projects, site settings and contact messages, and re-uploads every
+Cloudinary image through Payload (into GCS when configured). The old database
+is only read. It is safe to re-run.
