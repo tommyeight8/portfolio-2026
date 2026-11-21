@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { Gallery, type GalleryImage } from "@/components/site/Gallery";
 import { categoryLabel } from "@/components/site/ProjectCard";
 import { asMedia, getProjectBySlug, mediaUrl } from "@/lib/data";
 
@@ -27,7 +28,17 @@ export default async function ProjectPage({ params }: Props) {
   if (!project) notFound();
 
   const cover = asMedia(project.thumbnail);
-  const gallery = (project.images ?? []).map(asMedia).filter((m) => m !== null);
+  const gallery: GalleryImage[] = (project.images ?? [])
+    .map(asMedia)
+    .filter((m) => m !== null && Boolean(m.url))
+    .map((m) => ({
+      id: m!.id,
+      thumb: mediaUrl(m, "card") ?? m!.url!,
+      full: mediaUrl(m, "large") ?? m!.url!,
+      alt: m!.alt || project.title,
+      width: m!.width ?? 1600,
+      height: m!.height ?? 1000,
+    }));
 
   const facts = [
     { label: "Client", value: project.client },
@@ -56,7 +67,6 @@ export default async function ProjectPage({ params }: Props) {
         <h1 className="mt-3 font-display text-4xl font-semibold leading-tight sm:text-6xl">
           {project.title}
         </h1>
-        <p className="mt-5 text-lg leading-relaxed text-muted">{project.description}</p>
         {(project.liveUrl || project.githubUrl) && (
           <div className="mt-8 flex flex-wrap gap-3">
             {project.liveUrl && (
@@ -98,8 +108,9 @@ export default async function ProjectPage({ params }: Props) {
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_18rem]">
         <div className="min-w-0">
+          <p className="text-lg leading-relaxed text-muted">{project.description}</p>
           {project.content ? (
-            <RichText data={project.content} className="prose-site max-w-none" />
+            <RichText data={project.content} className="prose-site mt-8 max-w-none" />
           ) : null}
         </div>
 
@@ -130,22 +141,12 @@ export default async function ProjectPage({ params }: Props) {
       </div>
 
       {gallery.length > 0 && (
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
-          {gallery.map((image) =>
-            image.url ? (
-              <div key={image.id} className="card overflow-hidden">
-                <Image
-                  src={mediaUrl(image, "large") ?? image.url}
-                  alt={image.alt || project.title}
-                  width={image.width ?? 1600}
-                  height={image.height ?? 1000}
-                  sizes="(min-width: 640px) 50vw, 100vw"
-                  className="h-auto w-full"
-                />
-              </div>
-            ) : null,
-          )}
-        </div>
+        <section className="mt-16">
+          <h2 className="eyebrow">Gallery</h2>
+          <div className="mt-6">
+            <Gallery images={gallery} />
+          </div>
+        </section>
       )}
     </article>
   );
