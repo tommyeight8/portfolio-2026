@@ -27,9 +27,11 @@ Portfolio site and admin in one Next.js app.
 2. `npm install`
 3. `npm run dev`, then open `/admin` and create the first admin user.
 
-In development Payload syncs the schema to the database automatically. Without
-`GCS_BUCKET` uploads go to `./media`; without `RESEND_API_KEY` emails are logged
-to the console.
+Without `GCS_BUCKET` uploads go to `./media`; without `RESEND_API_KEY` emails
+are logged to the console.
+
+Local development and production share one database, so automatic schema sync
+is turned off (`push: false`). The schema only changes through migration files.
 
 ## Changing the content model
 
@@ -38,12 +40,20 @@ After editing a collection or global:
 ```bash
 npm run generate:types
 npm run payload -- migrate:create <name>
+npm run payload -- migrate
 ```
+
+Commit the new files in `migrations/`. The deploy runs `payload migrate` too,
+which is a no-op once the migration has been applied.
 
 ## Deploying to Vercel
 
-Set the build command to `npm run ci` (runs `payload migrate`, then `next build`)
-and add the variables from `.env.example` to the Vercel project.
+`vercel.json` sets the build command to `npm run ci` (runs `payload migrate`,
+then `next build`). Add the variables from `.env.example` to the Vercel project,
+except `LEGACY_DATABASE_URL`.
+
+Vercel limits request bodies to 4.5 MB, so files larger than that cannot be
+uploaded through the admin there.
 
 ## Migrating the old site's content
 

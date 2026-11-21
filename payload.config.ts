@@ -45,6 +45,9 @@ export default buildConfig({
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URI || "" },
     migrationDir: path.resolve(dirname, "migrations"),
+    // Local dev and production share one database, so the schema only ever
+    // changes through migration files (never dev-mode auto-sync).
+    push: false,
   }),
   // Without RESEND_API_KEY Payload logs emails to the console instead of sending.
   email: process.env.RESEND_API_KEY
