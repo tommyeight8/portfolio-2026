@@ -596,6 +596,10 @@ export interface Resume {
    * Downloadable resume (PDF or DOCX).
    */
   file?: (number | null) | Media;
+  /**
+   * Title line under your name on the resume page. Leave empty to use the owner title from Site Settings.
+   */
+  headline?: string | null;
   summary?: string | null;
   experience?:
     | {
@@ -604,6 +608,18 @@ export interface Resume {
         location?: string | null;
         period?: string | null;
         highlights?: string[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  projects?:
+    | {
+        title: string;
+        subtitle?: string | null;
+        stack?: string[] | null;
+        /**
+         * A point that starts with a label and a colon ("Problem: ...") shows the label in bold.
+         */
+        points?: string[] | null;
         id?: string | null;
       }[]
     | null;
@@ -619,6 +635,7 @@ export interface Resume {
         degree: string;
         school: string;
         period?: string | null;
+        highlights?: string[] | null;
         id?: string | null;
       }[]
     | null;
@@ -703,6 +720,7 @@ export interface HomeSelect<T extends boolean = true> {
  */
 export interface ResumeSelect<T extends boolean = true> {
   file?: T;
+  headline?: T;
   summary?: T;
   experience?:
     | T
@@ -712,6 +730,15 @@ export interface ResumeSelect<T extends boolean = true> {
         location?: T;
         period?: T;
         highlights?: T;
+        id?: T;
+      };
+  projects?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        stack?: T;
+        points?: T;
         id?: T;
       };
   skillGroups?:
@@ -727,6 +754,7 @@ export interface ResumeSelect<T extends boolean = true> {
         degree?: T;
         school?: T;
         period?: T;
+        highlights?: T;
         id?: T;
       };
   updatedAt?: T;

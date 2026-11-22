@@ -14,6 +14,14 @@ export const Resume: GlobalConfig = {
       admin: { description: "Downloadable resume (PDF or DOCX)." },
     },
     {
+      name: "headline",
+      type: "text",
+      admin: {
+        description:
+          "Title line under your name on the resume page. Leave empty to use the owner title from Site Settings.",
+      },
+    },
+    {
       name: "summary",
       type: "textarea",
       defaultValue: "Full-stack developer with 10+ years of design experience.",
@@ -72,6 +80,24 @@ export const Resume: GlobalConfig = {
           ],
         },
         { name: "highlights", type: "text", hasMany: true },
+      ],
+    },
+    {
+      name: "projects",
+      type: "array",
+      labels: { singular: "Selected project", plural: "Selected projects" },
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "subtitle", type: "text" },
+        { name: "stack", type: "text", hasMany: true },
+        {
+          name: "points",
+          type: "text",
+          hasMany: true,
+          admin: {
+            description: "A point that starts with a label and a colon (\"Problem: ...\") shows the label in bold.",
+          },
+        },
       ],
     },
     {
@@ -135,6 +161,7 @@ export const Resume: GlobalConfig = {
         { name: "degree", type: "text", required: true },
         { name: "school", type: "text", required: true },
         { name: "period", type: "text" },
+        { name: "highlights", type: "text", hasMany: true },
       ],
     },
   ],
