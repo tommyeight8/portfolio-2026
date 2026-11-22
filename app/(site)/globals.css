@@ -15,7 +15,7 @@
 }
 
 :root {
-  --bg: #fafaf9;
+  --bg: #ffffff;
   --surface: #ffffff;
   --line: #e4e2df;
   --fg: #0c0a09;
@@ -78,15 +78,34 @@ body {
   }
 }
 
-/* Home hero: a mesh gradient built from soft overlapping HSL colour spots. */
+/* Home hero: one diagonal gradient, four times the size of the section, that
+   slides back and forth so the colours shift continuously. */
 .hero-mesh {
-  background-color: hsl(232 72% 24%);
-  background-image:
-    radial-gradient(at 12% 18%, hsl(221 83% 53%) 0px, transparent 55%),
-    radial-gradient(at 88% 12%, hsl(262 80% 52%) 0px, transparent 50%),
-    radial-gradient(at 78% 88%, hsl(199 89% 48%) 0px, transparent 50%),
-    radial-gradient(at 18% 92%, hsl(250 75% 42%) 0px, transparent 55%),
-    radial-gradient(at 50% 50%, hsl(228 80% 38%) 0px, transparent 60%);
+  background: linear-gradient(
+    -45deg,
+    hsl(250 75% 42%),
+    hsl(262 80% 52%),
+    hsl(221 83% 53%),
+    hsl(199 89% 48%)
+  );
+  background-size: 400% 400%;
+  animation: hero-gradient 15s ease infinite;
+}
+@keyframes hero-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh {
+    animation: none;
+  }
 }
 
 /* Frosted-glass panel that holds the hero text. */

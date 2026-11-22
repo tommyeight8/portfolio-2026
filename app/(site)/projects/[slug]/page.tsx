@@ -6,6 +6,7 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Gallery, type GalleryImage } from "@/components/site/Gallery";
 import { categoryLabel } from "@/components/site/ProjectCard";
+import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { asMedia, getProjectBySlug, mediaUrl } from "@/lib/data";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -62,9 +63,9 @@ export default async function ProjectPage({ params }: Props) {
         <ArrowLeft className="h-4 w-4" /> All projects
       </Link>
 
-      <header className="mt-8 max-w-3xl">
+      <Reveal as="header" className="mt-8 max-w-3xl">
         <p className="eyebrow">{categoryLabel(project.category)}</p>
-        <h1 className="mt-3 font-display text-4xl font-semibold leading-tight sm:text-6xl">
+        <h1 className="mt-3 font-display text-3xl font-semibold leading-tight sm:text-5xl">
           {project.title}
         </h1>
         {(project.liveUrl || project.githubUrl) && (
@@ -91,10 +92,10 @@ export default async function ProjectPage({ params }: Props) {
             )}
           </div>
         )}
-      </header>
+      </Reveal>
 
       {cover?.url && (
-        <div className="card relative mt-12 aspect-[16/10] overflow-hidden">
+        <Reveal className="card relative mt-12 aspect-[16/10] overflow-hidden">
           <Image
             src={mediaUrl(cover, "large") ?? cover.url}
             alt={cover.alt || project.title}
@@ -103,30 +104,34 @@ export default async function ProjectPage({ params }: Props) {
             sizes="(min-width: 1152px) 1088px, 100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
       )}
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_18rem]">
-        <div className="min-w-0">
-          <p className="text-lg leading-relaxed text-muted">{project.description}</p>
+        <Reveal className="min-w-0 lg:border-r lg:border-gray-200 lg:pr-8">
+          <span className="eyebrow">Description</span>
+          <p className="leading-relaxed text-muted">{project.description}</p>
           {project.content ? (
-            <RichText data={project.content} className="prose-site mt-8 max-w-none" />
+            <RichText
+              data={project.content}
+              className="prose-site mt-8 max-w-none"
+            />
           ) : null}
-        </div>
+        </Reveal>
 
-        <aside className="space-y-8 text-sm">
+        <Stagger className="space-y-8 text-sm">
           {facts.length > 0 && (
-            <dl className="space-y-4">
+            <StaggerItem as="dl" className="space-y-4">
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="text-muted">{fact.label}</dt>
                   <dd className="mt-1 font-medium">{fact.value}</dd>
                 </div>
               ))}
-            </dl>
+            </StaggerItem>
           )}
           {lists.map((list) => (
-            <div key={list.label}>
+            <StaggerItem key={list.label}>
               <h2 className="text-muted">{list.label}</h2>
               <ul className="mt-2 flex flex-wrap gap-2">
                 {list.items!.map((item) => (
@@ -135,18 +140,18 @@ export default async function ProjectPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </StaggerItem>
           ))}
-        </aside>
+        </Stagger>
       </div>
 
       {gallery.length > 0 && (
-        <section className="mt-16">
+        <Reveal as="section" className="mt-16">
           <h2 className="eyebrow">Gallery</h2>
           <div className="mt-6">
             <Gallery images={gallery} />
           </div>
-        </section>
+        </Reveal>
       )}
     </article>
   );

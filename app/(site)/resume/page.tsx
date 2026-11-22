@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Download } from "lucide-react";
+import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { getResume, getSettings, mediaUrl } from "@/lib/data";
 
 export const metadata: Metadata = { title: "Resume" };
@@ -18,7 +19,10 @@ export default async function ResumePage() {
 
   return (
     <div className="container-site py-16 sm:py-20">
-      <header className="flex flex-col gap-6 border-b border-line pb-10 sm:flex-row sm:items-end sm:justify-between">
+      <Reveal
+        as="header"
+        className="flex flex-col gap-6 border-b border-line pb-10 sm:flex-row sm:items-end sm:justify-between"
+      >
         <div>
           <p className="eyebrow">Resume</p>
           <h1 className="mt-3 font-display text-4xl font-semibold sm:text-6xl">
@@ -36,25 +40,29 @@ export default async function ResumePage() {
             Contact
           </Link>
         </div>
-      </header>
+      </Reveal>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_18rem]">
         <div className="min-w-0 space-y-14">
           {resume.summary && (
-            <section>
+            <Reveal as="section">
               <h2 className="eyebrow">Summary</h2>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
                 {resume.summary}
               </p>
-            </section>
+            </Reveal>
           )}
 
           {experience.length > 0 && (
             <section>
               <h2 className="eyebrow">Experience</h2>
-              <ol className="mt-6 space-y-10">
+              <Stagger as="ol" className="mt-6 space-y-10">
                 {experience.map((job) => (
-                  <li key={job.id ?? job.title} className="border-l border-line pl-6">
+                  <StaggerItem
+                    as="li"
+                    key={job.id ?? job.title}
+                    className="border-l border-line pl-6"
+                  >
                     <p className="text-sm text-muted">{job.period}</p>
                     <h3 className="mt-1 font-display text-xl font-semibold">{job.title}</h3>
                     <p className="text-sm text-muted">
@@ -67,9 +75,9 @@ export default async function ResumePage() {
                         ))}
                       </ul>
                     ) : null}
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ol>
+              </Stagger>
             </section>
           )}
         </div>
@@ -78,9 +86,9 @@ export default async function ResumePage() {
           {skillGroups.length > 0 && (
             <section>
               <h2 className="eyebrow">Skills</h2>
-              <div className="mt-5 space-y-6">
+              <Stagger className="mt-5 space-y-6">
                 {skillGroups.map((group) => (
-                  <div key={group.id ?? group.title}>
+                  <StaggerItem key={group.id ?? group.title}>
                     <h3 className="text-sm font-medium">{group.title}</h3>
                     <ul className="mt-2 flex flex-wrap gap-2">
                       {(group.skills ?? []).map((skill) => (
@@ -89,25 +97,25 @@ export default async function ResumePage() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </section>
           )}
 
           {education.length > 0 && (
             <section>
               <h2 className="eyebrow">Education</h2>
-              <ul className="mt-5 space-y-4 text-sm">
+              <Stagger as="ul" className="mt-5 space-y-4 text-sm">
                 {education.map((item) => (
-                  <li key={item.id ?? item.degree}>
+                  <StaggerItem as="li" key={item.id ?? item.degree}>
                     <p className="font-medium">{item.degree}</p>
                     <p className="mt-1 text-muted">
                       {[item.school, item.period].filter(Boolean).join(" · ")}
                     </p>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             </section>
           )}
         </aside>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
+import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { asMedia, getResume, getSettings, mediaUrl } from "@/lib/data";
 
 export const metadata: Metadata = { title: "About" };
@@ -16,6 +17,7 @@ export default async function AboutPage() {
 
   return (
     <div className="container-site py-16 sm:py-20">
+      <Reveal>
       <p className="eyebrow">About</p>
       <h1 className="mt-3 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-6xl">
         {settings.ownerName}
@@ -23,9 +25,10 @@ export default async function AboutPage() {
       {settings.ownerTitle && (
         <p className="mt-4 text-lg text-muted">{settings.ownerTitle}</p>
       )}
+      </Reveal>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[20rem_1fr]">
-        <div className="space-y-4">
+        <Reveal className="space-y-4">
           <div className="card relative aspect-[4/5] overflow-hidden">
             <Image
               src={profileSrc}
@@ -42,34 +45,40 @@ export default async function AboutPage() {
               {settings.location}
             </p>
           )}
-        </div>
+        </Reveal>
 
         <div className="min-w-0">
           {paragraphs.length > 0 && (
-            <div className="max-w-2xl space-y-5 text-lg leading-relaxed text-muted">
+            <Stagger className="max-w-2xl space-y-5 text-lg leading-relaxed text-muted">
               {paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+                <StaggerItem as="p" key={paragraph}>
+                  {paragraph}
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           )}
 
           {stats.length > 0 && (
-            <dl className="mt-12 grid grid-cols-2 gap-6 border-y border-line py-8 sm:grid-cols-3">
+            <Stagger
+              as="dl"
+              className="mt-12 grid grid-cols-2 gap-6 border-y border-line py-8 sm:grid-cols-3"
+            >
               {stats.map((stat) => (
-                <div key={stat.id ?? stat.label}>
+                <StaggerItem key={stat.id ?? stat.label}>
                   <dd className="font-display text-4xl font-semibold">{stat.value}</dd>
                   <dt className="mt-1 text-sm text-muted">{stat.label}</dt>
-                </div>
+                </StaggerItem>
               ))}
-            </dl>
+            </Stagger>
           )}
 
           {experience.length > 0 && (
             <section className="mt-12">
               <h2 className="eyebrow">Experience</h2>
-              <ul className="mt-6 space-y-6">
+              <Stagger as="ul" className="mt-6 space-y-6">
                 {experience.map((job) => (
-                  <li
+                  <StaggerItem
+                    as="li"
                     key={job.id ?? job.title}
                     className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6"
                   >
@@ -80,9 +89,9 @@ export default async function AboutPage() {
                         {[job.company, job.location].filter(Boolean).join(" · ")}
                       </p>
                     </div>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             </section>
           )}
         </div>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
+import { MotionProvider } from "@/components/site/Reveal";
 import { getSettings } from "@/lib/data";
 import "./globals.css";
 
@@ -53,7 +54,9 @@ export default async function SiteLayout({
       </head>
       <body className="flex min-h-screen flex-col font-sans">
         <Nav siteName={settings.siteName} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <MotionProvider>{children}</MotionProvider>
+        </main>
         <Footer settings={settings} />
       </body>
     </html>
