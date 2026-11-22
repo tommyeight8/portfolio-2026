@@ -537,6 +537,9 @@ export interface SiteSetting {
    * Shown on the site and used for contact form notifications.
    */
   contactEmail?: string | null;
+  /**
+   * Paste the full profile URL. Each one you fill in shows as an icon in the site footer; leave a field empty to hide it.
+   */
   social?: {
     github?: string | null;
     linkedin?: string | null;

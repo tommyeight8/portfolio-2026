@@ -1,6 +1,12 @@
 import type { GlobalConfig } from "payload";
 import { revalidateSite } from "../lib/revalidate";
 
+// Social links open in a new tab, so they must be complete web addresses.
+const validateUrl = (value: unknown) =>
+  !value || /^https?:\/\/\S+$/i.test(String(value).trim())
+    ? true
+    : "Enter the full URL, starting with https://";
+
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
   admin: { group: "Site" },
@@ -99,12 +105,47 @@ export const SiteSettings: GlobalConfig = {
             {
               name: "social",
               type: "group",
+              label: "Social links",
+              admin: {
+                description:
+                  "Paste the full profile URL. Each one you fill in shows as an icon in the site footer; leave a field empty to hide it.",
+              },
               fields: [
-                { name: "github", type: "text" },
-                { name: "linkedin", type: "text" },
-                { name: "twitter", type: "text" },
-                { name: "instagram", type: "text" },
-                { name: "dribbble", type: "text" },
+                {
+                  name: "github",
+                  type: "text",
+                  label: "GitHub",
+                  admin: { placeholder: "https://github.com/username" },
+                  validate: validateUrl,
+                },
+                {
+                  name: "linkedin",
+                  type: "text",
+                  label: "LinkedIn",
+                  admin: { placeholder: "https://www.linkedin.com/in/username" },
+                  validate: validateUrl,
+                },
+                {
+                  name: "twitter",
+                  type: "text",
+                  label: "X (Twitter)",
+                  admin: { placeholder: "https://x.com/username" },
+                  validate: validateUrl,
+                },
+                {
+                  name: "instagram",
+                  type: "text",
+                  label: "Instagram",
+                  admin: { placeholder: "https://www.instagram.com/username" },
+                  validate: validateUrl,
+                },
+                {
+                  name: "dribbble",
+                  type: "text",
+                  label: "Dribbble",
+                  admin: { placeholder: "https://dribbble.com/username" },
+                  validate: validateUrl,
+                },
               ],
             },
           ],
