@@ -35,6 +35,7 @@ export default buildConfig({
       icons: [{ rel: "icon", type: "image/png", url: "/images/portfolio-logo.png" }],
     },
     components: {
+      afterLogin: ["/components/admin/LoginTurnstile#LoginTurnstile"],
       graphics: {
         Logo: "/components/admin/Logo#Logo",
         Icon: "/components/admin/Icon#Icon",

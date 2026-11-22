@@ -55,6 +55,20 @@ except `LEGACY_DATABASE_URL`.
 Vercel limits request bodies to 4.5 MB, so files larger than that cannot be
 uploaded through the admin there.
 
+## Spam protection (Cloudflare Turnstile)
+
+The contact form and the admin login are protected by Turnstile when
+`NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` are set. With
+both empty the check is switched off. `.env.example` lists Cloudflare's test
+keys for local development.
+
+- Contact form: the token is verified in the server action before a message is saved.
+- Admin login: the widget stores its token in a short-lived cookie, and the
+  Users collection verifies it before Payload checks the password.
+
+The site key is built into the page, so set both variables on the host before
+deploying, and redeploy after changing them.
+
 ## Migrating the old site's content
 
 Set `LEGACY_DATABASE_URL` to the old database, then:

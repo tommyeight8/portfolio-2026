@@ -3,6 +3,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { z } from "zod";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -21,10 +22,12 @@ export type ContactState = {
   message?: string;
   errors?: Partial<Record<keyof z.infer<typeof schema>, string>>;
   values?: Record<string, string>;
+  /** Increases on every failed submit so the Turnstile widget fetches a fresh token. */
+  attempt?: number;
 };
 
 export async function submitContact(
-  _previous: ContactState,
+  previous: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
   const values = Object.fromEntries(
@@ -44,7 +47,18 @@ export async function submitContact(
       const key = issue.path[0] as keyof z.infer<typeof schema>;
       errors[key] ??= issue.message;
     }
-    return { status: "error", errors, values };
+    return { status: "error", errors, values, attempt: previous.attempt };
+  }
+
+  // Checked after validation, because a Turnstile token can only be verified once.
+  const attempt = (previous.attempt ?? 0) + 1;
+  if (!(await verifyTurnstile(String(formData.get("cf-turnstile-response") ?? "")))) {
+    return {
+      status: "error",
+      message: "Security check failed. Wait for the check to complete, then send again.",
+      values,
+      attempt,
+    };
   }
 
   try {
@@ -60,6 +74,7 @@ export async function submitContact(
       status: "error",
       message: "Something went wrong sending your message. Please try again.",
       values,
+      attempt,
     };
   }
 }

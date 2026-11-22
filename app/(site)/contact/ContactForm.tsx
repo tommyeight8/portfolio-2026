@@ -1,9 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
+import { Turnstile } from "@/components/Turnstile";
 import { submitContact, type ContactState } from "./actions";
 
 const initialState: ContactState = { status: "idle" };
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export function ContactForm() {
   const [state, action, pending] = useActionState(submitContact, initialState);
@@ -71,6 +73,10 @@ export function ContactForm() {
         aria-hidden="true"
         className="hidden"
       />
+
+      {TURNSTILE_SITE_KEY && (
+        <Turnstile siteKey={TURNSTILE_SITE_KEY} resetSignal={state.attempt} />
+      )}
 
       {state.message && (
         <p role="alert" className="text-sm text-rose-500">
